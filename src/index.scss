@@ -1,0 +1,272 @@
+@mixin transition($property) {
+  -webkit-transition: $property;
+  -moz-transition: $property;
+  -ms-transition: $property;
+  transition: $property;
+}
+
+
+$themes: (
+  light: (
+    bodyBackground: #fff,
+    headerBackground: #f2f2fa,
+    textColor: #8e8ea8,
+    textColorDark: #364FCC,
+    textColorLight: #54a9f4,
+    titleText: #343747,
+    cardBackground: #ffffff,
+    cardBorder: #e7e7f3,
+    tableHeader: #ffffff,
+    tableBorder: #e7e7f3,
+  ),
+  dark: (
+    bodyBackground: #383f48,
+    headerBackground: #272c33,
+    textColor: #8b9296,
+    textColorDark: #398bf7,
+    textColorLight: #adadad,
+    titleText: #ffffff,
+    cardBackground: #272c33,
+    cardBorder: #272c33,
+    tableBorder: #323840,
+    tableHeader: #323840,
+  ),
+);
+
+$base-size: 15px;
+
+@mixin customize($arg: theme) {
+  $array: $themes;
+  $prefix: theme;
+
+  @if ($arg == theme) {
+    $array: $themes;
+    $prefix: theme;
+  }
+
+  @each $theme, $map in $array {
+    .#{$prefix}-#{$theme} & {
+      $array-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($array, $theme), '#{$key}');
+        $array-map: map-merge($array-map, ($key: $value)) !global;
+      }
+
+      @content;
+      $array-map: null !global;
+    }
+  }
+}
+
+@function getValue($key) {
+  @return map-get($array-map, $key);
+}
+
+// #root, .ant-layout {
+//   height: 100%;
+// }
+
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+a {
+  @include customize(theme) { color: getValue(textColorDark); }
+}
+
+h1 {
+  font-size: 38px;
+}
+
+h2 {
+  font-size: 32px;
+}
+
+h3 {
+  font-size: 28px;
+}
+
+h4 {
+  font-size: 24px;
+}
+
+
+h1, h2, h3, h4 {
+  @include customize(theme) { color: getValue(titleText); }
+  font-weight: 700;
+  letter-spacing: -.02em;
+  margin-bottom: 15px;
+}
+
+.ant-layout {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.header-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .logo {
+    width: 120px;
+    margin: 16px 24px 16px 0;
+    float: left;
+  }
+}
+
+.content-wrap {
+  padding: 30px 0 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ant-layout-header {
+  @include customize(theme) { background: getValue(headerBackground); }
+  .ant-menu-horizontal {
+    background: transparent;
+    .ant-menu-item {
+      font-size: $base-size;
+      border-bottom: 2px solid transparent;
+      @include customize(theme) { background: transparent }
+      a {
+        @include customize(theme) { color: getValue(textColor); }
+      }
+      &:hover a {
+        @include customize(theme) { color: getValue(textColorLight); }
+      }
+    }
+    .ant-menu-item-selected {
+      @include customize(theme) { border-bottom: 2px solid getValue(textColorDark); }
+      a, &:hover a {
+        @include customize(theme) { color: getValue(textColorDark); }
+        font-weight: 700;
+      }
+    }
+  }
+
+  .day-night-mode {
+    svg {
+      @include customize(theme) { fill: getValue(textColor); }
+      @include transition(fill 0.3s cubic-bezier(0.645, 0.045, 0.355, 1));
+      cursor: pointer;
+    }
+    &:hover svg {
+      @include customize(theme) { fill: getValue(textColorLight); }
+    }
+  }
+}
+
+.ant-layout-content {
+  padding: 0 50px;
+  @include customize(theme) { background: getValue(bodyBackground);  }
+  min-height: auto;
+}
+
+.ant-layout-footer {
+  @include customize(theme) { background: getValue(bodyBackground);  }
+}
+
+
+
+@media only screen and (max-width: 890px) {
+  .ant-layout-header, .ant-layout-content, .ant-layout-footer {
+    padding: 0 20px;
+  }
+
+}
+
+.preload-block {
+  text-align: center;
+  padding: 80px 0;
+  i {
+    @include customize(theme) {
+      color: getValue(textColorDark);
+    }
+  }
+}
+
+.ant-card {
+  margin-bottom: 30px;
+  font-size: $base-size;
+  @include customize(theme) {
+    color: getValue(textColor);
+    background: getValue(cardBackground);
+    border-color: getValue(cardBorder);
+  }
+}
+
+.antd-pro-number-info-numberInfo .antd-pro-number-info-numberInfoSubTitle,
+.antd-pro-charts-chart-card-chartCard .antd-pro-charts-chart-card-meta {
+  @include customize(theme) { color: getValue(textColor); }
+}
+
+.antd-pro-number-info-numberInfo .antd-pro-number-info-numberInfoValue span,
+.antd-pro-charts-chart-card-chartCard .antd-pro-charts-chart-card-total {
+  @include customize(theme) { color: getValue(titleText); }
+}
+
+.antd-pro-charts-chart-card-chartCard .antd-pro-charts-chart-card-chartTopMargin .antd-pro-charts-chart-card-avatar {
+  font-size: 38px;
+  line-height: 60px;
+}
+
+.ant-table-wrapper {
+  @include customize(theme) { background: getValue(cardBackground); }
+  margin-bottom: 30px;
+  .ant-table {
+    @include customize(theme) { color: getValue(titleText); }
+  }
+  .ant-table-tbody > tr > td,
+  .ant-table-thead > tr > th {
+    @include customize(theme) { border-color: getValue(tableBorder); }
+  }
+  .ant-table-tbody > tr:hover:not(.ant-table-expanded-row) > td {
+    @include customize(theme) {
+      background: getValue(tableHeader);
+      color: getValue(textColor);
+    }
+  }
+  .ant-table-thead > tr:first-child > th:first-child,
+  .ant-table-thead > tr:first-child > th:last-child {border-radius: 0}
+  .ant-table-thead > tr > th {
+    @include customize(theme) {
+      background: getValue(tableHeader);
+      color: getValue(textColor);
+    }
+  }
+}
+
+.block-item {
+  .ant-card-head {
+    padding: 0px 20px;
+    min-height: 30px;
+    font-size: $base-size;
+    font-weight: 700;
+    @include customize(theme) {
+      background: getValue(cardBackground);
+      border-color: getValue(tableBorder);
+    }
+    .ant-card-head-title {
+      padding: 10px 0;
+    }
+  }
+  .ant-card-body {
+    padding: 10px 25px;
+
+    span {
+      display: block;
+      @include customize(theme) { color: getValue(titleText); }
+      &.block-transactions {
+          margin-bottom: 10px;
+          @include customize(theme) { color: getValue(textColor); }
+      }
+    }
+  }
+}

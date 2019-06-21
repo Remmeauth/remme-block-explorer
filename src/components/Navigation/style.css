@@ -1,0 +1,23 @@
+.nav-wrapper {
+  float: left;
+}
+
+.mobile-nav-button {
+  font-size: 20px;
+  display: none;
+}
+
+@media only screen and (max-width: 890px) {
+  .nav-wrapper {
+    float: right;
+    margin-left: 15px;
+  }
+  .ant-menu.ant-menu-horizontal  {
+    display: none;
+  }
+  .mobile-nav-button {
+    display: block;
+    line-height: 62px;
+    margin-top: 2px;
+  }
+}
