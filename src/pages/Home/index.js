@@ -13,11 +13,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-      setInterval(this.timer, 5000);
-
-
-
-
+    setInterval(this.timer, 5000);
     if (document.readyState === 'complete') {
       this.setState({ loading: false });
     } else {

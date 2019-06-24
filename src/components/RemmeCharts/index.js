@@ -73,7 +73,7 @@ class RemmeCharts extends Component {
           </QueueAnim>
           <Col className="gutter-row" sm={24} md={12} lg={8} xl={7}>
             { show &&
-              <QueueAnim type="left"  >
+              <QueueAnim type="right"  >
                 <BlockInfoComponent icon="code-sandbox" title="Total Blocks" value="9231251" color="#f9b22b" key='1'/>
                 <BlockInfoComponent icon="user" title="Total Accounts" value="52312" color="#56c0d8" key='2'/>
               </QueueAnim>
@@ -81,7 +81,7 @@ class RemmeCharts extends Component {
           </Col>
           <Col className="gutter-row" sm={24} md={12} lg={8} xl={7}>
             { show &&
-              <QueueAnim type="left" >
+              <QueueAnim type="right" >
                 <BlockInfoComponent icon="column-width" title="Total Transactions" color="#ef534f" value="1251256" key='3'/>
                 <BlockInfoComponent classes="blockinfo-producer" icon="check-circle" title="Producer" value="eoshuobipool" color="#4cd79c" key='4'/>
               </QueueAnim>
