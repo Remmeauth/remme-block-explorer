@@ -4,16 +4,6 @@ import { Row, Col, Card, Icon } from 'antd';
 
 import './style.css'
 
-const Block = () => {
-  return (
-    <Col className="gutter-row" span={4}>
-      <Card title="Card title" bordered={false}>
-        Card content
-      </Card>
-    </Col>
-  )
-}
-
 class RemmeBlocks extends Component {
   index = 0;
   state = {

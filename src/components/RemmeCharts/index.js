@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import QueueAnim from 'rc-queue-anim';
-import { Row, Col, Tooltip, Icon } from 'antd';
+import { Row, Col, Icon } from 'antd';
 import NumberInfo from 'ant-design-pro/lib/NumberInfo';
-import { ChartCard, yuan, MiniArea } from 'ant-design-pro/lib/Charts';
-import numeral from 'numeral';
+import { ChartCard, MiniArea } from 'ant-design-pro/lib/Charts';
 import moment from 'moment';
 
 import "./style.css"
@@ -61,6 +60,7 @@ class RemmeCharts extends Component {
 
   render() {
     const {show, visitData} = this.state
+    const { totalBlocks, producer } = this.props.data
 
     return (
       <React.Fragment>
@@ -74,7 +74,7 @@ class RemmeCharts extends Component {
           <Col className="gutter-row" sm={24} md={12} lg={8} xl={7}>
             { show &&
               <QueueAnim type="right"  >
-                <BlockInfoComponent icon="code-sandbox" title="Total Blocks" value="9231251" color="#f9b22b" key='1'/>
+                <BlockInfoComponent icon="code-sandbox" title="Total Blocks" value={totalBlocks} color="#f9b22b" key='1'/>
                 <BlockInfoComponent icon="user" title="Total Accounts" value="52312" color="#56c0d8" key='2'/>
               </QueueAnim>
             }
@@ -83,7 +83,7 @@ class RemmeCharts extends Component {
             { show &&
               <QueueAnim type="right" >
                 <BlockInfoComponent icon="column-width" title="Total Transactions" color="#ef534f" value="1251256" key='3'/>
-                <BlockInfoComponent classes="blockinfo-producer" icon="check-circle" title="Producer" value="eoshuobipool" color="#4cd79c" key='4'/>
+                <BlockInfoComponent classes="blockinfo-producer" icon="check-circle" title="Producer" value={producer} color="#4cd79c" key='4'/>
               </QueueAnim>
             }
           </Col>
