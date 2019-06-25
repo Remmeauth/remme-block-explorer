@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-
 import QueueAnim from 'rc-queue-anim';
-
 import { Row, Col, Card, Icon } from 'antd';
+
+import './style.css'
 
 const Block = () => {
   return (
@@ -15,69 +15,51 @@ const Block = () => {
 }
 
 class RemmeBlocks extends Component {
-
-  index = 9483503;
+  index = 0;
   state = {
-        show: false,
-        items: [{
-          children: 'eoshuobipool',
-          key: 9483503,
-        }, {
-          children: 'eoshuobipool',
-          key: 9483502,
-        }, {
-          children: 'eoshuobipool',
-          key: 9483501,
-        }, {
-          children: 'eoshuobipool',
-          key: 9483500,
-        }, {
-          children: 'eoshuobipool',
-          key: 9483499,
-        }, {
-          children: 'eoshuobipool',
-          key: 9483498,
-        }, {
-          children: 'eoshuobipool',
-          key: 9483497,
-        }, {
-          children: 'eoshuobipool',
-          key: 9483496
-        }],
-        type: 'left',
-      };
+    show: false,
+    items: [],
+    type: 'left',
+  };
 
-      componentDidMount() {
-        const {wait} = this.props
-        setTimeout(
-          function() {
-              this.setState({ show: true });
-          }.bind(this)
-        , wait);
-      }
+  componentDidMount() {
+    const { wait } = this.props
+    setTimeout(
+      function() {
+          this.setState({ show: true });
+      }.bind(this)
+    , wait);
+  }
 
-      componentDidUpdate(prevProps) {
-        if (this.index != this.props.data) {
-          this.index = this.props.data
-          this.state.show && this.add();
-        }
-      }
+  componentDidUpdate(prevProps) {
+    if (this.index != this.props.data[0].block_num) {
+      this.index = this.props.data[0].block_num
+      this.state.show && this.add();
+    }
+  }
 
-      add = () => {
-          let {items} = this.state;
+  add = () => {
+    let { items } = this.state;
+    const { data } = this.props;
 
-          items.pop();
-          this.setState({ items, type: 'right' });
+    if (!items[0]) {
+      this.setState({ items: data, type: 'left' });
+      return false;
+    }
 
-          setTimeout(
-              function() {
-                items.unshift({
-                  children: 'new',
-                  key: this.index,
-                });
-                this.setState({ items, type: 'left' });
-              }.bind(this), 450);
-        }
+    const firstBlock = data[0].block_num
+    const lastBlock = items[0].block_num
+
+    for ( var i = 0; i < (firstBlock - lastBlock); i++ ) {
+        items.pop();
+    }
+    this.setState({ items, type: 'right' });
+
+    setTimeout(
+        function() {
+          this.setState({ items: data, type: 'right' });
+        }.bind(this), 145 * (firstBlock - lastBlock));
+  }
 
   render() {
     const {show} = this.state
@@ -85,17 +67,18 @@ class RemmeBlocks extends Component {
     return (
       <React.Fragment>
         <h4>Blocks</h4>
-        <Row gutter={30}>
-          { show && <QueueAnim type={this.state.type}>
-            {this.state.items.map((item) =>
-              <Col className="gutter-row" sm={24} md={12} lg={6} key={item.key}>
-                <Card className="block-item" title=<a><Icon type="code-sandbox" /> {item.key}</a> bordered={true}>
-                  <span className="block-transactions">0 Transactions</span>
-                  <span className="block-producer">Producer: <a><b>Valera{item.children}</b></a></span>
-                  <span className="block-time">Time: 1/21, 5:34:49 pm</span>
-                </Card>
-              </Col>
-            )}
+        <Row className="blocks-row" gutter={30}>
+          { show &&
+            <QueueAnim type={this.state.type}>
+              {this.state.items.map((item) =>
+                <Col className="gutter-row" sm={24} md={12} lg={6} key={item.block_num}>
+                  <Card className="block-item" title=<a><Icon type="code-sandbox" /> {item.block_num}</a> bordered={true}>
+                    <span className="block-transactions">{item.transactions} Transactions</span>
+                    <span className="block-producer">Producer: <a><b>{item.producer}</b></a></span>
+                    <span className="block-time">{item.timestamp}</span>
+                  </Card>
+                </Col>
+              )}
           </QueueAnim>}
         </Row>
       </React.Fragment>

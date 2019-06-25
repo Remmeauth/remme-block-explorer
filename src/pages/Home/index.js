@@ -1,38 +1,39 @@
 import React, { Component } from 'react';
 import { Row, Col, Spin, Icon  } from 'antd';
 
+import { backendAddress } from '../../config.js'
 import { RemmeCharts, RemmeBlocks, RemmeTransactions } from '../../components';
 
 const loadIcon = <Icon type="setting" rotate={180} style={{ fontSize: 24 }} spin />;
 
 class Home extends Component {
+  intervalID = 0;
 
   state = {
     loading: true,
-    data: 9483503,
+    data: {},
   }
 
-  componentDidMount() {
-    setInterval(this.timer, 5000);
-    if (document.readyState === 'complete') {
-      this.setState({ loading: false });
-    } else {
-      window.addEventListener('load', this.handleLoad);
+  handleUpdate = async () => {
+    try {
+      const response = await fetch( backendAddress + `/api/getInfo`);
+      const json = await response.json();
+      this.setState({
+        loading: false,
+        data: json
+      });
+    } catch (error) {
+      console.log(error.message);
     }
   }
 
-  timer = () => {
-    const {data} = this.state
-    console.log(data);
-    this.setState({ data: data+1 });
+  componentDidMount() {
+    this.handleUpdate();
+    this.intervalID = setInterval(this.handleUpdate, 3000);
   }
 
-  handleLoad = () => {
-    setTimeout(
-      function() {
-          this.setState({ loading: false });
-      }.bind(this)
-    , 700);
+  componentWillUnmount() {
+    clearInterval(this.intervalID);
   }
 
   render() {
@@ -41,8 +42,8 @@ class Home extends Component {
       <React.Fragment>
         {!loading ? (
           <React.Fragment>
-            <RemmeCharts wait={300}/>
-            <RemmeBlocks wait={600} data={data}/>
+            <RemmeCharts wait={300} data={data}/>
+            <RemmeBlocks wait={600} data={data.blocks}/>
             <Row gutter={30}>
               <Col lg={24} xl={12}>
                 <RemmeTransactions wait={1500}/>

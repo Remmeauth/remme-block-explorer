@@ -1,5 +1,7 @@
 import request from "request";
 
+import { nodeAddress } from '../../config'
+
 export const sleep = (ms) => {
   return new Promise(resolve=>{
     setTimeout(resolve,ms)
@@ -11,7 +13,7 @@ export const api = (type, action, body) => {
       try {
         var options = {
           method: 'POST',
-          url: 'https://eos.greymass.com/v1/'+ type +'/' + action,
+          url: nodeAddress + '/v1/'+ type +'/' + action,
           headers: {accept: 'application/json', 'content-type': 'application/json'},
           body: body
         };
