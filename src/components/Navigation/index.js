@@ -18,28 +18,28 @@ const NavigationItems = [
     link: '/blocks',
     icon: 'code-sandbox',
     type: 'simple',
-    key: 1,
+    key: 2,
   },
   {
     title: 'Transactions',
     link: '/transactions',
     icon: 'column-width',
     type: 'simple',
-    key: 2,
+    key: 3,
   },
   {
     title: 'RAM',
     link: '/ram',
     icon: 'line-chart',
     type: 'simple',
-    key: 3,
+    key: 4,
   },
   {
     title: 'Producers',
     link: '/producers',
     icon: 'team',
     type: 'simple',
-    key: 4,
+    key: 5,
   },
 ];
 
@@ -63,7 +63,7 @@ class Navigation extends Component {
     const { location } = this.props;
     return (
 
-      <div className="nav-wrapper">
+      <div className="nav-wrapper" key="nav">
 
       <Icon className="mobile-nav-button" type="menu" onClick={this.showDrawer} />
 
@@ -123,9 +123,9 @@ class Navigation extends Component {
                  ? <Button style={{ marginLeft: 8 }} type={item.style}>
                      {item.title}
                    </Button>
-                 : <a className="ant-nav-dropdown">
+                 : <aa className="ant-nav-dropdown">
                      <Icon type={item.icon} /> {item.title} <Icon type="down" />
-                   </a>
+                   </aa>
                }
             </Dropdown>
         )}

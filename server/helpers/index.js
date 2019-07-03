@@ -1,6 +1,6 @@
 import request from "request";
 
-import { nodeAddress } from '../../config'
+import { nodeAddress, marketChartEndpoint } from '../../config'
 
 export const sleep = (ms) => {
   return new Promise(resolve=>{
@@ -18,6 +18,23 @@ export const api = (type, action, body) => {
           body: body
         };
 
+        request(options, function (error, response, body) {
+          if (error) reject(error);
+          resolve(body);
+        });
+      } catch (e) {
+        reject(e.message);
+      }
+    });
+};
+
+export const coinmarketcap = () => {
+    return new Promise(function(resolve, reject) {
+      try {
+        var options = {
+          method: 'GET',
+          url: marketChartEndpoint,
+        };
         request(options, function (error, response, body) {
           if (error) reject(error);
           resolve(body);

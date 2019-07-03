@@ -1,9 +1,11 @@
 import { sleep } from '../helpers'
 import { startBlocksDeamon, getBlockList } from './blocks.deamon.js'
+import { startMarketDeamon, getMarketChart } from './market.deamon.js'
 
-let infoData = {}
+let infoData = {};
 
 const prepareData = () => {
+  infoData.marketChart = getMarketChart();
   infoData.totalBlocks = getBlockList()[0].block_num;
   infoData.producer = getBlockList()[0].producer;
   infoData.blocks = getBlockList().map( (item) => {
@@ -23,7 +25,8 @@ export const getInfo = () => {
 
 export const startDaemons = async () => {
   await startBlocksDeamon();
+  await startMarketDeamon();
   prepareData();
-  await sleep(10);
+  await sleep(1000);
   startDaemons();
 }

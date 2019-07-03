@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import QueueAnim from 'rc-queue-anim';
 
-import { Table, Divider, Tag } from 'antd';
+import { } from 'antd';
 
 class RemmeTransactions extends Component {
   state = {
@@ -22,7 +23,7 @@ class RemmeTransactions extends Component {
     title: 'Tx Hash',
     dataIndex: 'tx',
     key: 'tx',
-    render: text => <a href="javascript:;">{text}</a>,
+    render: text => <a href="/">{text}</a>,
   },
   {
     title: 'Action Name',
@@ -90,17 +91,17 @@ class RemmeTransactions extends Component {
                            </thead>
                             <QueueAnim type="right" component="tbody" className="ant-table-tbody">
                               <tr className="ant-table-row ant-table-row-level-0" key="1" data-row-key="1">
-                                 <td className=""><span className="ant-table-row-indent indent-level-0" ></span><a href="javascript:;">1b980f52fefdef499</a></td>
+                                 <td className=""><span className="ant-table-row-indent indent-level-0" ></span><Link to="/about">1b980f52fefdef499</Link></td>
                                  <td className="">transfer</td>
                                  <td className="">3</td>
                               </tr>
                               <tr className="ant-table-row ant-table-row-level-0" key="2" data-row-key="2">
-                                 <td className=""><span className="ant-table-row-indent indent-level-0" ></span><a href="javascript:;">1b980f52fefdef499</a></td>
+                                 <td className=""><span className="ant-table-row-indent indent-level-0" ></span><Link to="/about">1b980f52fefdef499</Link></td>
                                  <td className="">transfer</td>
                                  <td className="">2</td>
                               </tr>
                               <tr className="ant-table-row ant-table-row-level-0" key="3" data-row-key="3">
-                                 <td className=""><span className="ant-table-row-indent indent-level-0" ></span><a href="javascript:;">1b980f52fefdef499</a></td>
+                                 <td className=""><span className="ant-table-row-indent indent-level-0" ></span><Link to="/about">1b980f52fefdef499</Link></td>
                                  <td className="">transfer</td>
                                  <td className="">1</td>
                               </tr>

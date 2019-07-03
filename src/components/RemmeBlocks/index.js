@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import QueueAnim from 'rc-queue-anim';
 import { Row, Col, Card, Icon } from 'antd';
 
@@ -22,7 +23,7 @@ class RemmeBlocks extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.index != this.props.data[0].block_num) {
+    if (this.index !== this.props.data[0].block_num) {
       this.index = this.props.data[0].block_num
       this.state.show && this.add();
     }
@@ -53,7 +54,6 @@ class RemmeBlocks extends Component {
 
   render() {
     const {show} = this.state
-    const {data} = this.props
     return (
       <React.Fragment>
         <h4>Blocks</h4>
@@ -62,9 +62,9 @@ class RemmeBlocks extends Component {
             <QueueAnim type={this.state.type}>
               {this.state.items.map((item) =>
                 <Col className="gutter-row" sm={24} md={12} lg={6} key={item.block_num}>
-                  <Card className="block-item" title=<a><Icon type="code-sandbox" /> {item.block_num}</a> bordered={true}>
+                  <Card className="block-item" title=<Link to="/block"><Icon type="code-sandbox" /> {item.block_num}</Link> bordered={true}>
                     <span className="block-transactions">{item.transactions} Transactions</span>
-                    <span className="block-producer">Producer: <a><b>{item.producer}</b></a></span>
+                    <span className="block-producer">Producer: <Link to="/producer"><b>{item.producer}</b></Link></span>
                     <span className="block-time">{item.timestamp}</span>
                   </Card>
                 </Col>

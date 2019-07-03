@@ -3,27 +3,26 @@ import QueueAnim from 'rc-queue-anim';
 import { Row, Col, Icon } from 'antd';
 import NumberInfo from 'ant-design-pro/lib/NumberInfo';
 import { ChartCard, MiniArea } from 'ant-design-pro/lib/Charts';
-import moment from 'moment';
+import numeral from 'numeral';
 
 import "./style.css"
 
 const ChartComponent = ({visitData}) => {
+
+  const { prices, market_caps } = visitData;
+
   return (
     <ChartCard contentHeight={178}>
       <NumberInfo
         subTitle="Price"
-        total={'$0.0064'}
-        status="up"
-        subTotal={-1.1}
+        total={"$"+prices[0].y.toFixed(4)}
       />
-      <MiniArea line height={45} data={visitData} color="#398bf7" borderColor="#398bf7"  />
+      <MiniArea line height={45} data={prices} color="#398bf7" borderColor="#398bf7"  />
       <NumberInfo
         subTitle="Market Cap"
-        total={'$3,931,694'}
-        status="up"
-        subTotal={12.1}
+        total={"$"+ numeral(market_caps[0].y).format('0,0')}
       />
-      <MiniArea line height={45} data={visitData} color="#735af2" borderColor="#735af2"  />
+      <MiniArea line height={45} data={market_caps} color="#735af2" borderColor="#735af2"  />
     </ChartCard>
   )
 }
@@ -39,17 +38,6 @@ class RemmeCharts extends Component {
   }
 
   componentDidMount() {
-    const visitData = [];
-    const beginDay = new Date().getTime();
-    for (let i = 0; i < 20; i += 1) {
-      visitData.push({
-        x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD'),
-        y: Math.floor(Math.random() * 100) + 10,
-      });
-    }
-
-    this.setState({ visitData });
-
     const {wait} = this.props
     setTimeout(
       function() {
@@ -59,8 +47,8 @@ class RemmeCharts extends Component {
   }
 
   render() {
-    const {show, visitData} = this.state
-    const { totalBlocks, producer } = this.props.data
+    const {show} = this.state
+    const { totalBlocks, producer, marketChart } = this.props.data
 
     return (
       <React.Fragment>
@@ -68,7 +56,7 @@ class RemmeCharts extends Component {
         <Row gutter={30}>
           <QueueAnim type="right" >
             <Col className="gutter-row"  md={24} lg={8} xl={10} key='0'>
-              <ChartComponent visitData={visitData} />
+              <ChartComponent visitData={marketChart} />
             </Col>
           </QueueAnim>
           <Col className="gutter-row" sm={24} md={12} lg={8} xl={7}>
