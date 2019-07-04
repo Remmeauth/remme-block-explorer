@@ -163,6 +163,12 @@ h1, h2, h3, h4 {
   }
 }
 
+.ant-table-body {
+  table {
+    white-space: nowrap;
+  }
+}
+
 .ant-layout-content {
   padding: 0 50px;
   @include customize(theme) { background: getValue(bodyBackground);  }

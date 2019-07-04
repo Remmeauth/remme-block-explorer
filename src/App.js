@@ -16,7 +16,7 @@ class App extends Component {
         <Header>
           <div className="header-wrap">
             <Link to="/">
-              <h2 style={{float: 'left', marginRight: '10px'}}>Explorer</h2>
+              <h2 style={{float: 'left', marginRight: '20px'}}>Explorer</h2>
               {this.sad && <img className="logo" src={logo} alt="Logo" />}
             </Link>
             <Navigation />

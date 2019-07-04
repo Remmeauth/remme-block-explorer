@@ -101,6 +101,9 @@ h1, h2, h3, h4 {
 .theme-dark .ant-layout-header .day-night-mode:hover svg {
   fill: #adadad; }
 
+.ant-table-body table {
+  white-space: nowrap; }
+
 .ant-layout-content {
   padding: 0 50px;
   min-height: auto; }

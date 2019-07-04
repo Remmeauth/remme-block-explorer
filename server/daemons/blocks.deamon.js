@@ -37,3 +37,7 @@ export const startBlocksDeamon = async () => {
 export const getBlockList = () => {
   return BLOCK_LIST
 }
+
+export const getNewBlockList = () => {
+  return NEW_BLOCKS
+}

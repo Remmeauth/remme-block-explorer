@@ -50,10 +50,10 @@ class Home extends Component {
             <RemmeBlocks wait={600} data={data.blocks}/>
             <Row gutter={30}>
               <Col lg={24} xl={12}>
-                <RemmeTransactions wait={1500}/>
+                <RemmeTransactions data={data.transactions} wait={1500}/>
               </Col>
               <Col lg={24} xl={12}>
-                <RemmeTransactions wait={1800}/>
+                <RemmeTransactions data={data.transactions} wait={1800}/>
               </Col>
             </Row>
           </React.Fragment>
