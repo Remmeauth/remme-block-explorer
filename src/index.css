@@ -46,7 +46,7 @@ h1, h2, h3, h4 {
     float: left; }
 
 .content-wrap {
-  padding: 30px 0 80px;
+  padding: 30px 0 0;
   max-width: 1200px;
   margin: 0 auto; }
 
@@ -112,11 +112,20 @@ h1, h2, h3, h4 {
   .theme-dark .ant-layout-content {
     background: #383f48; }
 
-.theme-light .ant-layout-footer {
-  background: #fff; }
-
-.theme-dark .ant-layout-footer {
-  background: #383f48; }
+.ant-layout-footer {
+  padding: 24px 50px 50px;
+  text-align: center; }
+  .theme-light .ant-layout-footer {
+    background: #fff; }
+  .theme-dark .ant-layout-footer {
+    background: #383f48; }
+  .ant-layout-footer p {
+    font-weight: 600;
+    font-size: 14px; }
+    .theme-light .ant-layout-footer p {
+      color: #8e8ea8; }
+    .theme-dark .ant-layout-footer p {
+      color: #8b9296; }
 
 @media only screen and (max-width: 890px) {
   .ant-layout-header, .ant-layout-content, .ant-layout-footer {

@@ -8,11 +8,15 @@ export const sleep = (ms) => {
   })
 };
 
-export const api = (type, action, body) => {
+export const api = (method, type, action, body) => {
     return new Promise(function(resolve, reject) {
+
+      if (method == 'GET') {
+        console.log(nodeAddress + '/v1/'+ type +'/' + action);
+      };
       try {
         var options = {
-          method: 'POST',
+          method: method,
           url: nodeAddress + '/v1/'+ type +'/' + action,
           headers: {accept: 'application/json', 'content-type': 'application/json'},
           body: body

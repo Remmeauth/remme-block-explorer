@@ -4,6 +4,7 @@ import DayNightMode from "./DayNightMode";
 import RemmeCharts from "./RemmeCharts";
 import RemmeBlocks from "./RemmeBlocks";
 import RemmeTransactions from "./RemmeTransactions";
+import RemmeProducers from "./RemmeProducers";
 
 export {
   Navigation,
@@ -11,5 +12,6 @@ export {
   DayNightMode,
   RemmeCharts,
   RemmeBlocks,
-  RemmeTransactions
+  RemmeTransactions,
+  RemmeProducers
 };

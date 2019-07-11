@@ -2,6 +2,7 @@ import { sleep } from '../helpers'
 import { startBlocksDeamon, getBlockList } from './blocks.deamon.js'
 import { startMarketDeamon, getMarketChart } from './market.deamon.js'
 import { startTransactionsDeamon, getTransactionList } from './transactions.deamon.js'
+import { startProducersDeamon, getProducerList } from './producers.deamon.js'
 
 let infoData = {};
 
@@ -10,6 +11,7 @@ const prepareData = () => {
   infoData.totalBlocks = getBlockList()[0].block_num;
   infoData.producer = getBlockList()[0].producer;
   infoData.transactions = getTransactionList();
+  infoData.producers = getProducerList();
   infoData.blocks = getBlockList().map( (item) => {
     return {
       id: item.id,
@@ -29,6 +31,7 @@ export const startDaemons = async () => {
   await startBlocksDeamon();
   await startMarketDeamon();
   await startTransactionsDeamon();
+  await startProducersDeamon();
   prepareData();
   await sleep(1000);
   startDaemons();

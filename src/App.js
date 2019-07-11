@@ -6,7 +6,7 @@ import { Layout } from 'antd';
 import logo from './assets/logo.png';
 import { Navigation, DayNightMode } from './components'
 
-const { Header, Content } = Layout;
+const { Header, Content, Footer } = Layout;
 
 class App extends Component {
   render() {
@@ -28,6 +28,9 @@ class App extends Component {
             {this.props.children}
           </div>
         </Content>
+        <Footer>
+          <p>Powered by <b>Remme</b> © 2019<br/>Block Explorer and Analytics Platform for Remme blockchain</p>
+        </Footer>
       </Layout>
     );
   }

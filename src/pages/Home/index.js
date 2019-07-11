@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Spin, Icon  } from 'antd';
 
 import { backendAddress } from '../../config.js'
-import { RemmeCharts, RemmeBlocks, RemmeTransactions } from '../../components';
+import { RemmeCharts, RemmeBlocks, RemmeTransactions, RemmeProducers } from '../../components';
 
 const loadIcon = <Icon type="setting" rotate={180} style={{ fontSize: 24 }} spin />;
 
@@ -18,6 +18,7 @@ class Home extends Component {
     try {
       const response = await fetch( backendAddress + `/api/getInfo`);
       const json = await response.json();
+      console.log(json);
       if (!json.marketChart) { return false }
       this.setState({
         loading: false,
@@ -33,7 +34,7 @@ class Home extends Component {
 
   componentDidMount() {
     this.handleUpdate();
-    this.intervalID = setInterval(this.handleUpdate, 3000);
+    this.intervalID = setInterval(this.handleUpdate, 4000);
   }
 
   componentWillUnmount() {
@@ -53,7 +54,7 @@ class Home extends Component {
                 <RemmeTransactions data={data.transactions} wait={1500}/>
               </Col>
               <Col lg={24} xl={12}>
-                <RemmeTransactions data={data.transactions} wait={1800}/>
+                <RemmeProducers data={data.producers} wait={1800}/>
               </Col>
             </Row>
           </React.Fragment>
