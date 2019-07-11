@@ -150,7 +150,9 @@ h1, h2, h3, h4 {
       }
     }
   }
-
+  .anticon-menu svg {
+    @include customize(theme) { fill: getValue(textColor); }
+  }
   .day-night-mode {
     svg {
       @include customize(theme) { fill: getValue(textColor); }
@@ -274,6 +276,7 @@ h1, h2, h3, h4 {
 
     span {
       display: block;
+      white-space: nowrap;
       @include customize(theme) { color: getValue(titleText); }
       &.block-transactions {
           margin-bottom: 10px;

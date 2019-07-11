@@ -2,3 +2,17 @@
   height: 340px;
   overflow: hidden;
 }
+
+@media only screen and (max-width: 992px) {
+  .blocks-row {
+    height: 680px;
+    overflow: hidden;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .blocks-row {
+    height: 1360px;
+    overflow: hidden;
+  }
+}
