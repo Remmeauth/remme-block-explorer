@@ -110,10 +110,34 @@ h1, h2, h3, h4 {
     height: 100%;
 }
 
+.ant-collapse {
+  margin-bottom: 40px;
+  @include customize(theme) { background: getValue(cardBackground); }
+  border: 0;
+  .ant-collapse-content {
+    border-radius: 0;
+    @include customize(theme) {
+      background: getValue(cardBackground);
+      border-color: getValue(tableBorder);
+    }
+    .ant-collapse-content-box {
+      padding: 0;
+      .react-json-view {
+        padding: 20px;
+      }
+    }
+  }
+  .ant-collapse-header {
+    border-radius: 0;
+    font-weight: 600;
+    @include customize(theme) { color: getValue(titleText); }
+  }
+  .ant-collapse-item {border-bottom: 0;}
+}
+
 .header-wrap {
   max-width: 1200px;
   margin: 0 auto;
-
   .logo {
     width: 120px;
     margin: 16px 24px 16px 0;
@@ -182,7 +206,6 @@ h1, h2, h3, h4 {
   text-align: center;
   @include customize(theme) { background: getValue(bodyBackground);  }
   p {
-    font-weight: 600;
     font-size: 14px;
     @include customize(theme) { color: getValue(textColor); }
   }

@@ -32,24 +32,21 @@ class RemmeBlocks extends Component {
   add = () => {
     let { items } = this.state;
     const { data } = this.props;
-
     if (!items[0]) {
       this.setState({ items: data, type: 'left' });
       return false;
     }
-
     const firstBlock = data[0].block_num
     const lastBlock = items[0].block_num
-
     for ( var i = 0; i < (firstBlock - lastBlock); i++ ) {
         items.pop();
     }
     this.setState({ items, type: 'right' });
-
     setTimeout(
         function() {
           this.setState({ items: data, type: 'right' });
-        }.bind(this), 145 * (firstBlock - lastBlock));
+        }.bind(this), 145 * (firstBlock - lastBlock)
+    );
   }
 
   render() {
@@ -62,7 +59,7 @@ class RemmeBlocks extends Component {
             <QueueAnim type={this.state.type}>
               {this.state.items.map((item) =>
                 <Col className="gutter-row" sm={24} md={12} lg={6} key={item.block_num}>
-                  <Card className="block-item" title=<Link to="/block"><Icon type="code-sandbox" /> {item.block_num}</Link> bordered={true}>
+                  <Card className="block-item" title=<Link to={"/block/" + item.block_num}><Icon type="code-sandbox" /> {item.block_num}</Link> bordered={true}>
                     <span className="block-transactions">{item.transactions} Transactions</span>
                     <span className="block-producer">Producer: <Link to="/producer"><b>{item.producer}</b></Link></span>
                     <span className="block-time">{item.timestamp}</span>

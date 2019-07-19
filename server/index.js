@@ -4,6 +4,7 @@ import path from "path";
 import bodyParser from "body-parser";
 import cors from "cors";
 
+import { getBlock } from './actions'
 import { getInfo, startDaemons } from './daemons'
 
 const corsOptions = {
@@ -18,6 +19,12 @@ app.use(bodyParser.json());
 
 app.get('/api/getInfo', async (req, res) => {
   res.json(getInfo());
+});
+
+app.get('/api/getBlock/:id', async (req, res) => {
+  const responce = await getBlock(req.params.id);
+  console.log(responce);
+  res.json(responce);
 });
 
 app.listen(port, () => console.log('\x1b[34m%s\x1b[0m',`Blockexplorer backend is running on localhost:${port}`));
