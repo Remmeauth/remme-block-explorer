@@ -75,7 +75,7 @@ class Block extends Component {
           {
             key: '1',
             name: 'Producer',
-            value: json.producer
+            value: (<Link to={'/account/' + json.producer}>{json.producer}</Link>)
           },
           {
             key: '2',
@@ -157,7 +157,7 @@ class Block extends Component {
             error ? (<Result title={error} extra={ <Button type="primary" key="console"> Go Dashboard </Button> } />) : (
             <React.Fragment>
               <h4>Block: <span className="block-color">#{raw.block_num}</span></h4>
-              <Table className="block-info" dataSource={dataSource} columns={columns} pagination={false} />
+              <Table className="block-info details-info" dataSource={dataSource} columns={columns} pagination={false} />
               <Collapse className="block-raw" accordion defaultActiveKey={['1']}>
                <Panel header="Block Raw Data" key="1">
                  <ReactJson src={raw} collapsed={true} theme="ocean" />

@@ -48,3 +48,20 @@ export const coinmarketcap = () => {
       }
     });
 };
+
+export const producerInfo = (url) => {
+    return new Promise(function(resolve, reject) {
+      try {
+        var options = {
+          method: 'GET',
+          url: url,
+        };
+        request(options, function (error, response) {
+          if (error) reject(error);
+          resolve(response.body);
+        });
+      } catch (e) {
+        reject(e.message);
+      }
+    });
+};

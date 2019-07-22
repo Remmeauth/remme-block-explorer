@@ -61,7 +61,7 @@ class RemmeBlocks extends Component {
                 <Col className="gutter-row" sm={24} md={12} lg={6} key={item.block_num}>
                   <Card className="block-item" title=<Link to={"/block/" + item.block_num}><Icon type="code-sandbox" /> {item.block_num}</Link> bordered={true}>
                     <span className="block-transactions">{item.transactions} Transactions</span>
-                    <span className="block-producer">Producer: <Link to="/producer"><b>{item.producer}</b></Link></span>
+                    <span className="block-producer">Producer: <Link to={"/account/" + item.producer}><b>{item.producer}</b></Link></span>
                     <span className="block-time">{item.timestamp}</span>
                   </Card>
                 </Col>

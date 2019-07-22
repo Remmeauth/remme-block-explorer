@@ -4,7 +4,7 @@ import path from "path";
 import bodyParser from "body-parser";
 import cors from "cors";
 
-import { getBlock, getTransaction } from './actions'
+import { getBlock, getTransaction, getProducer } from './actions'
 import { getInfo, startDaemons } from './daemons'
 
 const corsOptions = {
@@ -28,7 +28,11 @@ app.get('/api/getBlock/:id', async (req, res) => {
 
 app.get('/api/getTransaction/:id', async (req, res) => {
   const responce = await getTransaction(req.params.id);
-  console.log(responce);
+  res.json(responce);
+});
+
+app.get('/api/getProducer/:id', async (req, res) => {
+  const responce = await getProducer(req.params.id);
   res.json(responce);
 });
 
@@ -41,32 +45,3 @@ const sleep = (ms) => {
 };
 
 startDaemons();
-
-// var request = require("request");
-//
-// var options = {
-//   method: 'POST',
-//   url: 'https://eos.greymass.com/v1/chain/get_info',
-//   headers: {accept: 'application/json', 'content-type': 'application/json'},
-// };
-//
-// request(options, function (error, response, body) {
-//   if (error) throw new Error(error);
-//
-//   console.log(body);
-// });
-
-// var request = require("request");
-//
-// var options = {
-//   method: 'POST',
-//   url: 'https://eos.greymass.com/v1/history/get_actions',
-//   headers: {'content-type': 'application/json'},
-//   body: '{"pos":"-1", "offset":"-20"}'
-// };
-//
-// request(options, function (error, response, body) {
-//   if (error) throw new Error(error);
-//
-//   console.log(body);
-// });

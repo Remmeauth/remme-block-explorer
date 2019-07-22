@@ -18,6 +18,7 @@ class Home extends Component {
     try {
       const response = await fetch( backendAddress + `/api/getInfo`);
       const json = await response.json();
+      console.log(json);
       if (!json.marketChart) { return false }
       this.setState({
         loading: false,

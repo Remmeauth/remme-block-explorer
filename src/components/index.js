@@ -5,6 +5,7 @@ import RemmeCharts from "./RemmeCharts";
 import RemmeBlocks from "./RemmeBlocks";
 import RemmeTransactions from "./RemmeTransactions";
 import RemmeProducers from "./RemmeProducers";
+import MapContainer from "./MapContainer";
 
 export {
   Navigation,
@@ -13,5 +14,6 @@ export {
   RemmeCharts,
   RemmeBlocks,
   RemmeTransactions,
-  RemmeProducers
+  RemmeProducers,
+  MapContainer
 };
