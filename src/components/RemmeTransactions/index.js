@@ -55,9 +55,8 @@ class RemmeTransactions extends Component {
                           <tbody className="ant-table-tbody">
                             {data.map((item) =>
                               <tr className="ant-table-row ant-table-row-level-0" key={item.trx.id} data-row-key={item.trx.id}>
-                                 <td className=""><span className="ant-table-row-indent indent-level-0" ></span><Link to="/about">{item.trx.id.substring(0,10)}...</Link></td>
+                                 <td className=""><span className="ant-table-row-indent indent-level-0" ></span><Link to={"/transaction/" + item.trx.id} >{item.trx.id.substring(0,10)}...</Link></td>
                                  <td className=""><Tag color="#ef534f">{item.trx.transaction.actions[0].name}</Tag></td>
-
                                  <td className="">{JSON.stringify(item.trx.transaction.actions[0].data).substring(0,40)}</td>
                               </tr>
                             )}

@@ -4,7 +4,7 @@ import path from "path";
 import bodyParser from "body-parser";
 import cors from "cors";
 
-import { getBlock } from './actions'
+import { getBlock, getTransaction } from './actions'
 import { getInfo, startDaemons } from './daemons'
 
 const corsOptions = {
@@ -23,6 +23,11 @@ app.get('/api/getInfo', async (req, res) => {
 
 app.get('/api/getBlock/:id', async (req, res) => {
   const responce = await getBlock(req.params.id);
+  res.json(responce);
+});
+
+app.get('/api/getTransaction/:id', async (req, res) => {
+  const responce = await getTransaction(req.params.id);
   console.log(responce);
   res.json(responce);
 });

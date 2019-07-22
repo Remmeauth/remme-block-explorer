@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import { Table, Collapse, Spin, Icon, Result, Button } from 'antd';
+import { Table, Collapse, Spin, Icon, Result, Button, Tag } from 'antd';
 import ReactJson from 'react-json-view'
 
 import { backendAddress } from '../../config.js'
@@ -123,13 +123,12 @@ class Block extends Component {
             cpu_usage_us: item["cpu_usage_us"],
             net_usage_words: item["net_usage_words"],
             status: item["status"],
-            actions: item["trx"]["transaction"]["actions"].map(action => { return action["name"] }),
+            actions: item["trx"]["transaction"]["actions"].map(action =>  (<Tag color="#ef534f">volcano{action["name"]}</Tag>)),
           }
         })
       });
     } catch (error) {
       this.setState({
-        data: {},
         error: "Unknown Block",
         loading: false
       });
@@ -138,7 +137,6 @@ class Block extends Component {
 
   forceUpdate = () => {
     this.setState({
-      data: {},
       error: false,
       loading: true
     }, () => {
@@ -158,14 +156,14 @@ class Block extends Component {
           loading ? (<div className="preload-block"><Spin indicator={loadIcon} /></div>) :
             error ? (<Result title={error} extra={ <Button type="primary" key="console"> Go Dashboard </Button> } />) : (
             <React.Fragment>
-              <h4>Block #{raw.block_num}</h4>
+              <h4>Block: <span className="block-color">#{raw.block_num}</span></h4>
               <Table className="block-info" dataSource={dataSource} columns={columns} pagination={false} />
-              <Collapse className="block-raw" accordion>
+              <Collapse className="block-raw" accordion defaultActiveKey={['1']}>
                <Panel header="Block Raw Data" key="1">
-                 <ReactJson src={raw} collapsed={true} theme="monokai" />
+                 <ReactJson src={raw} collapsed={true} theme="ocean" />
                </Panel>
              </Collapse>
-             <h4>Transactions </h4>
+             <h4>Transactions:</h4>
              <Table className="block-transactions" dataSource={dataSourceTx} columns={columnsTx} pagination={false} />
             </React.Fragment>
           )

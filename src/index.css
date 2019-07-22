@@ -23,6 +23,20 @@ h3 {
 h4 {
   font-size: 24px; }
 
+.theme-light .transition-color, .theme-light
+.block-color, .theme-light
+.account-color, .theme-light
+.producer-color {
+  color: #8e8ea8;
+  font-weight: 500; }
+
+.theme-dark .transition-color, .theme-dark
+.block-color, .theme-dark
+.account-color, .theme-dark
+.producer-color {
+  color: #8b9296;
+  font-weight: 500; }
+
 h1, h2, h3, h4 {
   font-weight: 700;
   letter-spacing: -.02em;
@@ -38,12 +52,17 @@ h1, h2, h3, h4 {
   height: 100%; }
 
 .ant-collapse {
-  margin-bottom: 40px;
-  border: 0; }
+  margin-bottom: 30px;
+  border: 0;
+  border-radius: 0; }
   .theme-light .ant-collapse {
     background: #ffffff; }
   .theme-dark .ant-collapse {
     background: #272c33; }
+  .theme-light .ant-collapse {
+    border-bottom: solid 1px #e7e7f3; }
+  .theme-dark .ant-collapse {
+    border-bottom: solid 1px #323840; }
   .ant-collapse .ant-collapse-content {
     border-radius: 0; }
     .theme-light .ant-collapse .ant-collapse-content {
@@ -138,6 +157,9 @@ h1, h2, h3, h4 {
 
 .ant-table-body table {
   white-space: nowrap; }
+
+.ant-table-content {
+  overflow: hidden; }
 
 .ant-layout-content {
   padding: 0 50px;

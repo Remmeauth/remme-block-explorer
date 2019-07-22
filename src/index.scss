@@ -96,9 +96,14 @@ h4 {
   font-size: 24px;
 }
 
+.transition-color,
+.block-color,
+.account-color,
+.producer-color { @include customize(theme) { color: getValue(textColor);  font-weight: 500 }}
+
 
 h1, h2, h3, h4 {
-  @include customize(theme) { color: getValue(titleText); }
+  @include customize(theme) { color: getValue(titleText);}
   font-weight: 700;
   letter-spacing: -.02em;
   margin-bottom: 15px;
@@ -111,9 +116,11 @@ h1, h2, h3, h4 {
 }
 
 .ant-collapse {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   @include customize(theme) { background: getValue(cardBackground); }
   border: 0;
+  border-radius: 0;
+  @include customize(theme) { border-bottom: solid 1px getValue(tableBorder); }
   .ant-collapse-content {
     border-radius: 0;
     @include customize(theme) {
@@ -193,6 +200,10 @@ h1, h2, h3, h4 {
   table {
     white-space: nowrap;
   }
+}
+
+.ant-table-content {
+  overflow: hidden;
 }
 
 .ant-layout-content {
