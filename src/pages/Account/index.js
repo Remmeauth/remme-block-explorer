@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Spin, Icon, Result, Row, Col, Card, Button } from 'antd';
+import { Table, Icon, Result, Row, Col, Card, Button } from 'antd';
 import { Pie } from 'ant-design-pro/lib/Charts';
 import Moment from 'react-moment';
-
 import QueueAnim from 'rc-queue-anim';
 
 import { backendAddress, coin, dateFormat } from '../../config.js'
-
-import { MapContainer } from '../../components'
+import { MapContainer, RemmeSpin } from '../../components'
 
 import './style.css'
-
-const loadIcon = <Icon type="setting" rotate={180} style={{ fontSize: 24 }} spin />;
-const updating = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 const gridStyle = {
   width: '100%',
@@ -36,48 +31,6 @@ const columns = [
 class Account extends Component {
   state = {
     loading: true
-  }
-
-  handleProducerInfo = async () => {
-    try {
-      this.setState({
-        error: false,
-        loading: false,
-        producerDataSource: [
-          {
-            key: '1',
-            name: 'Position',
-            value: "# 1"
-          },
-          {
-            key: '2',
-            name: 'Votes',
-            value: "12512166123"
-          },
-          {
-            key: '4',
-            name: 'Public Key',
-            value: "EOS8MpYyXwn3DLqk9Y9XTHYcd6wGGijNqJefFoQEwEoXTq1awZ42w"
-          },
-          {
-            key: '5',
-            name: 'Location',
-            value: "CN, HK, China"
-          },
-          {
-            key: '6',
-            name: 'Links',
-            value: 'links'
-          }
-        ],
-      });
-    } catch (error) {
-      console.log(error.message);
-      this.setState({
-        error: "Unknown Producer",
-        loading: false
-      });
-    }
   }
 
   handleAccountInfo = async () => {
@@ -105,12 +58,12 @@ class Account extends Component {
             {
               key: '2',
               name: 'Total Balance',
-              value: `${json.balance.total_balance} ${coin}`
+              value: (<b>{json.balance.total_balance} {coin}</b>)
             },
             {
               key: '8',
               name: 'Total USD Value :',
-              value: `${json.balance.total_usd_value} $`
+              value: (<b>{json.balance.total_usd_value} $</b>)
             },
             {
               key: '4',
@@ -170,11 +123,11 @@ class Account extends Component {
 
 
   render() {
-    const { accountDataSource, producerDataSource, raw, loading, error } = this.state;
+    const { accountDataSource, raw, loading, error } = this.state;
     return (
       <React.Fragment>
-        { loading ? (<div className="preload-block"><Spin indicator={loadIcon} /></div>) :
-            error ? (<Result title={error} extra={ <Button type="primary" key="console"> Go Dashboard </Button> } />) : (
+        { loading ? (<RemmeSpin/>) :
+            error ? (<Result title={error} extra={ <Link to="/"><Button type="primary" key="console"> Go Dashboard </Button></Link> } />) : (
             <React.Fragment>
 
               <QueueAnim delay={300} interval={300} type="right" component={Row} gutter={30}>

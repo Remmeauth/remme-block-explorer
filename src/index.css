@@ -33,6 +33,9 @@ h6 {
   text-align: center;
   margin-bottom: 5px; }
 
+b, strong {
+  font-weight: 600; }
+
 .theme-light .transition-color, .theme-light
 .block-color, .theme-light
 .account-color, .theme-light
@@ -236,13 +239,48 @@ h1, h2, h3, h4, h5 {
   -moz-box-shadow: 1px 0 0 0 #323840, 0 1px 0 0 #323840, 1px 1px 0 0 #323840, 1px 0 0 0 #323840 inset, 0 1px 0 0 #323840 inset;
   box-shadow: 1px 0 0 0 #323840, 0 1px 0 0 #323840, 1px 1px 0 0 #323840, 1px 0 0 0 #323840 inset, 0 1px 0 0 #323840 inset; }
 
-.theme-light 1px 0 0 0 #e8e8e8, .theme-light 0 1px 0 0 #e8e8e8, .theme-light 1px 1px 0 0 #e8e8e8, .theme-light 1px 0 0 0 #e8e8e8 inset, .theme-light 0 1px 0 0 #e8e8e8 inset
-.antd-pro-number-info-numberInfo .antd-pro-number-info-numberInfoSubTitle, .theme-light
+.theme-light .ant-result {
+  background: #ffffff;
+  border-color: #e7e7f3; }
+
+.theme-dark .ant-result {
+  background: #272c33;
+  border-color: #272c33; }
+
+.theme-light .ant-result .ant-result-title {
+  color: #343747; }
+
+.theme-dark .ant-result .ant-result-title {
+  color: #ffffff; }
+
+.theme-light .ant-result .ant-result-icon i {
+  color: #364FCC; }
+
+.theme-dark .ant-result .ant-result-icon i {
+  color: #398bf7; }
+
+.ant-btn {
+  min-width: 110px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 4px;
+  height: 38px; }
+  .ant-btn:hover {
+    opacity: 0.9; }
+
+.theme-light .ant-btn-primary {
+  background: #364FCC;
+  border-color: #364FCC; }
+
+.theme-dark .ant-btn-primary {
+  background: #398bf7;
+  border-color: #398bf7; }
+
+.theme-light .antd-pro-number-info-numberInfo .antd-pro-number-info-numberInfoSubTitle, .theme-light
 .antd-pro-charts-chart-card-chartCard .antd-pro-charts-chart-card-meta {
   color: #8e8ea8; }
 
-.theme-dark 1px 0 0 0 #e8e8e8, .theme-dark 0 1px 0 0 #e8e8e8, .theme-dark 1px 1px 0 0 #e8e8e8, .theme-dark 1px 0 0 0 #e8e8e8 inset, .theme-dark 0 1px 0 0 #e8e8e8 inset
-.antd-pro-number-info-numberInfo .antd-pro-number-info-numberInfoSubTitle, .theme-dark
+.theme-dark .antd-pro-number-info-numberInfo .antd-pro-number-info-numberInfoSubTitle, .theme-dark
 .antd-pro-charts-chart-card-chartCard .antd-pro-charts-chart-card-meta {
   color: #8b9296; }
 

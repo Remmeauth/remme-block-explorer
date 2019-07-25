@@ -56,15 +56,10 @@ const calcBalance = (account, balance) => {
     const total_resources = Number(account.total_resources.cpu_weight.split(' ')[0]) + Number(account.total_resources.net_weight.split(' ')[0]);
     const self_delegated_bandwidth = account.self_delegated_bandwidth ? (Number(account.self_delegated_bandwidth.cpu_weight.split(' ')[0]) + Number(account.self_delegated_bandwidth.net_weight.split(' ')[0])) : accInfo.staked;
     accInfo.staked_by_others = round(total_resources - self_delegated_bandwidth, 4)
-    console.log("start");
-    console.log(total_resources);
-    console.log(self_delegated_bandwidth);
-    console.log(total_resources - self_delegated_bandwidth);
-    console.log("staked:", accInfo.staked);
     accInfo.total_balance = round(accInfo.unstaked + accInfo.staked, 4)
     return accInfo;
   } catch (e) {
-    console.log(e);
+    console.log(e.message);
     return accInfo
   }
 }
@@ -80,7 +75,6 @@ export const getAccount = async (id) => {
     accountInfo.balance = calcBalance(accountInfo.account, balanceInfo);
     accountInfo.balance.total_usd_value = (accountInfo.balance.total_balance * accountInfo.marketChart.prices[0].y).toFixed(2)
     //accountInfo.actions = actionsInfo;
-
     for (var i = 0; i < chainInfo.producers.length; i++){
       if (chainInfo.producers[i].owner === accountInfo.account.account_name){
          accountInfo.producer = chainInfo.producers[i];
@@ -89,7 +83,7 @@ export const getAccount = async (id) => {
     }
     return accountInfo
   } catch (e) {
-    console.log(e);
-    return e
+    console.log(e.message);
+    return {}
   }
 }

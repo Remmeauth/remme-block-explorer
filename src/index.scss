@@ -108,6 +108,10 @@ h6 {
   margin-bottom: 5px;
 }
 
+b, strong {
+    font-weight: 600;
+}
+
 .transition-color,
 .block-color,
 .account-color,
@@ -276,8 +280,40 @@ h6 {
   }
 }
 
-1px 0 0 0 #e8e8e8, 0 1px 0 0 #e8e8e8, 1px 1px 0 0 #e8e8e8, 1px 0 0 0 #e8e8e8 inset, 0 1px 0 0 #e8e8e8 inset
+.ant-result {
+  @include customize(theme) {
+    background: getValue(cardBackground);
+    border-color: getValue(cardBorder);
+  }
+  .ant-result-title {
+    @include customize(theme) {
+      color: getValue(titleText);
+    }
+  }
+  .ant-result-icon i {
+    @include customize(theme) {
+      color: getValue(textColorDark);
+    }
+  }
+}
 
+.ant-btn {
+  min-width: 110px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 4px;
+  height: 38px;
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.ant-btn-primary {
+  @include customize(theme) {
+    background: getValue(textColorDark);
+    border-color: getValue(textColorDark);
+  }
+}
 
 .antd-pro-number-info-numberInfo .antd-pro-number-info-numberInfoSubTitle,
 .antd-pro-charts-chart-card-chartCard .antd-pro-charts-chart-card-meta {

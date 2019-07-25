@@ -6,6 +6,7 @@ import RemmeBlocks from "./RemmeBlocks";
 import RemmeTransactions from "./RemmeTransactions";
 import RemmeProducers from "./RemmeProducers";
 import MapContainer from "./MapContainer";
+import RemmeSpin from "./RemmeSpin";
 
 export {
   Navigation,
@@ -15,5 +16,6 @@ export {
   RemmeBlocks,
   RemmeTransactions,
   RemmeProducers,
-  MapContainer
+  MapContainer,
+  RemmeSpin
 };

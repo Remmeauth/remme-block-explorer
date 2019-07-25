@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { Table, Collapse, Spin, Icon, Result, Button } from 'antd';
 import ReactJson from 'react-json-view'
+import Moment from 'react-moment';
 
-import { backendAddress } from '../../config.js'
+import { backendAddress, dateFormat } from '../../config.js'
 
 import './style.css'
 
@@ -51,7 +52,7 @@ class Transaction extends Component {
           {
             key: '3',
             name: 'Block Time',
-            value: json.block_time
+            value: <Moment format={dateFormat}>{json.block_time}</Moment>
           },
           {
             key: '4',

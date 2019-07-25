@@ -23,8 +23,8 @@ class RemmeProducers extends Component {
     const { data } = this.props;
     return (
       <React.Fragment>
-        <h4>Producers</h4>
         { show && <QueueAnim type="right">
+        <h4>Producers</h4>
         <div key="1" className="ant-table-wrapper">
          <div className="ant-spin-nested-loading">
             <div className="ant-spin-container">

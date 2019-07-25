@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { Table, Collapse, Spin, Icon, Result, Button, Tag } from 'antd';
 import ReactJson from 'react-json-view'
+import Moment from 'react-moment';
 
-import { backendAddress } from '../../config.js'
+import { backendAddress, dateFormat } from '../../config.js'
 
 import './style.css'
 
@@ -105,7 +106,7 @@ class Block extends Component {
           {
             key: '7',
             name: 'Time',
-            value: json.timestamp
+            value: <Moment format={dateFormat}>{json.timestamp}</Moment>
           },
           {
             key: '8',
