@@ -10,11 +10,6 @@ import {
 import geoData from "../../assets/world.json";
 import ReactTooltip from "react-tooltip";
 
-const wrapperStyles = {
-  width: "100%",
-  maxWidth: 980,
-  margin: "0 auto"
-};
 
 const markers = [
   {
@@ -59,13 +54,13 @@ class SimpleMarkers extends Component {
                         outline: "none"
                       },
                       hover: {
-                        fill: "#CFD8DC",
+                        fill: "#f9b22b",
                         stroke: "#607D8B",
                         strokeWidth: 0.75,
                         outline: "none"
                       },
                       pressed: {
-                        fill: "#FF5722",
+                        fill: "#f9b22b",
                         stroke: "#607D8B",
                         strokeWidth: 0.75,
                         outline: "none"
@@ -80,24 +75,20 @@ class SimpleMarkers extends Component {
                 <Marker
                   key={i}
                   marker={marker}
-                  //data-tip={"ciao"}
-                  //data-for='test'
-                  //onClick={this.handleClick}
                   style={{
                     default: { fill: "#00AAFF" },
                     hover: { fill: "#FFFFFF" },
-                    pressed: { fill: "#00AAFF" }
+                    pressed: { fill: "#ffffff" }
                   }}
                 >
                   <circle
                     data-tip={marker.name}
-                    data-event="click"
                     cx={0}
                     cy={0}
                     r={5}
                     style={{
-                      fill:"#FF5722",
-                      stroke:"#DF3702"
+                      fill:"#398bf7",
+                      stroke:"#398bf7"
                     }}
                   />
                 </Marker>

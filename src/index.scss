@@ -96,18 +96,36 @@ h4 {
   font-size: 24px;
 }
 
+h5 {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+h6 {
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
 .transition-color,
 .block-color,
 .account-color,
 .producer-color { @include customize(theme) { color: getValue(textColor);  font-weight: 500 }}
 
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5 {
   @include customize(theme) { color: getValue(titleText);}
   font-weight: 700;
   letter-spacing: -.02em;
   margin-bottom: 15px;
 }
+
+h6 {
+  @include customize(theme) { color: getValue(titleText);}
+}
+
+.align-center { text-align: center;}
 
 .ant-layout {
     position: absolute;
@@ -250,6 +268,17 @@ h1, h2, h3, h4 {
   }
 }
 
+.ant-card-grid {
+  @include customize(theme) {
+    -webkit-box-shadow: 1px 0 0 0 getValue(tableBorder), 0 1px 0 0 getValue(tableBorder), 1px 1px 0 0 getValue(tableBorder), 1px 0 0 0 getValue(tableBorder) inset, 0 1px 0 0 getValue(tableBorder) inset;
+    -moz-box-shadow: 1px 0 0 0 getValue(tableBorder), 0 1px 0 0 getValue(tableBorder), 1px 1px 0 0 getValue(tableBorder), 1px 0 0 0 getValue(tableBorder) inset, 0 1px 0 0 getValue(tableBorder) inset;
+    box-shadow: 1px 0 0 0 getValue(tableBorder), 0 1px 0 0 getValue(tableBorder), 1px 1px 0 0 getValue(tableBorder), 1px 0 0 0 getValue(tableBorder) inset, 0 1px 0 0 getValue(tableBorder) inset;
+  }
+}
+
+1px 0 0 0 #e8e8e8, 0 1px 0 0 #e8e8e8, 1px 1px 0 0 #e8e8e8, 1px 0 0 0 #e8e8e8 inset, 0 1px 0 0 #e8e8e8 inset
+
+
 .antd-pro-number-info-numberInfo .antd-pro-number-info-numberInfoSubTitle,
 .antd-pro-charts-chart-card-chartCard .antd-pro-charts-chart-card-meta {
   @include customize(theme) { color: getValue(textColor); }
@@ -295,31 +324,41 @@ h1, h2, h3, h4 {
   }
 }
 
-.block-item {
-  .ant-card-head {
-    padding: 0px 20px;
-    min-height: 30px;
-    font-size: $base-size;
-    font-weight: 700;
+.ant-card-head {
+  padding: 0px 20px;
+  min-height: 30px;
+  font-size: $base-size;
+  @include customize(theme) {
+    background: getValue(cardBackground);
+    border-color: getValue(tableBorder);
+  }
+  .ant-card-head-title {
+    padding: 16px 0;
     @include customize(theme) {
-      background: getValue(cardBackground);
-      border-color: getValue(tableBorder);
-    }
-    .ant-card-head-title {
-      padding: 10px 0;
+      color: getValue(titleText);
     }
   }
-  .ant-card-body {
-    padding: 10px 25px;
+}
+.ant-card-body {
+  padding: 10px 25px;
 
-    span {
-      display: block;
-      white-space: nowrap;
-      @include customize(theme) { color: getValue(titleText); }
-      &.block-transactions {
-          margin-bottom: 10px;
-          @include customize(theme) { color: getValue(textColor); }
-      }
+  span {
+    display: block;
+    white-space: nowrap;
+    @include customize(theme) { color: getValue(titleText); }
+    &.block-transactions {
+        margin-bottom: 10px;
+        @include customize(theme) { color: getValue(textColor); }
     }
   }
+}
+
+.pie-sub-title {
+    margin-bottom: 0 !important;
+    font-weight: 700 !important;
+}
+
+
+.antd-pro-charts-pie-pie .antd-pro-charts-pie-total > h4 {
+  @include customize(theme) { color: getValue(titleText);}
 }

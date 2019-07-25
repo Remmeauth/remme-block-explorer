@@ -5,7 +5,7 @@ import App from '../App';
 import Home from '../pages/Home';
 import Block from '../pages/Block';
 import Transaction from '../pages/Transaction';
-import Producer from '../pages/Producer';
+import Account from '../pages/Account';
 
 export default () => (
   <Router>
@@ -14,7 +14,7 @@ export default () => (
         <Route exact path="/" component={Home} />
         <Route exact path="/block/:id" component={Block} />
         <Route exact path="/transaction/:id" component={Transaction} />
-        <Route exact path="/account/:id" component={Producer} />
+        <Route exact path="/account/:id" component={Account} />
       </Switch>
     </App>
   </Router>
