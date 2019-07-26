@@ -21,12 +21,22 @@ export const getTransaction = async (id) => {
   }
 }
 
+export const getActions = async (id) => {
+  try {
+    const chainInfo = JSON.parse(await api('POST','history', 'get_actions', '{"pos":"-1","offset":"-50","account_name":"'+id+'"}'));
+    return chainInfo
+  } catch (e) {
+    console.log(e.message);
+  }
+}
+
 export const getProducer = async (url) => {
   try {
     const bp = JSON.parse(await producerInfo(url + "/bp.json"));
     return bp;
   } catch (e) {
-    return e
+    console.log(e);
+    return {}
   }
 }
 
@@ -81,6 +91,10 @@ export const getAccount = async (id) => {
          accountInfo.producer.position = i+1;
       }
     }
+    if (accountInfo.producer) {
+      accountInfo.producer.bp = await getProducer(accountInfo.producer.url);
+    }
+
     return accountInfo
   } catch (e) {
     console.log(e.message);

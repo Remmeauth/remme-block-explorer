@@ -25,7 +25,6 @@ h4 {
 
 h5 {
   font-size: 16px;
-  text-align: center;
   margin-bottom: 0; }
 
 h6 {
@@ -72,6 +71,11 @@ h1, h2, h3, h4, h5 {
   position: absolute;
   width: 100%;
   height: 100%; }
+
+.ant-tag {
+  min-width: 80px;
+  text-align: center;
+  font-weight: 600; }
 
 .ant-collapse {
   margin-bottom: 30px;
@@ -363,6 +367,11 @@ h1, h2, h3, h4, h5 {
         color: #8e8ea8; }
       .theme-dark .ant-card-body span.block-transactions {
         color: #8b9296; }
+
+.producer-links a {
+  margin-right: 5px; }
+  .producer-links a:hover {
+    opacity: 0.8; }
 
 .pie-sub-title {
   margin-bottom: 0 !important;

@@ -11,21 +11,29 @@ import geoData from "../../assets/world.json";
 import ReactTooltip from "react-tooltip";
 
 
-const markers = [
-  {
-    name: "HK, China",
-    coordinates: [114.173351, 22.304807],
-  }
-];
-
 class SimpleMarkers extends Component {
-  handleClick(marker, evt) {
-    console.log("Marker data: ", marker);
+
+  state = {markers: []};
+
+  componentDidMount() {
+    const {data} = this.props;
+
+    const markers = data.producer.bp.nodes.map((item) => {
+      return {
+        name: item.location.name + '(' + item.location.country +')',
+        coordinates: [item.location.longitude, item.location.latitude]
+      }
+    })
+    this.setState({
+      markers: markers
+    })
   }
 
   render() {
+    const {markers} = this.state;
     return (
       <div>
+        <h4>Nodes location:</h4>
         <ComposableMap
           projectionConfig={{
             scale: 205,
@@ -85,7 +93,7 @@ class SimpleMarkers extends Component {
                     data-tip={marker.name}
                     cx={0}
                     cy={0}
-                    r={5}
+                    r={10}
                     style={{
                       fill:"#398bf7",
                       stroke:"#398bf7"

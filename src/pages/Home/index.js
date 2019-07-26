@@ -34,7 +34,7 @@ class Home extends Component {
 
   componentDidMount() {
     this.handleUpdate();
-    this.intervalID = setInterval(this.handleUpdate, 400000);
+    this.intervalID = setInterval(this.handleUpdate, 4000);
   }
 
   componentWillUnmount() {

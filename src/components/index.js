@@ -7,6 +7,11 @@ import RemmeTransactions from "./RemmeTransactions";
 import RemmeProducers from "./RemmeProducers";
 import MapContainer from "./MapContainer";
 import RemmeSpin from "./RemmeSpin";
+import RemmeResult from "./RemmeResult";
+import RemmeAccountInfo from "./RemmeAccountInfo";
+import RemmeResourcesInfo from "./RemmeResourcesInfo";
+import RemmeProducerInfo from "./RemmeProducerInfo";
+import RemmeAccountTxInfo from "./RemmeAccountTxInfo";
 
 export {
   Navigation,
@@ -17,5 +22,10 @@ export {
   RemmeTransactions,
   RemmeProducers,
   MapContainer,
-  RemmeSpin
+  RemmeSpin,
+  RemmeResult,
+  RemmeAccountInfo,
+  RemmeResourcesInfo,
+  RemmeProducerInfo,
+  RemmeAccountTxInfo
 };

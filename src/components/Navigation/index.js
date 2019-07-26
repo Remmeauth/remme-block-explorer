@@ -35,8 +35,8 @@ const NavigationItems = [
   //   key: 4,
   // },
   {
-    title: 'Producers',
-    link: '/producers',
+    title: 'Swap',
+    link: '/swap',
     icon: 'team',
     type: 'simple',
     key: 5,
