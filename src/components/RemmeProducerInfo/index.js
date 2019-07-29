@@ -86,7 +86,30 @@ class RemmeProducerInfo extends Component {
         });
     } catch (e) {
       console.log(e);
+      const accountDataSource = [
+          {
+            key: '0',
+            name: 'Status',
+            value: data.producer.is_active ? <Tag color="#4cd79c">Active</Tag> : <Tag color="#ef534f">Not active</Tag>
+          },
+          {
+            key: '1',
+            name: 'Position',
+            value: `# ${data.producer.position}`
+          },
+          {
+            key: '2',
+            name: 'Votes',
+            value:  `${data.producer.total_votes}`
+          },
+          {
+            key: '4',
+            name: 'Public Key',
+            value: `${data.producer.producer_key}`
+          }
+        ]
       this.setState({
+        producerDataSource: accountDataSource,
         error: true
       });
     }
@@ -99,14 +122,17 @@ class RemmeProducerInfo extends Component {
       <React.Fragment>
         <h4>Producer info:</h4>
         { error ?
-
-          <Result
-            status="warning"
-            title="There are some problems with bp.json of the Block Producer."
-            extra={
-              <SmartLink link="https://github.com/eosrio/bp-info-standard">BP Information Standard</SmartLink>
-            }
-          /> :
+              <div>
+                <Table className="producer-info details-info" dataSource={producerDataSource} columns={columns} pagination={false} />
+                <Result
+                  status="warning"
+                  title="There are some problems with bp.json of the Block Producer."
+                  extra={
+                    <SmartLink link="https://github.com/eosrio/bp-info-standard">BP Information Standard</SmartLink>
+                  }
+                />
+              </div>
+             :
           <Table className="producer-info details-info" dataSource={producerDataSource} columns={columns} pagination={false} />
         }
       </React.Fragment>

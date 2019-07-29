@@ -48,7 +48,7 @@ class RemmeCharts extends Component {
 
   render() {
     const {show} = this.state
-    const { totalBlocks, producer, marketChart } = this.props.data
+    const { totalBlocks, producer, marketChart, producers } = this.props.data
 
     return (
       <React.Fragment>
@@ -63,7 +63,7 @@ class RemmeCharts extends Component {
             { show &&
               <QueueAnim type="right"  >
                 <BlockInfoComponent icon="code-sandbox" title="Total Blocks" value={totalBlocks} color="#f9b22b" key='1'/>
-                <BlockInfoComponent icon="user" title="Total Accounts" value="-" color="#56c0d8" key='2'/>
+                <BlockInfoComponent icon="user" title="Total Producers" value={producers.length} color="#56c0d8" key='2'/>
               </QueueAnim>
             }
           </Col>

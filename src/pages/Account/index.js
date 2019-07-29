@@ -84,7 +84,7 @@ class Account extends Component {
                 </Col>
               </QueueAnim> }
 
-              <QueueAnim delay={1200} interval={300} type="right" component={Collapse} gutter={30} >
+              <QueueAnim delay={1200} interval={300} type="right"  >
                 <Collapse className="account-raw" accordion defaultActiveKey={['3']} key='1'>
                  <Panel header="Account Raw Data" key="1">
                    <ReactJson src={raw.account} collapsed={2} theme="ocean" />
