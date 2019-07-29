@@ -9,6 +9,7 @@ REMME Block Explorer is an open source web tool that allows to view information 
 ## Get started
 
 1. Create config.js file in the project directory (see config.example.js).
+
 2. Run frontend in the development mode:
 
 ### `npm start`
@@ -21,9 +22,6 @@ You will also see any lint errors in the console.
 
 ### `npm run server`
 
-In the project directory, you can run:
-
-### `npm start`
 
 4. Builds the app for production to the `build` folder.
 
