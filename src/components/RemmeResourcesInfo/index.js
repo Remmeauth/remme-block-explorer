@@ -21,6 +21,16 @@ class RemmeResourcesInfo extends Component {
     return value;
   }
 
+  formatBytes = (bytes, decimals) => {
+    if(bytes == 0) return '0 B';
+    var k = 1024,
+        dm = decimals <= 0 ? 0 : decimals || 2,
+        sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+        i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+
+
   render() {
     const { data } = this.props;
     return (
@@ -30,9 +40,9 @@ class RemmeResourcesInfo extends Component {
           <Card.Grid style={gridStyle}>
             <h5>Used:</h5>
             <Row gutter={10}>
-              <Col sm={24} md={8}><Pie percent={this.percent(data.account.ram_usage / data.account.ram_quota * 100)} color="#398bf7" animate={true} subTitle="RAM" total={this.total(data.account.ram_usage / data.account.ram_quota * 100).toFixed(2) + "%"} height={140} /><p className="align-center">{ this.total(data.account.ram_usage / 1024).toFixed(2) } kb / { (data.account.ram_quota / 1024).toFixed(2) } kb</p></Col>
+              <Col sm={24} md={8}><Pie percent={this.percent(data.account.ram_usage / data.account.ram_quota * 100)} color="#398bf7" animate={true} subTitle="RAM" total={this.total(data.account.ram_usage / data.account.ram_quota * 100).toFixed(2) + "%"} height={140} /><p className="align-center">{ this.formatBytes(data.account.ram_usage / 1024)} / { this.formatBytes(data.account.ram_quota) } kb</p></Col>
               <Col sm={24} md={8}><Pie percent={this.percent(data.account.cpu_limit.used / data.account.cpu_limit.max * 100)} color="#725af2" animate={true} subTitle="CPU" total={this.total(data.account.cpu_limit.used / data.account.cpu_limit.max * 100).toFixed(2) + "%"} height={140} /><p className="align-center">{ this.total(data.account.cpu_limit.used / 1000000).toFixed(2) } sec / { (data.account.cpu_limit.max / 1000000).toFixed(2) } sec</p></Col>
-              <Col sm={24} md={8}><Pie percent={this.percent(data.account.net_limit.used / data.account.cpu_limit.max * 100)} color="#c787f5" animate={true} subTitle="NET" total={this.total(data.account.net_limit.used / data.account.cpu_limit.max * 100).toFixed(2) + "%"} height={140} /><p className="align-center">{ this.total(data.account.net_limit.used / 1024).toFixed(2) } kb / { (data.account.net_limit.max / 1024).toFixed(2) } kb</p></Col>
+              <Col sm={24} md={8}><Pie percent={this.percent(data.account.net_limit.used / data.account.cpu_limit.max * 100)} color="#c787f5" animate={true} subTitle="NET" total={this.total(data.account.net_limit.used / data.account.cpu_limit.max * 100).toFixed(2) + "%"} height={140} /><p className="align-center">{ this.formatBytes(data.account.net_limit.used)} / { this.formatBytes(data.account.net_limit.max)  }</p></Col>
             </Row>
           </Card.Grid>
           <Card.Grid style={gridStyle}>

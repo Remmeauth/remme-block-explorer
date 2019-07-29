@@ -97,11 +97,6 @@ class Account extends Component {
                  </Panel>
                 </Collapse>
               </QueueAnim>
-
-
-
-
-
             </React.Fragment>
           )
         }

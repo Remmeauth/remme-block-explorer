@@ -14,8 +14,14 @@ export const startTransactionsDeamon = async () => {
   if (blocks.length && !INITIAL_BLOCK)
     INITIAL_BLOCK = blocks.pop().block_num;
 
-  blocks.forEach(function(item){
-    TRANSACTION_LIST = item.transactions.filter(checkTransaction).concat(TRANSACTION_LIST);
+  blocks.forEach(function(item) {
+    try {
+      TRANSACTION_LIST = item.transactions.filter(checkTransaction).concat(TRANSACTION_LIST);
+    } catch (e) {
+      
+      console.log(e.message);
+      console.log(item);
+    }
     TRANSACTION_LIST = TRANSACTION_LIST.slice(0, 30);
   });
 }

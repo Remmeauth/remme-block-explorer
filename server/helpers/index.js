@@ -58,7 +58,12 @@ export const producerInfo = (url) => {
         };
         request(options, function (error, response) {
           if (error) reject(error);
-          resolve(response.body);
+          console.log(response);
+          if (response !== undefined) {
+            resolve(response.body);
+          } else {
+            resolve({});
+          }
         });
       } catch (e) {
         reject(e.message);

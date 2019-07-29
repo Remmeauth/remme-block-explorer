@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Tag, Icon } from 'antd';
+import { Table, Tag, Icon, Card, Result } from 'antd';
 
 import { SmartLink } from '../../components'
 
@@ -33,8 +33,8 @@ class RemmeProducerInfo extends Component {
 
   componentDidMount() {
     const { data } = this.props
-    this.setState({
-      producerDataSource:   [
+    try {
+      const accountDataSource = [
           {
             key: '0',
             name: 'Status',
@@ -81,15 +81,34 @@ class RemmeProducerInfo extends Component {
             )
           }
         ]
-    });
+        this.setState({
+          producerDataSource: accountDataSource
+        });
+    } catch (e) {
+      console.log(e);
+      this.setState({
+        error: true
+      });
+    }
+
   }
 
   render() {
-    const { producerDataSource } = this.state;
+    const { producerDataSource, error } = this.state;
     return (
       <React.Fragment>
         <h4>Producer info:</h4>
-        <Table className="producer-info details-info" dataSource={producerDataSource} columns={columns} pagination={false} />
+        { error ?
+
+          <Result
+            status="warning"
+            title="There are some problems with bp.json of the Block Producer."
+            extra={
+              <SmartLink link="https://github.com/eosrio/bp-info-standard">BP Information Standard</SmartLink>
+            }
+          /> :
+          <Table className="producer-info details-info" dataSource={producerDataSource} columns={columns} pagination={false} />
+        }
       </React.Fragment>
     )
   }

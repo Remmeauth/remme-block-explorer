@@ -18,15 +18,21 @@ class SimpleMarkers extends Component {
   componentDidMount() {
     const {data} = this.props;
 
-    const markers = data.producer.bp.nodes.map((item) => {
-      return {
-        name: item.location.name + '(' + item.location.country +')',
-        coordinates: [item.location.longitude, item.location.latitude]
-      }
-    })
-    this.setState({
-      markers: markers
-    })
+    try {
+      const markers = data.producer.bp.nodes.map((item) => {
+        return {
+          name: item.location.name + '(' + item.location.country +')',
+          coordinates: [item.location.longitude, item.location.latitude]
+        }
+      })
+      this.setState({
+        markers: markers
+      })
+    } catch (e) {
+      console.log(e);
+    }
+
+
   }
 
   render() {

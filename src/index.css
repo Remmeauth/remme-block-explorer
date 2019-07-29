@@ -243,25 +243,22 @@ h1, h2, h3, h4, h5 {
   -moz-box-shadow: 1px 0 0 0 #323840, 0 1px 0 0 #323840, 1px 1px 0 0 #323840, 1px 0 0 0 #323840 inset, 0 1px 0 0 #323840 inset;
   box-shadow: 1px 0 0 0 #323840, 0 1px 0 0 #323840, 1px 1px 0 0 #323840, 1px 0 0 0 #323840 inset, 0 1px 0 0 #323840 inset; }
 
-.theme-light .ant-result {
-  background: #ffffff;
-  border-color: #e7e7f3; }
-
-.theme-dark .ant-result {
-  background: #272c33;
-  border-color: #272c33; }
-
-.theme-light .ant-result .ant-result-title {
-  color: #343747; }
-
-.theme-dark .ant-result .ant-result-title {
-  color: #ffffff; }
-
-.theme-light .ant-result .ant-result-icon i {
-  color: #364FCC; }
-
-.theme-dark .ant-result .ant-result-icon i {
-  color: #398bf7; }
+.ant-result {
+  margin-bottom: 30px; }
+  .theme-light .ant-result {
+    background: #ffffff;
+    border-color: #e7e7f3; }
+  .theme-dark .ant-result {
+    background: #272c33;
+    border-color: #272c33; }
+  .theme-light .ant-result .ant-result-title {
+    color: #343747; }
+  .theme-dark .ant-result .ant-result-title {
+    color: #ffffff; }
+  .theme-light .ant-result .ant-result-icon i {
+    color: #364FCC; }
+  .theme-dark .ant-result .ant-result-icon i {
+    color: #398bf7; }
 
 .ant-btn {
   min-width: 110px;

@@ -286,6 +286,7 @@ h6 {
 }
 
 .ant-result {
+  margin-bottom: 30px;
   @include customize(theme) {
     background: getValue(cardBackground);
     border-color: getValue(cardBorder);
