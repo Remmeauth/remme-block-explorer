@@ -1,0 +1,9 @@
+.balance p {
+  margin: 0;
+  font-size: 14px;
+  text-align: left;
+}
+
+.address {
+  color: #364FCC;
+}

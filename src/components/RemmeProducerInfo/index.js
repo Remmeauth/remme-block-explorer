@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Tag, Icon, Card, Result } from 'antd';
+import { Table, Tag, Icon, Result } from 'antd';
 
 import { SmartLink } from '../../components'
 

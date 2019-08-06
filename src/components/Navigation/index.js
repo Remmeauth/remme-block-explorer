@@ -13,6 +13,13 @@ const NavigationItems = [
     type: 'simple',
     key: 1,
   },
+  {
+    title: 'Wallet',
+    link: '/wallet',
+    icon: 'column-width',
+    type: 'simple',
+    key: 2,
+  },
   // {
   //   title: 'Blocks',
   //   link: '/blocks',
@@ -36,7 +43,7 @@ const NavigationItems = [
   // },
   {
     title: 'Swap',
-    link: '/swap',
+    link: '/init-swap',
     icon: 'team',
     type: 'simple',
     key: 5,

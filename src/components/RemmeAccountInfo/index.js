@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Table } from 'antd';
 import Moment from 'react-moment';
 
-import { coin, dateFormat } from '../../config.js'
+import { network, dateFormat } from '../../config.js'
 
 const columns = [
   {
@@ -36,7 +36,7 @@ class RemmeAccountInfo extends Component {
         {
           key: '2',
           name: 'Total Balance',
-          value: (<b>{data.balance.total_balance} {coin}</b>)
+          value: (<b>{data.balance.total_balance} {network.coin}</b>)
         },
         {
           key: '8',
@@ -46,17 +46,17 @@ class RemmeAccountInfo extends Component {
         {
           key: '4',
           name: 'Unstaked',
-          value: `${data.balance.unstaked} ${coin}`
+          value: `${data.balance.unstaked} ${network.coin}`
         },
         {
           key: '5',
           name: 'Staked',
-          value: `${data.balance.staked} ${coin}`
+          value: `${data.balance.staked} ${network.coin}`
         },
         {
           key: '9',
           name: 'Staked by Others',
-          value: `${data.balance.staked_by_others} ${coin}`
+          value: `${data.balance.staked_by_others} ${network.coin}`
         },
         {
           key: '6',

@@ -4,7 +4,7 @@ import { Table, Collapse, Spin, Icon, Result, Button } from 'antd';
 import ReactJson from 'react-json-view'
 import Moment from 'react-moment';
 
-import { backendAddress, dateFormat } from '../../config.js'
+import { network, dateFormat } from '../../config.js'
 
 import './style.css'
 
@@ -32,8 +32,9 @@ class Transaction extends Component {
   handleUpdate = async () => {
     const { id } = this.props.match.params
     try {
-      const response = await fetch( backendAddress + `/api/getTransaction/` + id);
+      const response = await fetch( network.backendAddress + `/api/getTransaction/` + id);
       const json = await response.json();
+      console.log(json);
       this.setState({
         error: false,
         loading: false,

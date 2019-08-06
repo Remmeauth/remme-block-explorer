@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 import ReactJson from 'react-json-view'
-import { Collapse } from 'antd';
 
 import { RemmeSpin } from '../../components'
-import { backendAddress } from '../../config.js'
-
-const { Panel } = Collapse;
+import { network } from '../../config.js'
 
 class RemmeAccountTxInfo extends Component {
 
@@ -17,7 +14,7 @@ class RemmeAccountTxInfo extends Component {
   handleUpdate = async () => {
     const { id } = this.props;
     try {
-      const response = await fetch(`${backendAddress}/api/getActions/${id}`);
+      const response = await fetch(`${network.backendAddress}/api/getActions/${id}`);
       const json = await response.json();
       this.setState({
         loading:false,

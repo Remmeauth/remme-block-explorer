@@ -1,6 +1,6 @@
 import request from "request";
 
-import { nodeAddress, marketChartEndpoint } from '../../config'
+import { network, marketChartEndpoint } from '../../config'
 
 export const sleep = (ms) => {
   return new Promise(resolve=>{
@@ -12,12 +12,12 @@ export const api = (method, type, action, body) => {
     return new Promise(function(resolve, reject) {
 
       if (method == 'GET') {
-        console.log(nodeAddress + '/v1/'+ type +'/' + action);
+        console.log(network.host + '/v1/'+ type +'/' + action);
       };
       try {
         var options = {
           method: method,
-          url: nodeAddress + '/v1/'+ type +'/' + action,
+          url: network.host + '/v1/'+ type +'/' + action,
           headers: {accept: 'application/json', 'content-type': 'application/json'},
           body: body
         };

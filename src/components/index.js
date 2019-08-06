@@ -12,6 +12,7 @@ import RemmeAccountInfo from "./RemmeAccountInfo";
 import RemmeResourcesInfo from "./RemmeResourcesInfo";
 import RemmeProducerInfo from "./RemmeProducerInfo";
 import RemmeAccountTxInfo from "./RemmeAccountTxInfo";
+import CreateForm from './CreateForm';
 
 export {
   Navigation,
@@ -27,5 +28,6 @@ export {
   RemmeAccountInfo,
   RemmeResourcesInfo,
   RemmeProducerInfo,
-  RemmeAccountTxInfo
+  RemmeAccountTxInfo,
+  CreateForm
 };

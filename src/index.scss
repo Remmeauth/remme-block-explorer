@@ -23,7 +23,7 @@ $themes: (
     bodyBackground: #383f48,
     headerBackground: #272c33,
     textColor: #8b9296,
-    textColorDark: #398bf7,
+    textColorDark: #568fff,
     textColorLight: #adadad,
     titleText: #ffffff,
     cardBackground: #272c33,
@@ -126,6 +126,17 @@ h1, h2, h3, h4, h5 {
 
 h6 {
   @include customize(theme) { color: getValue(titleText);}
+}
+
+p {
+  @include customize(theme) { color: getValue(textColor); }
+  font-size: 16px;
+}
+
+.color-background {
+  @include customize(theme) {
+    background: getValue(textColorDark);
+  }
 }
 
 .align-center { text-align: center;}
@@ -309,8 +320,20 @@ h6 {
   font-weight: 700;
   border-radius: 4px;
   height: 38px;
+  border: 0px;
+  margin: 0 5px;
+  @include customize(theme) {
+    background: getValue(textColorDark);
+    border-color: getValue(textColorDark);
+  }
+
+  span {
+    color: #ffffff !important;
+  }
+
   &:hover {
     opacity: 0.9;
+    color: #ffffff;
   }
 }
 
@@ -384,6 +407,10 @@ h6 {
 .ant-card-body {
   padding: 10px 25px;
 
+  p {
+    font-size: 15px;
+  }
+
   span {
     display: block;
     white-space: nowrap;
@@ -393,6 +420,10 @@ h6 {
         @include customize(theme) { color: getValue(textColor); }
     }
   }
+}
+
+.card-with-padding {
+  padding: 25px;
 }
 
 .producer-links a {
@@ -410,4 +441,190 @@ h6 {
 
 .antd-pro-charts-pie-pie .antd-pro-charts-pie-total > h4 {
   @include customize(theme) { color: getValue(titleText);}
+}
+
+.ant-steps {
+  margin-bottom: 15px;
+}
+
+.ant-steps-item-process > .ant-steps-item-content > .ant-steps-item-title,
+.ant-steps-item-finish > .ant-steps-item-content > .ant-steps-item-title {
+  @include customize(theme) {
+    color: getValue(textColorDark);
+  }
+}
+
+.ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon .ant-steps-icon-dot,
+.ant-steps-item-finish > .ant-steps-item-tail::after,
+.ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon .ant-steps-icon-dot {
+  @include customize(theme) {
+    background: getValue(textColorDark);
+  }
+}
+
+.ant-steps-item-wait .ant-steps-item-icon > .ant-steps-icon .ant-steps-icon-dot,
+.ant-steps-item-process > .ant-steps-item-tail::after,
+.ant-steps-item-wait > .ant-steps-item-tail::after {
+  @include customize(theme) {
+    background: getValue(textColor);
+  }
+}
+
+.ant-steps-item-wait > .ant-steps-item-content > .ant-steps-item-title {
+  @include customize(theme) {
+    color: getValue(textColor);
+  }
+}
+
+.ant-steps-item-finish > .ant-steps-item-content > .ant-steps-item-description,
+.ant-steps-item-process > .ant-steps-item-content > .ant-steps-item-description {
+  @include customize(theme) { color: getValue(titleText);}
+}
+
+.ant-steps-vertical .ant-steps-item-icon {
+  @include customize(theme) {
+    background: getValue(cardBackground);
+    border-color: getValue(textColorDark);
+  }
+  .ant-steps-icon {
+    @include customize(theme) { color: getValue(textColorDark);}
+  }
+}
+
+.ant-steps-vertical .ant-steps-item-process .ant-steps-item-icon {
+  @include customize(theme) {
+    background: getValue(textColorDark);
+  }
+  .ant-steps-icon {
+    color: #ffffff !important;
+  }
+}
+
+
+// SWAP
+
+.swap-wrapper {
+  width: 100%;
+  max-width: 780px;
+  min-height: 600px;
+  border: 1px solid;
+  margin: 0 auto;
+  margin-top: 30px;
+  border-radius: 8px;
+  padding: 30px 30px 40px;
+  box-sizing: border-box;
+
+  @include customize(theme) {
+    background: getValue(cardBackground);
+    border-color: getValue(tableBorder);
+  }
+}
+
+.ant-form {
+  max-width: 460px;
+  margin: 0 auto;
+
+  .ant-form-item-label > label {
+    @include customize(theme) {
+      color: getValue(textColor);
+    }
+  }
+}
+
+.ant-spin-container::after {
+  background: transparent;
+}
+
+.ant-spin-container.ant-spin-blur {
+  opacity: 0.1;
+}
+
+.success-block {
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid;
+  @include customize(theme) { border-color: getValue(tableBorder);}
+}
+
+.image-button {
+    width: 200px;
+    margin: 10px;
+    cursor: pointer;
+    @include transition(opacity 0.1s cubic-bezier(0.645, 0.045, 0.355, 1));
+    &:hover {
+      opacity: 0.8;
+    }
+}
+
+.loader {
+  height: 4px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: #ddd;
+  margin: 15px 0 30px;
+}
+
+.loader:before{
+  display: block;
+  position: absolute;
+  content: "";
+  left: -200px;
+  width: 200px;
+  height: 4px;
+  background-color: #496BE8;
+  -webkit-animation: pulsate 3s linear infinite;
+  -moz-animation: pulsate 3s linear infinite;
+  -o-animation: pulsate 3s linear infinite;
+  -ms-animation: pulsate 3s linear infinite;
+  animation: pulsate 3s linear infinite;
+}
+
+
+.loader.done, .loader.done:before {
+  background-color: #27D086;
+}
+.loader.error, .loader.error:before {
+  background-color: #FB4444;
+}
+
+@-webkit-keyframes pulsate {
+  from {left: -200px; width: 30%;}
+  50% {width: 30%;}
+  70% {width: 70%;}
+  80% { left: 50%;}
+  95% {left: 120%;}
+  to {left: 100%;}
+}
+@-moz-keyframes pulsate {
+  from {left: -200px; width: 30%;}
+  50% {width: 30%;}
+  70% {width: 70%;}
+  80% { left: 50%;}
+  95% {left: 120%;}
+  to {left: 100%;}
+}
+@-ms-keyframes pulsate {
+  from {left: -200px; width: 30%;}
+  50% {width: 30%;}
+  70% {width: 70%;}
+  80% { left: 50%;}
+  95% {left: 120%;}
+  to {left: 100%;}
+}
+@-o-keyframes pulsate {
+  from {left: -200px; width: 30%;}
+  50% {width: 30%;}
+  70% {width: 70%;}
+  80% { left: 50%;}
+  95% {left: 120%;}
+  to {left: 100%;}
+}
+@keyframes pulsate {
+  from {left: -200px; width: 30%;}
+  50% {width: 30%;}
+  70% {width: 70%;}
+  80% { left: 50%;}
+  95% {left: 120%;}
+  to {left: 100%;}
 }

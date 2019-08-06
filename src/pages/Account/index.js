@@ -3,7 +3,7 @@ import { Row, Col, Collapse } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import ReactJson from 'react-json-view'
 
-import { backendAddress } from '../../config.js'
+import { network } from '../../config.js'
 import { MapContainer, RemmeSpin, RemmeResult, RemmeAccountInfo, RemmeResourcesInfo, RemmeProducerInfo, RemmeAccountTxInfo } from '../../components'
 
 import './style.css'
@@ -18,7 +18,7 @@ class Account extends Component {
   handleAccountInfo = async () => {
     const { id } = this.props.match.params
     try {
-      const response = await fetch(`${backendAddress}/api/getAccount/${id}`);
+      const response = await fetch(`${network.backendAddress}/api/getAccount/${id}`);
       const json = await response.json();
       console.log(json);
       if (!json.account.account_name) {

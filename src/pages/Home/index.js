@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Spin, Icon  } from 'antd';
 
-import { backendAddress } from '../../config.js'
+import { network } from '../../config.js'
 import { RemmeCharts, RemmeBlocks, RemmeTransactions, RemmeProducers } from '../../components';
 
 const loadIcon = <Icon type="setting" rotate={180} style={{ fontSize: 24 }} spin />;
@@ -16,7 +16,7 @@ class Home extends Component {
 
   handleUpdate = async () => {
     try {
-      const response = await fetch( backendAddress + `/api/getInfo`);
+      const response = await fetch( network.backendAddress + `/api/getInfo`);
       const json = await response.json();
       //console.log(json);
       if (!json.marketChart) { return false }

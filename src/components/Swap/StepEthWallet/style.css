@@ -1,0 +1,25 @@
+.select-metamask {
+  height: 200px;
+  cursor: pointer;
+  opacity: 1;
+  -webkit-transition: 0.25s;
+  -moz-transition: 0.25s;
+  -o-transition: 0.25s;
+  transition: 0.25s;
+}
+
+.select-metamask:hover {
+  background: #3e58d8;
+}
+
+
+.select-metamask img {
+    height: 60px;
+    margin-top: 55px;
+}
+
+.select-metamask p {
+    color: #fff;
+    font-weight: 700;
+    margin-top: 10px;
+}

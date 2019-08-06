@@ -24,7 +24,18 @@ export const getTransaction = async (id) => {
 export const getActions = async (id) => {
   try {
     const chainInfo = JSON.parse(await api('POST','history', 'get_actions', '{"pos":"-1","offset":"-50","account_name":"'+id+'"}'));
+    console.log(chainInfo);
     return chainInfo
+  } catch (e) {
+    console.log(e.message);
+  }
+}
+
+export const getSwapInfo= async (id) => {
+  try {
+    const swapInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "remio.swap", "scope": "remio.swap", "table": "swaps", "limit": "500", "index_position": "secondary", "key_type": "i64", "lower_bound": '+id+', "upper_bound": '+id+' }' ));
+    console.log(swapInfo);
+    return swapInfo
   } catch (e) {
     console.log(e.message);
   }
@@ -80,11 +91,9 @@ export const getAccount = async (id) => {
     let accountInfo = {};
     accountInfo.marketChart = chainInfo.marketChart;
     accountInfo.account = JSON.parse(await api('POST','chain', 'get_account', '{"account_name":"' + id + '"}'));
-    //let actionsInfo = JSON.parse(await api('POST','history', 'get_actions', '{"pos":"-1","offset":"-20","account_name":"' + id + '"}'));
     const balanceInfo = JSON.parse(await api('POST','chain', 'get_currency_balance', '{"code":"eosio.token", "account":"'+id+'"}'));
     accountInfo.balance = calcBalance(accountInfo.account, balanceInfo);
     accountInfo.balance.total_usd_value = (accountInfo.balance.total_balance * accountInfo.marketChart.prices[0].y).toFixed(2)
-    //accountInfo.actions = actionsInfo;
     for (var i = 0; i < chainInfo.producers.length; i++){
       if (chainInfo.producers[i].owner === accountInfo.account.account_name){
          accountInfo.producer = chainInfo.producers[i];

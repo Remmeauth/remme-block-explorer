@@ -1,0 +1,33 @@
+.swap-initiate-section {
+  margin-bottom: 20px;
+}
+
+.swap-initiate-section img {
+  height: 85px;
+  margin-bottom: 8px;
+}
+
+.swap-initiate-section p {
+    margin-bottom: 5px;
+}
+
+.swap-initiate-section .anticon-right {
+  font-size: 40px;
+   color: #9E9E9E;
+   margin-top: 25px;
+}
+
+
+.ant-btn.init-swap {
+  background: #27D086;
+}
+
+.ant-btn.init-swap:hover {
+  background: #27D086;
+  color: #fff;
+}
+
+.ant-btn.init-swap:focus {
+  background: #27D086;
+  color: #fff;
+}

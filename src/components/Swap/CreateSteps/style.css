@@ -1,0 +1,15 @@
+
+.ant-steps {
+  margin-bottom: 20px;
+}
+
+.steps-content {
+  text-align: center;
+  min-height: 100px;
+  padding: 20px;
+}
+
+.steps-action {
+  text-align: center;
+  padding-bottom: 20px;
+}
