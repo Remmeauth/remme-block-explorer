@@ -7,6 +7,9 @@ REMME Block Explorer is an open source web tool that allows to view information 
 ![Image](https://rawcdn.githack.com/Remmeauth/remme-block-explorer/b1fc97698043e0261351e041f30c3714030ddfe1/src/assets/screen.png)
 
 ## Get started
+0. Install dependencies.
+
+### `npm install`
 
 1. Create config.js file in the project directory (see config.example.js).
 
