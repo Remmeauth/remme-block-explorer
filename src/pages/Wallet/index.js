@@ -20,25 +20,25 @@ class Wallet extends Component {
     loading: false,
   }
 
-
   handleTransaction = (e) => {
     const {authorization, name} = this.state;
     const form = this.form;
-    form.validateFields((err, values) => {
-      if (err) { return; }
-      //try {
-        console.log(values);
-        console.log(name, values.account_name, Number(`${values.amount}`).toFixed(4) + ` ${network.coin}`, values.memo, authorization);
-
-        this.eos.transfer(name, 'helloworld', '0.0001 EOS', 'memo', authorization).then(trx => {
+    try {
+      form.validateFields((err, values) => {
+        if (err) { return; }
+        const eos = ScatterJS.scatter.eos(network, Eos, eosOptions);
+        eos.transfer(name, values.account_name, Number(`${values.amount}`).toFixed(4) + ` ${network.coin}`, values.memo, authorization).then(trx => {
+            message.success('Transaction Success, Please check your account page', 2);
             console.log(`Transaction ID: ${trx.transaction_id}`);
         }).catch(error => {
-            console.error(error);
+            message.error('Transaction Fail', 2);
         });
-      // } catch (e) {
-      //  message.error("Data is wrong. Try again.", 2);
-      // }
-    });
+      });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      form.resetFields();
+    }
   };
 
   handleAccountInfo = async (name,authority) => {
@@ -46,7 +46,6 @@ class Wallet extends Component {
     try {
       const response = await fetch(`${network.backendAddress}/api/getAccount/${name}`);
       const json = await response.json();
-      console.log(json);
       if (!json.account.account_name) {
         this.setState({
           error: "Account not found",
@@ -83,20 +82,6 @@ class Wallet extends Component {
           if (identity.accounts.length === 0) return;
           if (ScatterJS.identity && ScatterJS.identity.accounts) objectIdentity = ScatterJS.identity.accounts.find(x => x.blockchain === network.blockchain);
           if (objectIdentity) {
-            console.log("START");
-            console.log(network);
-            console.log(Eos);
-            console.log(eosOptions);
-            const eos = ScatterJS.scatter.eos(network, Eos, eosOptions);
-            const transactionOptions = { authorization:[`${objectIdentity.name}@${objectIdentity.authority}`] };
-
-            eos.transfer(objectIdentity.name, 'helloworld', '0.0001 EOS', 'memo', transactionOptions).then(trx => {
-            // That's it!
-                console.log(`Transaction ID: ${trx.transaction_id}`);
-            }).catch(error => {
-                console.error(error);
-            });
-
             this.handleAccountInfo(objectIdentity.name, objectIdentity.authority);
           }
       }).catch(err => {
@@ -108,7 +93,6 @@ class Wallet extends Component {
 
   render() {
     const { raw, loading, error } = this.state;
-    console.log(this.state);
     return (
       <React.Fragment>
         { loading ? (<RemmeSpin/>) :
@@ -137,9 +121,11 @@ class Wallet extends Component {
               ) : (
                 <QueueAnim delay={300} interval={300} type="right" component={Row} gutter={30}>
                   <Col className="align-center" key="1">
-                    <h4>WEB Wallet</h4>
-                    <p>Unlock wallet to start:</p>
-                    <img className="image-button" onClick={this.login} src={scatter} alt=""/>
+                    <Card className="card-with-padding" >
+                      <h4>WEB Wallet</h4>
+                      <p>Unlock wallet to start:</p>
+                      <img className="image-button" onClick={this.login} src={scatter} alt=""/>
+                    </Card>
                   </Col>
                 </QueueAnim>
               )
