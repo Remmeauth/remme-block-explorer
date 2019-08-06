@@ -49,6 +49,7 @@ class RemmeCharts extends Component {
   render() {
     const {show} = this.state
     const { totalBlocks, producer, marketChart, producers } = this.props.data
+    console.log(this.props.data);
 
     return (
       <React.Fragment>

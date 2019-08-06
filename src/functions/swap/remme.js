@@ -53,7 +53,7 @@ export const RemGetSwapInfo = async (SwapID) => {
 
 export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestamp, sig, active_pubkey, owner_pubkey) => {
   const signatureProvider = new JsSignatureProvider([techPrivkey]);
-  const rpc = new JsonRpc(network.host, { fetch });
+  const rpc = new JsonRpc(`${network.protocol}://${network.host}:${network.port}`, { fetch });
   const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
   const result = await api.transact({
     actions: [{
