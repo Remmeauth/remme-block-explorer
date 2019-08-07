@@ -49,7 +49,6 @@ class StepRemWallet extends Component {
   render() {
     const { choice } = this.state;
     const { onSubmit } = this.props;
-    const scheme = newAccount;
     return (
       <React.Fragment>
           <div className="align-center">

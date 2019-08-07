@@ -7,20 +7,26 @@ import { startProducersDeamon, getProducerList } from './producers.deamon.js'
 let infoData = {};
 
 const prepareData = () => {
-  infoData.marketChart = getMarketChart();
-  infoData.totalBlocks = getBlockList()[0].block_num;
-  infoData.producer = getBlockList()[0].producer;
-  infoData.transactions = getTransactionList();
-  infoData.producers = getProducerList();
-  infoData.blocks = getBlockList().map( (item) => {
-    return {
-      id: item.id,
-      block_num: item.block_num,
-      producer: item.producer,
-      timestamp: item.timestamp,
-      transactions: item.transactions.length
-    }
-  });
+  try {
+    infoData.marketChart = getMarketChart();
+    infoData.totalBlocks = getBlockList()[0].block_num;
+    infoData.producer = getBlockList()[0].producer;
+    infoData.transactions = getTransactionList();
+    infoData.producers = getProducerList();
+    infoData.blocks = getBlockList().map( (item) => {
+      return {
+        id: item.id,
+        block_num: item.block_num,
+        producer: item.producer,
+        timestamp: item.timestamp,
+        transactions: item.transactions.length
+      }
+    });
+  } catch (e) {
+    console.log(e.message);
+    infoData = {}
+  }
+
 }
 
 export const getInfo = () => {

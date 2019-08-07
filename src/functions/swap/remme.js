@@ -3,7 +3,7 @@ import CryptoJS from "crypto-js";
 import bigInt from "big-integer"
 import moment from 'moment';
 
-import { Api, JsonRpc, RpcError } from 'eosjs';
+import { Api, JsonRpc } from 'eosjs';
 import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
 
 import { network, techPrivkey, techAccount } from '../../config'

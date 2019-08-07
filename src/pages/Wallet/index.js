@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import { Row, Col, Button, message, Card } from 'antd';
+import { Row, Col, Button, message, Card, Tabs } from 'antd';
 import QueueAnim from 'rc-queue-anim';
-import ScatterJS from 'scatterjs-core';
-import ScatterEOS from 'scatterjs-plugin-eosjs';
-import Eos from 'eosjs';
+import ScatterJS from '@scatterjs/core';
+import ScatterEOS from '@scatterjs/eosjs2';
+import {JsonRpc, Api} from 'eosjs';
 
 import { network } from '../../config.js'
 import { RemmeSpin, RemmeResult, RemmeAccountInfo, RemmeResourcesInfo, CreateForm } from '../../components'
-import { walletTransfer } from '../../schemes';
-import scatter from "../../assets/scatter.jpg"
+import { walletTransfer, walletStake } from '../../schemes';
+import scatter from "../../assets/scatter.jpg";
+
+const { TabPane } = Tabs;
 
 ScatterJS.plugins( new ScatterEOS() );
-
-const eosOptions = { expireInSeconds:60 };
+const net = ScatterJS.Network.fromJson(network);
+const rpc = new JsonRpc(net.fullhost());
+const eos = ScatterJS.eos(net, Api, {rpc});
 
 class Wallet extends Component {
 
@@ -20,25 +23,75 @@ class Wallet extends Component {
     loading: false,
   }
 
+  initTransaction = (prefix, action_name, data, form) => {
+    const {authority, name} = this.state;
+    eos.transact({
+        actions: [{
+            account: `${network.account}${prefix}`,
+            name: action_name,
+            authorization: [{
+                actor: name,
+                permission: authority,
+            }],
+            data: data
+        }]
+    }, {
+        blocksBehind: 3,
+        expireSeconds: 30,
+    }).then(res => {
+        console.log('sent: ', res);
+      message.success('Transaction Success, Please check your account page', 2);
+    }).catch(err => {
+      message.error(err.message, 2);
+    });
+  }
+
   handleTransaction = (e) => {
-    const {authorization, name} = this.state;
-    const form = this.form;
-    try {
-      form.validateFields((err, values) => {
-        if (err) { return; }
-        const eos = ScatterJS.scatter.eos(network, Eos, eosOptions);
-        eos.transfer(name, values.account_name, Number(`${values.amount}`).toFixed(4) + ` ${network.coin}`, values.memo, authorization).then(trx => {
-            message.success('Transaction Success, Please check your account page', 2);
-            console.log(`Transaction ID: ${trx.transaction_id}`);
-        }).catch(error => {
-            message.error('Transaction Fail', 2);
-        });
-      });
-    } catch (e) {
-      console.log(e);
-    } finally {
+    const {name} = this.state;
+    const form = this.form1;
+    form.validateFields((err, values) => {
+      if (err) { return; }
+      const data = {
+          from: name,
+          to: values.account_name,
+          quantity: Number(`${values.amount}`).toFixed(4) + ` ${network.coin}`,
+          memo: values.memo,
+      }
       form.resetFields();
-    }
+      this.initTransaction('.token', 'transfer', data, form);
+    });
+  };
+
+  handleStake = (e) => {
+    const {name} = this.state;
+    const form = this.form2;
+    form.validateFields((err, values) => {
+      if (err) { return; }
+      const data = {
+          from: name,
+          receiver: name,
+          stake_quantity: values.amount,
+          transfer: false,
+      }
+      form.resetFields();
+      this.initTransaction('','delegatebw', data, form);
+    });
+  };
+
+  handleUnstake = (e) => {
+    const {name} = this.state;
+    const form = this.form3;
+    form.validateFields((err, values) => {
+      if (err) { return; }
+      const data = {
+          from: name,
+          receiver: name,
+          unstake_quantity: values.amount,
+          transfer: false,
+      }
+      form.resetFields();
+      this.initTransaction('','undelegatebw', data, form);
+    });
   };
 
   handleAccountInfo = async (name,authority) => {
@@ -57,7 +110,7 @@ class Wallet extends Component {
           loading: false,
           raw: json,
           name: name,
-          authorization: { authorization:[`${name}@${authority}`] }
+          authority: authority
         });
       }
     } catch (error) {
@@ -69,26 +122,36 @@ class Wallet extends Component {
     }
   }
 
-  logout = () => {
-    this.setState({ account: false, raw: false });
+  logout = () =>  {
+    ScatterJS.scatter.forgetIdentity();
     ScatterJS.scatter.logout();
+    window.location.reload(false);
   }
 
   login = () => {
-    ScatterJS.scatter.connect(network.blockchain).then(connected => {
-      if(!connected) { message.error("Can't connect to Scatter"); return false; }
-      ScatterJS.getIdentity({ accounts: [network]}).then(identity => {
-          let objectIdentity;
-          if (identity.accounts.length === 0) return;
-          if (ScatterJS.identity && ScatterJS.identity.accounts) objectIdentity = ScatterJS.identity.accounts.find(x => x.blockchain === network.blockchain);
-          if (objectIdentity) {
-            this.handleAccountInfo(objectIdentity.name, objectIdentity.authority);
-          }
-      }).catch(err => {
-          message.error(err.message);
-          console.error(err.message);
+    if (ScatterJS.account) {
+      const account = ScatterJS.account('eos');
+      if (account) {
+        this.handleAccountInfo(account.name, account.authority);
+      } else {
+        this.logout();
+      }
+    } else {
+      ScatterJS.connect(network.account, {net}).then(connected => {
+        if(!connected) return console.error('no scatter');
+        ScatterJS.login({ accounts: [net]}).then(id => {
+            if(!id) return console.error('no identity');
+            const account = ScatterJS.account('eos');
+            if (account) {
+              this.handleAccountInfo(account.name, account.authority);
+            } else {
+              message.error('No accounts');
+            }
+        });
       });
-    });
+    }
+
+
   }
 
   render() {
@@ -100,6 +163,36 @@ class Wallet extends Component {
               raw ? (
                 <React.Fragment>
                   <QueueAnim delay={300} interval={300} type="right" component={Row} gutter={30}>
+                    <Col key="1">
+                      <h4>Web Wallet:</h4>
+                      <Card className="card-with-padding align-center" >
+                        <Tabs defaultActiveKey="1">
+                          <TabPane tab="Token transfer" key="1">
+                            <h5>Transfer Tokens:</h5>
+                            <CreateForm scheme={walletTransfer} ref={form => this.form1 = form}/>
+                            <Button type="primary" onClick={this.handleTransaction}>Generate Transaction</Button>
+
+                          </TabPane>
+                          <TabPane tab="Stake Resources" key="2">
+                            <h5>Stake:</h5>
+                            <CreateForm scheme={walletStake} ref={form => this.form2 = form}/>
+                            <Button type="primary" onClick={this.handleStake}>Generate Transaction</Button>
+                          </TabPane>
+                          <TabPane tab="Unstake Resources" key="3">
+                            <h5>Unstake:</h5>
+                            <CreateForm scheme={walletStake} ref={form => this.form3 = form}/>
+                            <Button type="primary" onClick={this.handleUnstake}>Generate Transaction</Button>
+                          </TabPane>
+                          <TabPane tab="Vote" key="4">
+                            <h5>Vote:</h5>
+
+                          </TabPane>
+                        </Tabs>
+
+                      </Card>
+                    </Col>
+                  </QueueAnim>
+                  <QueueAnim delay={900} interval={300} type="right" component={Row} gutter={30}>
                     <Col lg={24} xl={12} key="1">
                       <RemmeAccountInfo data={raw} forceUpdate={()=>{}}/>
                     </Col>
@@ -107,14 +200,9 @@ class Wallet extends Component {
                       <RemmeResourcesInfo data={raw}/>
                     </Col>
                   </QueueAnim>
-                  <QueueAnim delay={900} interval={300} type="right" component={Row} gutter={30}>
-                    <Col className="align-center" key="1">
-                      <Card className="card-with-padding" >
-                        <h4>Transfer Tokens:</h4>
-                        <CreateForm scheme={walletTransfer} ref={form => this.form = form}/>
-                        <Button type="primary" onClick={this.handleTransaction}>Generate Transaction</Button>
-                        <Button type="primary" onClick={this.logout}>Logout</Button>
-                      </Card>
+                  <QueueAnim delay={1500} interval={300} type="right" component={Row} gutter={30}>
+                    <Col lg={24} xl={24} key="1" className="align-center">
+                      <Button type="primary" onClick={this.logout}>Logout</Button>
                     </Col>
                   </QueueAnim>
                 </React.Fragment>

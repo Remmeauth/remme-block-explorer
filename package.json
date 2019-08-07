@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@scatterjs/core": "^2.7.31",
+    "@scatterjs/eosjs2": "^1.5.13",
     "ant-design-pro": "^2.3.2",
     "antd": "3.20.0",
     "babel-cli": "^6.26.0",
@@ -34,8 +36,6 @@
     "react-tooltip": "^3.10.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "scatterjs-core": "^2.7.18",
-    "scatterjs-plugin-eosjs": "^1.5.1",
     "typeface-open-sans": "0.0.54",
     "web3": "1.2.0"
   },
