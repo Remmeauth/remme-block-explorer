@@ -14,7 +14,6 @@ const { TabPane } = Tabs;
 
 ScatterJS.plugins( new ScatterEOS() );
 const net = ScatterJS.Network.fromJson(network);
-console.log(net);
 const rpc = new JsonRpc(net.fullhost());
 const eos = ScatterJS.eos(net, Api, {rpc});
 
@@ -157,6 +156,7 @@ class Wallet extends Component {
   login = () => {
     if (ScatterJS.account) {
       const account = ScatterJS.account('rem');
+      console.log(account);
       if (account) {
         this.handleAccountInfo(account.name, account.authority);
       } else {
@@ -168,9 +168,9 @@ class Wallet extends Component {
           return
         }
         ScatterJS.login({ accounts: [net]}).then(id => {
-            console.log("id: ",id);
             if(!id) return console.error('no identity');
             const account = ScatterJS.account(network.blockchain);
+            console.log(account);
             if (account) {
               this.handleAccountInfo(account.name, account.authority);
             } else {

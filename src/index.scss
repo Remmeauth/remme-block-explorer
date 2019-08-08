@@ -332,9 +332,10 @@ p {
     border-color: getValue(textColorDark);
   }
 
-  span {
+  span, i {
     color: #ffffff !important;
   }
+
 
   &:hover {
     opacity: 0.9;
@@ -393,6 +394,17 @@ p {
     }
   }
 }
+
+.ant-tabs-nav {
+  .ant-tabs-tab {
+    @include customize(theme) { color: getValue(textColor); }
+  }
+  .ant-tabs-tab-active {
+    @include customize(theme) { color: getValue(textColorDark); }
+  }
+
+}
+
 
 .ant-card-head {
   padding: 0px 20px;

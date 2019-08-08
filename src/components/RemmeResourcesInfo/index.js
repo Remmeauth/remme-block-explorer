@@ -10,12 +10,15 @@ const gridStyle = {
 class RemmeResourcesInfo extends Component {
 
   percent = (value) => {
-    if (value === 0) return 0;
+    if (isNaN(value)) return 0.1;
+    if (value === Infinity) return 0.1;
+    if (value === 0) return  0.1;
     if (value < 5) return 5;
     return value;
   }
 
   total = (value) => {
+    if (isNaN(value)) return 0;
     if (value === 0) return 0;
     if (value < 0.01) return 0.01;
     return value;
@@ -29,7 +32,6 @@ class RemmeResourcesInfo extends Component {
         i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
-
 
   render() {
     const { data } = this.props;

@@ -290,7 +290,7 @@ p {
   .theme-dark .ant-btn {
     background: #568fff;
     border-color: #568fff; }
-  .ant-btn span {
+  .ant-btn span, .ant-btn i {
     color: #ffffff !important; }
   .ant-btn:hover {
     opacity: 0.9;
@@ -358,6 +358,18 @@ p {
   .theme-dark .ant-table-wrapper .ant-table-thead > tr > th {
     background: #323840;
     color: #8b9296; }
+
+.theme-light .ant-tabs-nav .ant-tabs-tab {
+  color: #8e8ea8; }
+
+.theme-dark .ant-tabs-nav .ant-tabs-tab {
+  color: #8b9296; }
+
+.theme-light .ant-tabs-nav .ant-tabs-tab-active {
+  color: #364FCC; }
+
+.theme-dark .ant-tabs-nav .ant-tabs-tab-active {
+  color: #568fff; }
 
 .ant-card-head {
   padding: 0px 20px;

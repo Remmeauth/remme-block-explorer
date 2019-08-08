@@ -121,7 +121,7 @@ class StepInitiate extends Component {
           <div className="swap-initiate-section">
             <SwapParamsView type={type} addressEth={addressEth} addressRem={addressRem} balanceRemRem={balanceRemRem} balanceEthRem={balanceEthRem} balanceEthEth={balanceEthEth}/>
           </div>
-          <p>Amount:</p>
+          <p>Tokens to swap</p>
           <CreateForm
             scheme={scheme}
             className="amount-form"

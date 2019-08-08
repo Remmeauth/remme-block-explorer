@@ -1,11 +1,12 @@
 import { api } from '../helpers'
+import { network } from '../../config'
 
 const ungerKey = "EOS1111111111111111111111111111111114T1Anm";
 let PRODUCERS_LIST = [];
 
 export const startProducersDeamon = async () => {
     try {
-      const blockInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "eosio", "scope": "eosio", "table": "producers", "limit": "500" }' ));
+      const blockInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'", "scope": "'+network.account+'", "table": "producers", "limit": "500" }' ));
       let result = [];
       let data = blockInfo.rows;
 
