@@ -147,10 +147,15 @@ p {
     height: 100%;
 }
 
+.custom-field .ant-tag {
+    margin: 5px;
+}
+
 .ant-tag {
     min-width: 80px;
     text-align: center;
     font-weight: 600;
+
 }
 
 .ant-collapse {
@@ -529,6 +534,25 @@ p {
       color: getValue(textColor);
     }
   }
+}
+
+.form-wit-tags-field {
+    margin-bottom: 15px;
+    .ant-form-item {
+      margin-bottom: 5px;
+    }
+    p {
+      margin-bottom: 5px;
+      &:before {
+        display: inline-block;
+        margin-right: 4px;
+        color: #f5222d;
+        font-size: 14px;
+        font-family: SimSun, sans-serif;
+        line-height: 1;
+        content: '*';
+      }
+    }
 }
 
 .ant-spin-container::after {

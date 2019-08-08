@@ -128,17 +128,19 @@ const actions = {
     SwapTransactionStatus: async ({ SwapTransaction }) => {
       return await EthTransactionStatus( SwapTransaction )
     },
-    SwapSignDigest: ({ AccountNameRem, ActiveKeyRem, OwnerKeyRem, SwapSecret }) => {
-      return RemSignDigest( AccountNameRem, ActiveKeyRem, OwnerKeyRem, SwapSecret[0] )
+
+    SwapSignDigest: ({ AccountNameRem, SwapTransaction, SwapSecret, amount, addressEth, SwapTransactionStatus  }) => {
+      return RemSignDigest( AccountNameRem, SwapTransaction, SwapSecret[1], amount, addressEth, SwapTransactionStatus, SwapSecret[0])
     },
-    SwapID: ({ SwapTransaction, SwapSecret, amount, SwapTransactionStatus }) => {
-      return RemGenSwapId( SwapTransaction, SwapSecret[1], amount, SwapTransactionStatus )
+
+    SwapID: ({ SwapTransaction, SwapSecret, amount, SwapTransactionStatus, addressEth }) => {
+      return RemGenSwapId( SwapTransaction, SwapSecret[1], amount, SwapTransactionStatus, addressEth )
     },
     SwapWait: async ({SwapID}) => {
       return await RemGetSwapInfo(SwapID);
     },
-    SwapFinish: async ({AccountNameRem, SwapTransaction, SwapSecret, amount, SwapTransactionStatus, SwapSignDigest, ActiveKeyRem, OwnerKeyRem }) => {
-      return await RemFinishSwap(AccountNameRem, SwapTransaction, SwapSecret[1], amount, SwapTransactionStatus, SwapSignDigest, ActiveKeyRem, OwnerKeyRem);
+    SwapFinish: async ({AccountNameRem, SwapTransaction, SwapSecret, amount, SwapTransactionStatus, SwapSignDigest, ActiveKeyRem, OwnerKeyRem, addressEth }) => {
+      return await RemFinishSwap(AccountNameRem, SwapTransaction, SwapSecret[1], amount, SwapTransactionStatus, SwapSignDigest, ActiveKeyRem, OwnerKeyRem, addressEth);
     }
   },
 

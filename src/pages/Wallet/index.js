@@ -6,24 +6,30 @@ import ScatterEOS from '@scatterjs/eosjs2';
 import {JsonRpc, Api} from 'eosjs';
 
 import { network } from '../../config.js'
-import { RemmeSpin, RemmeResult, RemmeAccountInfo, RemmeResourcesInfo, CreateForm } from '../../components'
-import { walletTransfer, walletStake } from '../../schemes';
+import { RemmeSpin, RemmeResult, RemmeAccountInfo, RemmeResourcesInfo, CreateForm, TagsField } from '../../components'
+import { walletTransfer, walletStake, walletVote } from '../../schemes';
 import scatter from "../../assets/scatter.jpg";
 
 const { TabPane } = Tabs;
 
 ScatterJS.plugins( new ScatterEOS() );
 const net = ScatterJS.Network.fromJson(network);
+console.log(net);
 const rpc = new JsonRpc(net.fullhost());
 const eos = ScatterJS.eos(net, Api, {rpc});
 
 class Wallet extends Component {
 
   state = {
+    producers: [],
     loading: false,
   }
 
-  initTransaction = (prefix, action_name, data, form) => {
+  voteProducers = (tags) => {
+    this.setState({ producers: tags });
+  }
+
+  initTransaction = (prefix, action_name, data) => {
     const {authority, name} = this.state;
     eos.transact({
         actions: [{
@@ -58,9 +64,29 @@ class Wallet extends Component {
           memo: values.memo,
       }
       form.resetFields();
-      this.initTransaction('.token', 'transfer', data, form);
+      this.initTransaction('.token', 'transfer', data);
     });
   };
+
+  handleVote = () => {
+    const {producers} = this.state;
+    const form = this.form4;
+    form.validateFields((err, values) => {
+      if (err) { return; }
+      if (!producers || producers.length == 0) {
+        message.error('Pls. Set producers.');
+        return;
+      }
+      const data = {
+          voter: values.voter,
+          proxy: '',
+          producers: producers
+      }
+      form.resetFields();
+      this.setState({ producers: [] });
+      this.initTransaction('', 'voteproducer', data);
+    });
+  }
 
   handleStake = (e) => {
     const {name} = this.state;
@@ -74,7 +100,7 @@ class Wallet extends Component {
           transfer: false,
       }
       form.resetFields();
-      this.initTransaction('','delegatebw', data, form);
+      this.initTransaction('','delegatebw', data);
     });
   };
 
@@ -90,7 +116,7 @@ class Wallet extends Component {
           transfer: false,
       }
       form.resetFields();
-      this.initTransaction('','undelegatebw', data, form);
+      this.initTransaction('','undelegatebw', data);
     });
   };
 
@@ -130,7 +156,7 @@ class Wallet extends Component {
 
   login = () => {
     if (ScatterJS.account) {
-      const account = ScatterJS.account('eos');
+      const account = ScatterJS.account('rem');
       if (account) {
         this.handleAccountInfo(account.name, account.authority);
       } else {
@@ -138,10 +164,13 @@ class Wallet extends Component {
       }
     } else {
       ScatterJS.connect(network.account, {net}).then(connected => {
-        if(!connected) return console.error('no scatter');
+        if(!connected) {
+          return
+        }
         ScatterJS.login({ accounts: [net]}).then(id => {
+            console.log("id: ",id);
             if(!id) return console.error('no identity');
-            const account = ScatterJS.account('eos');
+            const account = ScatterJS.account(network.blockchain);
             if (account) {
               this.handleAccountInfo(account.name, account.authority);
             } else {
@@ -155,7 +184,7 @@ class Wallet extends Component {
   }
 
   render() {
-    const { raw, loading, error } = this.state;
+    const { raw, loading, error, producers } = this.state;
     return (
       <React.Fragment>
         { loading ? (<RemmeSpin/>) :
@@ -171,7 +200,6 @@ class Wallet extends Component {
                             <h5>Transfer Tokens:</h5>
                             <CreateForm scheme={walletTransfer} ref={form => this.form1 = form}/>
                             <Button type="primary" onClick={this.handleTransaction}>Generate Transaction</Button>
-
                           </TabPane>
                           <TabPane tab="Stake Resources" key="2">
                             <h5>Stake:</h5>
@@ -185,7 +213,12 @@ class Wallet extends Component {
                           </TabPane>
                           <TabPane tab="Vote" key="4">
                             <h5>Vote:</h5>
-
+                            <div className="form-wit-tags-field">
+                              <CreateForm scheme={walletVote} ref={form => this.form4 = form}/>
+                              <p>Add producers:</p>
+                              <TagsField onUpdate={this.voteProducers} tags={producers}/>
+                            </div>
+                            <Button type="primary" onClick={this.handleVote}>Generate Transaction</Button>
                           </TabPane>
                         </Tabs>
 

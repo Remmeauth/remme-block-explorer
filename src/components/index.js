@@ -13,6 +13,7 @@ import RemmeResourcesInfo from "./RemmeResourcesInfo";
 import RemmeProducerInfo from "./RemmeProducerInfo";
 import RemmeAccountTxInfo from "./RemmeAccountTxInfo";
 import CreateForm from './CreateForm';
+import TagsField from './TagsField';
 
 export {
   Navigation,
@@ -29,5 +30,6 @@ export {
   RemmeResourcesInfo,
   RemmeProducerInfo,
   RemmeAccountTxInfo,
-  CreateForm
+  CreateForm,
+  TagsField
 };
