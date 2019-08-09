@@ -28,42 +28,42 @@ export const taskList = {
   },
   {
    id: "SwapTransactionApproveStatus",
-   title: "Check Swap Approve Transaction",
+   title: "Waiting for Swap Approve Transaction",
    exeption: "Swap Approve Transaction error"
   },
   {
     id: "SwapRawTransaction",
-    title: "Create Swap Transaction",
+    title: "Create Swap Request Transaction",
     exeption: "Swap Transaction was not generated"
   },
   {
     id: "SwapTransaction",
-    title: "Send Swap Transaction",
+    title: "Signing Swap Request Transaction",
     exeption: "Swap Transaction was not sent"
   },
   {
     id: "SwapTransactionStatus",
-    title: "Check Swap Transaction",
+    title: "Waiting for Swap Request to be mined",
     exeption: "Swap Transaction error"
   },
   {
     id: "SwapSignDigest",
-    title: "Sign Digest",
+    title: "Signing Digest",
     exeption: "Error"
   },
   {
     id: "SwapID",
-    title: "Create SwapId",
+    title: "Composing Swap Identifier",
     exeption: "SwapId was not generated"
   },
   {
     id: "SwapWait",
-    title: "Wait for swap",
+    title: "Waiting for producers to approve",
     exeption: "Error"
   },
   {
-    id: "SwapFinish",
-    title: "Finish swap",
+    id: "SwapFinalize",
+    title: "Finalizing Swap on REMChain",
     exeption: "Error"
   }
   ],
@@ -139,8 +139,10 @@ const actions = {
     SwapWait: async ({SwapID}) => {
       return await RemGetSwapInfo(SwapID);
     },
-    SwapFinish: async ({AccountNameRem, SwapTransaction, SwapSecret, amount, SwapTransactionStatus, SwapSignDigest, ActiveKeyRem, OwnerKeyRem, addressEth }) => {
-      return await RemFinishSwap(AccountNameRem, SwapTransaction, SwapSecret[1], amount, SwapTransactionStatus, SwapSignDigest, ActiveKeyRem, OwnerKeyRem, addressEth);
+    SwapFinalize: async ({AccountNameRem, SwapTransaction, SwapSecret, amount, SwapTransactionStatus, SwapSignDigest, ActiveKeyRem, OwnerKeyRem, addressEth }) => {
+      const finish = await RemFinishSwap(AccountNameRem, SwapTransaction, SwapSecret[1], amount, SwapTransactionStatus, SwapSignDigest, ActiveKeyRem, OwnerKeyRem, addressEth);
+      console.log(finish);
+      return null
     }
   },
 
