@@ -8,6 +8,17 @@ import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
 
 import { network, techPrivkey, techAccount, EthReturnChainId } from '../../config'
 
+const formatSwapIdToLittleEnd = (str) => {
+    let le = '';
+    const p128 = str.match(/.{1,32}/g);
+    p128.forEach((hash) => {
+        const bytes = hash.match(/.{1,2}/g);
+        bytes.reverse();
+        le += bytes.join('');
+    });
+    return le;
+}
+
 export const RemPrivateKeyToAddress = ( PrivateKeyRem ) => {
   return PrivateKeyRem
 }
@@ -23,7 +34,7 @@ export const RemRandomKeys = async () => {
 }
 
 export const RemSignDigest = (receiver, txid, swap_pubkey, asset, return_address, timestamp, privkey) => {
-  const digest_to_sign = receiver + "*" + txid.substring(2) + "*" + network.chainId + "*" + swap_pubkey.substring(3) + "*" + `${Number(asset).toFixed(4)} REM` + "*" + return_address.substring(2) + "*" + EthReturnChainId + "*" + timestamp
+  const digest_to_sign = receiver + "*" + txid.substring(2) + "*" + network.chainId + "*" + `${Number(asset).toFixed(4)} REM` + "*" + return_address.substring(2) + "*" + EthReturnChainId + "*" + timestamp
   console.log("Pub:", swap_pubkey );
   console.log("Priv:", privkey );
   console.log("digest_to_sign", digest_to_sign);
@@ -32,22 +43,20 @@ export const RemSignDigest = (receiver, txid, swap_pubkey, asset, return_address
 
 export const RemGenSwapId = (txid, swap_pubkey, asset, timestamp, return_address) => {
   const amount = `${Number(asset).toFixed(4)} REM`
-  const swap_str = txid.substring(2) + "*" + network.chainId + "*" + swap_pubkey.substring(3) + "*" + amount + "*" + return_address.substring(2) + "*" + EthReturnChainId + "*" + timestamp
+  const swap_str = swap_pubkey + "*" + txid.substring(2) + "*" + network.chainId + "*" + amount + "*" + return_address.substring(2) + "*" + EthReturnChainId + "*" + timestamp
   console.log("swap_str", swap_str);
-  var hashed = CryptoJS.SHA256(swap_str);
+  const hashed = CryptoJS.SHA256(swap_str);
   const result = hashed.toString(CryptoJS.enc.Hex);
   console.log("swap_id", result);
   return result
 }
 
 export const RemGetSwapInfo = async (SwapID) => {
-  const cutid = bigInt(SwapID.substring(0,16), 16);
-  const bound = String(cutid.value).replace('n','n');
-  const response = await fetch( network.backendAddress + `/api/getSwapInfo/${bound}`);
+  const le = formatSwapIdToLittleEnd(SwapID);
+  const response = await fetch( network.backendAddress + `/api/getSwapInfo/${le}`);
   const json = await response.json();
-
-  if (json.rows.length) {
-    if (json.rows[0].producers.length > 1) {
+  if (json.hasOwnProperty('rows') && json.rows.length) {
+    if (json.rows[0].provided_approvals.length > 1) {
       return "approved"
     }
   }
@@ -61,26 +70,27 @@ export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestam
   const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
   console.log("start");
   console.log({
-    actions: [{
-      account: 'rem.swap',
-      name: 'finish',
-      authorization: [{
-        actor: techAccount,
-        permission: 'active',
-      }],
-      data: {
-          "receiver": receiver,
-          "txid": txid.substring(2),
-          "swap_pubkey_str": swap_pubkey,
-          "amount": `${Number(asset).toFixed(4)} REM`,
-          "return_address": return_address.substring(2),
-          "return_chain_id": EthReturnChainId,
-          "timestamp": moment.utc(timestamp*1000).format("YYYY-MM-DDTHH:mm:ss"),
-          "sig": sig,
-          //"active_pubkey": active_pubkey,
-          //"owner_pubkey": owner_pubkey,
-      },
-    }]
+      actions: [{
+          account: 'rem.swap',
+          name: 'finish',
+          authorization: [{
+              actor: techAccount,
+              permission: 'active',
+          }],
+          data: {
+              "rampayer": techAccount,
+              "receiver": receiver,
+              "txid": txid.substring(2),
+              "swap_pubkey": swap_pubkey,
+              "quantity": `${Number(asset).toFixed(4)} REM`,
+              "return_address": return_address.substring(2),
+              "return_chain_id": EthReturnChainId,
+              "swap_timestamp": moment.utc(timestamp*1000).format("YYYY-MM-DDTHH:mm:ss"),
+              "sign": sig,
+              //"active_pubkey": active_pubkey,
+              //"owner_pubkey": owner_pubkey,
+          },
+      }]
   });
   const result = await api.transact({
     actions: [{
@@ -91,14 +101,15 @@ export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestam
         permission: 'active',
       }],
       data: {
+          "rampayer": techAccount,
           "receiver": receiver,
           "txid": txid.substring(2),
-          "swap_pubkey_str": swap_pubkey,
-          "amount": `${Number(asset).toFixed(4)} REM`,
+          "swap_pubkey": swap_pubkey,
+          "quantity": `${Number(asset).toFixed(4)} REM`,
           "return_address": return_address.substring(2),
           "return_chain_id": EthReturnChainId,
-          "timestamp": moment.utc(timestamp*1000).format("YYYY-MM-DDTHH:mm:ss"),
-          "sig": sig,
+          "swap_timestamp": moment.utc(timestamp*1000).format("YYYY-MM-DDTHH:mm:ss"),
+          "sign": sig,
           //"active_pubkey": active_pubkey,
           //"owner_pubkey": owner_pubkey,
       },
@@ -107,6 +118,5 @@ export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestam
     blocksBehind: 3,
     expireSeconds: 30,
   });
-  console.log(result);
   return result.transaction_id
 }

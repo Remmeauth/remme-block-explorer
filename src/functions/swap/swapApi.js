@@ -82,8 +82,8 @@ export const doSwapTask = async (current, props, callback) => {
     callback(null, props[id]);
   } else {
     try {
-      const responce = await actions[type][id](props);
-      callback(null, responce)
+      const response = await actions[type][id](props);
+      callback(null, response)
     } catch (e) {
       console.log(e.message);
       callback(new Error(exeption))
@@ -140,9 +140,7 @@ const actions = {
       return await RemGetSwapInfo(SwapID);
     },
     SwapFinalize: async ({AccountNameRem, SwapTransaction, SwapSecret, amount, SwapTransactionStatus, SwapSignDigest, ActiveKeyRem, OwnerKeyRem, addressEth }) => {
-      const finish = await RemFinishSwap(AccountNameRem, SwapTransaction, SwapSecret[1], amount, SwapTransactionStatus, SwapSignDigest, ActiveKeyRem, OwnerKeyRem, addressEth);
-      console.log(finish);
-      return null
+      return await RemFinishSwap(AccountNameRem, SwapTransaction, SwapSecret[1], amount, SwapTransactionStatus, SwapSignDigest, ActiveKeyRem, OwnerKeyRem, addressEth);
     }
   },
 
