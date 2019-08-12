@@ -85,10 +85,7 @@ export const EthRawTransactionApprove = async ( amount, myAddress ) => {
 export const EthRawTransaction = async ( amount, SwapSecret, addressEth ) => {
   try {
     const contract = new web3.eth.Contract(RemmeBridgeAbi, EthBridgeContractAddress);
-    console.log("RAW:");
-    //console.log("0x"+network.chainId, SwapSecret[1], amount*decimal);
-    //const data = await contract.methods.requestSwap("0x"+network.chainId, SwapSecret[1], amount*decimal).encodeABI();
-    const data = await contract.methods.requestSwap("0x"+'1c6ae7719a2a3b4ecb19584a30ff510ba1b6ded86e1fd8b8fc22f1179c622a32', SwapSecret[1], amount*decimal).encodeABI();
+    const data = await contract.methods.requestSwap("0x"+network.chainId, SwapSecret[1], amount*decimal).encodeABI();
     const responce = await genTransaction( addressEth, EthBridgeContractAddress, data )
     return responce;
   } catch (e) {

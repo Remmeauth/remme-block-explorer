@@ -23,8 +23,7 @@ export const RemRandomKeys = async () => {
 }
 
 export const RemSignDigest = (receiver, txid, swap_pubkey, asset, return_address, timestamp, privkey) => {
-  //const digest_to_sign = receiver + "*" + txid.substring(2) + "*" + network.chainId + "*" + swap_pubkey.substring(3) + "*" + `${Number(asset).toFixed(4)} REM` + "*" + return_address.substring(2) + "*" + EthReturnChainId + "*" + timestamp
-  const digest_to_sign = receiver + "*" + txid.substring(2) + "*" + '1c6ae7719a2a3b4ecb19584a30ff510ba1b6ded86e1fd8b8fc22f1179c622a32' + "*" + swap_pubkey.substring(3) + "*" + `${Number(asset).toFixed(4)} REM` + "*" + return_address.substring(2) + "*" + '0000000000000000000000000000000000000000000000000000000000000003' + "*" + timestamp
+  const digest_to_sign = receiver + "*" + txid.substring(2) + "*" + network.chainId + "*" + swap_pubkey.substring(3) + "*" + `${Number(asset).toFixed(4)} REM` + "*" + return_address.substring(2) + "*" + EthReturnChainId + "*" + timestamp
   console.log("Pub:", swap_pubkey );
   console.log("Priv:", privkey );
   console.log("digest_to_sign", digest_to_sign);
@@ -33,9 +32,7 @@ export const RemSignDigest = (receiver, txid, swap_pubkey, asset, return_address
 
 export const RemGenSwapId = (txid, swap_pubkey, asset, timestamp, return_address) => {
   const amount = `${Number(asset).toFixed(4)} REM`
-  //const swap_str = txid.substring(2) + "*" + network.chainId + "*" + swap_pubkey.substring(3) + "*" + amount + "*" + return_address.substring(2) + "*" + EthReturnChainId + "*" + timestamp
-  const swap_str = txid.substring(2) + "*" + '1c6ae7719a2a3b4ecb19584a30ff510ba1b6ded86e1fd8b8fc22f1179c622a32' + "*" + swap_pubkey.substring(3) + "*" + amount + "*" + return_address.substring(2) + "*" + EthReturnChainId + "*" + timestamp
-
+  const swap_str = txid.substring(2) + "*" + network.chainId + "*" + swap_pubkey.substring(3) + "*" + amount + "*" + return_address.substring(2) + "*" + EthReturnChainId + "*" + timestamp
   console.log("swap_str", swap_str);
   var hashed = CryptoJS.SHA256(swap_str);
   const result = hashed.toString(CryptoJS.enc.Hex);

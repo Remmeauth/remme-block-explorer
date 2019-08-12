@@ -3,6 +3,7 @@ import { message, Button, Icon } from 'antd';
 
 import CreateForm from '../../CreateForm';
 import { existingAccount, newAccount } from '../../../schemes';
+import { network } from '../../../config'
 
 
 class StepRemWallet extends Component {
@@ -10,17 +11,24 @@ class StepRemWallet extends Component {
     choice: false,
   };
 
-  handleExistingAccount = (e) => {
+  handleExistingAccount = async (e) => {
     const { onSubmit } = this.props;
     const form = this.form;
     form.validateFields((err, values) => {
       if (err) { return; }
       try {
-        onSubmit({
-          PrivateKeyRem: 'scatter',
-          AccountNameRem: values.account_name,
-          OwnerKeyRem: "",
-          ActiveKeyRem: ""
+        fetch(`${network.backendAddress}/api/getAccount/${values.account_name}`).then(res => res.json()).then(json =>{
+          console.log(json);
+          if (!json.account) {
+            message.error("Account not found.", 2);
+          } else {
+            onSubmit({
+              PrivateKeyRem: 'scatter',
+              AccountNameRem: values.account_name,
+              OwnerKeyRem: "",
+              ActiveKeyRem: ""
+            });
+          }
         });
       } catch (e) {
        message.error("Data is wrong. Try again.", 2);
@@ -34,11 +42,18 @@ class StepRemWallet extends Component {
     form.validateFields((err, values) => {
       if (err) { return; }
       try {
-        onSubmit({
-          PrivateKeyRem: 'scatter',
-          AccountNameRem: values.account_name,
-          OwnerKeyRem: values.owner_key,
-          ActiveKeyRem: values.active_key
+        fetch(`${network.backendAddress}/api/getAccount/${values.account_name}`).then(res => res.json()).then(json =>{
+          console.log(json);
+          if (json.account) {
+            message.error("Account already exist.", 2); 
+          } else {
+            onSubmit({
+              PrivateKeyRem: 'scatter',
+              AccountNameRem: values.account_name,
+              OwnerKeyRem: values.owner_key,
+              ActiveKeyRem: values.active_key
+            });
+          }
         });
       } catch (e) {
        message.error("Data is wrong. Try again.", 2);

@@ -33,7 +33,7 @@ export const getActions = async (id) => {
 
 export const getSwapInfo= async (id) => {
   try {
-    const swapInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'.swap", "scope": "'+network.account+'.swap", "table": "swaps", "limit": "500", "index_position": "secondary", "key_type": "i64", "lower_bound": '+id+', "upper_bound": '+id+' }' ));
+    const swapInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'.swap", "scope": "'+network.account+'.swap", "table": "swaps2", "limit": "500", "index_position": "secondary", "key_type": "i64", "lower_bound": '+id+', "upper_bound": '+id+' }' ));
     console.log(swapInfo);
     return swapInfo
   } catch (e) {
