@@ -43,7 +43,7 @@ export const RemSignDigest = (receiver, txid, swap_pubkey, asset, return_address
 
 export const RemGenSwapId = (txid, swap_pubkey, asset, timestamp, return_address) => {
   const amount = `${Number(asset).toFixed(4)} REM`
-  const swap_str = swap_pubkey + "*" + txid.substring(2) + "*" + network.chainId + "*" + amount + "*" + return_address.substring(2) + "*" + EthReturnChainId + "*" + timestamp
+  const swap_str = swap_pubkey.substring(3) + "*" + txid.substring(2) + "*" + network.chainId + "*" + amount + "*" + return_address.substring(2) + "*" + EthReturnChainId + "*" + timestamp
   console.log("swap_str", swap_str);
   const hashed = CryptoJS.SHA256(swap_str);
   const result = hashed.toString(CryptoJS.enc.Hex);
