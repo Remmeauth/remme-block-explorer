@@ -3,7 +3,7 @@ import { START, CANCEL } from '../types';
 const initialState = {
 };
 
-const handleStart = (state, { SwapFinish, SwapWait, SwapSignDigest, SwapID, SwapTransactionStatus, SwapSecret, SwapTransactionApproveStatus, SwapRawTransactionApprove, SwapTransactionApprove, SwapRawTransaction, SwapTransaction }) => ({
+const handleStart = (state, { SwapFinalize, SwapWait, SwapSignDigest, SwapID, SwapTransactionStatus, SwapSecret, SwapTransactionApproveStatus, SwapRawTransactionApprove, SwapTransactionApprove, SwapRawTransaction, SwapTransaction }) => ({
   SwapID,
   SwapSecret,
 
@@ -17,7 +17,7 @@ const handleStart = (state, { SwapFinish, SwapWait, SwapSignDigest, SwapID, Swap
 
   SwapSignDigest,
   SwapWait,
-  SwapFinish
+  SwapFinalize
 });
 
 const handleCancel = () => initialState;

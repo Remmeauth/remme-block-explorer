@@ -72,6 +72,7 @@ class SwapHistory extends Component {
   render() {
     const { type, amount, SwapApproveTransaction, SwapTransaction } = this.props
     const { current, taksStatus, currentStatus } = this.state
+    console.log(this.state);
     return (
       <React.Fragment>
         <div className={`loader ${currentStatus}`}></div>
@@ -131,7 +132,7 @@ function mapStateToProps(state) {
     SwapSignDigest:state.swap.SwapSignDigest,
     SwapID:state.swap.SwapID,
     SwapWait:state.swap.SwapWait,
-    SwapFinish: state.swap.SwapWait
+    SwapFinalize: state.swap.SwapFinalize
   };
 };
 

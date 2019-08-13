@@ -64,34 +64,10 @@ export const RemGetSwapInfo = async (SwapID) => {
 }
 
 export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestamp, sig, active_pubkey, owner_pubkey, return_address) => {
-  console.log("RemFinishSwap");
   const signatureProvider = new JsSignatureProvider([techPrivkey]);
   const rpc = new JsonRpc(`${network.protocol}://${network.host}:${network.port}`, { fetch });
   const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
-  console.log("start");
-  console.log({
-      actions: [{
-          account: 'rem.swap',
-          name: 'finish',
-          authorization: [{
-              actor: techAccount,
-              permission: 'active',
-          }],
-          data: {
-              "rampayer": techAccount,
-              "receiver": receiver,
-              "txid": txid.substring(2),
-              "swap_pubkey": swap_pubkey,
-              "quantity": `${Number(asset).toFixed(4)} REM`,
-              "return_address": return_address.substring(2),
-              "return_chain_id": EthReturnChainId,
-              "swap_timestamp": moment.utc(timestamp*1000).format("YYYY-MM-DDTHH:mm:ss"),
-              "sign": sig,
-              //"active_pubkey": active_pubkey,
-              //"owner_pubkey": owner_pubkey,
-          },
-      }]
-  });
+
   const result = await api.transact({
     actions: [{
       account: 'rem.swap',
