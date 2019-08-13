@@ -72,7 +72,6 @@ class SwapHistory extends Component {
   render() {
     const { type, amount, SwapApproveTransaction, SwapTransaction } = this.props
     const { current, taksStatus, currentStatus } = this.state
-    console.log(this.state);
     return (
       <React.Fragment>
         <div className={`loader ${currentStatus}`}></div>
