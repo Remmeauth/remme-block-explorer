@@ -43,7 +43,7 @@ const NavigationItems = [
   // },
   {
     title: 'Swap',
-    link: '/init-swap',
+    link: '/coming',
     icon: 'team',
     type: 'simple',
     key: 5,

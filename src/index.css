@@ -290,6 +290,10 @@ p {
   .theme-dark .ant-btn {
     background: #568fff;
     border-color: #568fff; }
+  .ant-btn.ant-input-search-button {
+    height: 32px;
+    min-width: 32px;
+    margin: 0; }
   .ant-btn span, .ant-btn i {
     color: #ffffff !important; }
   .ant-btn:hover {

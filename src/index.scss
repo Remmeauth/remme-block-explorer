@@ -332,6 +332,12 @@ p {
     border-color: getValue(textColorDark);
   }
 
+  &.ant-input-search-button {
+    height: 32px;
+    min-width: 32px;
+    margin: 0;
+  }
+
   span, i {
     color: #ffffff !important;
   }

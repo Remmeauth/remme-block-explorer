@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
 
 import logo from './assets/logo.png';
-import { Navigation, DayNightMode } from './components'
+import { Navigation, DayNightMode, Search } from './components'
 
 const { Header, Content, Footer } = Layout;
 
@@ -21,6 +21,7 @@ class App extends Component {
             </Link>
             <Navigation />
             <DayNightMode />
+            <Search/>
           </div>
         </Header>
         <Content>

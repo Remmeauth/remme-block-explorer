@@ -14,7 +14,7 @@ import RemmeProducerInfo from "./RemmeProducerInfo";
 import RemmeAccountTxInfo from "./RemmeAccountTxInfo";
 import CreateForm from './CreateForm';
 import TagsField from './TagsField';
-
+import Search from './Search';
 export {
   Navigation,
   SmartLink,
@@ -31,5 +31,6 @@ export {
   RemmeProducerInfo,
   RemmeAccountTxInfo,
   CreateForm,
-  TagsField
+  TagsField,
+  Search
 };

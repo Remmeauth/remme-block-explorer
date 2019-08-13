@@ -10,6 +10,8 @@ import Account from '../pages/Account';
 import SwapInit from '../pages/SwapInit';
 import Swap from '../pages/Swap';
 import PrivateRouter from './PrivateRoute';
+import Coming from '../pages/Coming';
+import NotFound from '../pages/NotFound'
 
 export default () => (
   <Router>
@@ -22,7 +24,9 @@ export default () => (
         <Route exact path="/account/:id" component={Account} />
         <Route exact path="/init-swap" component={SwapInit} />
         <PrivateRouter exact path="/swap" component={Swap} />
-        <Redirect to="/" />
+        <Route exact path="/coming" component={Coming} />
+
+        <Route component={NotFound} />
       </Switch>
     </App>
   </Router>

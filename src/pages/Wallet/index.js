@@ -95,7 +95,7 @@ class Wallet extends Component {
       const data = {
           from: name,
           receiver: name,
-          stake_quantity: values.amount,
+          stake_quantity: Number(`${values.amount}`).toFixed(4) + ` ${network.coin}`,
           transfer: false,
       }
       form.resetFields();
@@ -111,7 +111,7 @@ class Wallet extends Component {
       const data = {
           from: name,
           receiver: name,
-          unstake_quantity: values.amount,
+          unstake_quantity: Number(`${values.amount}`).toFixed(4) + ` ${network.coin}`,
           transfer: false,
       }
       form.resetFields();
