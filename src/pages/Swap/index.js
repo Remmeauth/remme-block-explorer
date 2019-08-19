@@ -20,6 +20,7 @@ class Swap extends Component {
         localStorage.removeItem("swap");
         logout();
         cancel();
+        window.location.reload();
       },
       onCancel() {},
     });

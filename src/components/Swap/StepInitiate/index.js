@@ -76,7 +76,7 @@ class StepInitiate extends Component {
     try {
       this.setState({ loading: true });
 
-      const addressEth = EthPrivateKeyToAddress(PrivateKeyEth);
+      const addressEth = await EthPrivateKeyToAddress(PrivateKeyEth);
       const addressRem = AccountNameRem;
 
       const balanceEthRem = await EthGetBalanceRem(addressEth);

@@ -17,8 +17,8 @@ class StepContent extends Component {
       <React.Fragment>
         {{
          0: (<StepType onSubmit={this.StepSubmit} />),
-         1: (<StepEthWallet onSubmit={this.StepSubmit} />),
-         2: (<StepRemWallet onSubmit={this.StepSubmit} />),
+         1: (<StepEthWallet onSubmit={this.StepSubmit} {...this.props} />),
+         2: (<StepRemWallet onSubmit={this.StepSubmit} {...this.props} />),
          3: (<StepInitiate onSubmit={this.StepSubmit} {...this.props} />),
         }[current]}
       </React.Fragment>

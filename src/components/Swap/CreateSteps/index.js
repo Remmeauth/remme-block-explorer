@@ -22,7 +22,7 @@ class CreateSteps extends Component {
   };
 
   next = (update_params) => {
-    const current = update_params.current ? update_params.current : this.state.current + 1;
+    const current = update_params.current !== undefined ? update_params.current : this.state.current + 1;
     this.setState({
       ...update_params,
       current
@@ -61,11 +61,6 @@ class CreateSteps extends Component {
             handleSubmit={this.next}
           />
         </div>
-
-        <div className="steps-action">
-          { current > 0 && current < 2 && ( <Button type="primary" onClick={() => this.prev()}> <Icon type="left" /> Back </Button> ) }
-        </div>
-
       </div>
     )
   }

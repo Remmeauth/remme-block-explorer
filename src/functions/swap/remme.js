@@ -2,11 +2,30 @@ import ecc from 'eosjs-ecc'
 import CryptoJS from "crypto-js";
 import bigInt from "big-integer"
 import moment from 'moment';
+import ScatterJS from '@scatterjs/core';
+import ScatterEOS from '@scatterjs/eosjs2';
+import Web3 from 'web3';
 
 import { Api, JsonRpc } from 'eosjs';
 import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
 
-import { network, techPrivkey, techAccount, EthReturnChainId } from '../../config'
+import {
+    network,
+    techPrivkey,
+    techAccount,
+    EthReturnChainId,
+    EthNetworkConfig,
+    EthTokenAbi,
+    EthTokenContractAddress, decimal
+} from '../../config';
+
+
+const web3 = new Web3(new Web3.providers.HttpProvider(EthNetworkConfig));
+
+ScatterJS.plugins( new ScatterEOS() );
+const net = ScatterJS.Network.fromJson(network);
+const rpc = new JsonRpc(net.fullhost());
+const eos = ScatterJS.eos(net, Api, {rpc});
 
 const formatSwapIdToLittleEnd = (str) => {
     let le = '';
@@ -23,8 +42,18 @@ export const RemPrivateKeyToAddress = ( PrivateKeyRem ) => {
   return PrivateKeyRem
 }
 
-export const RemGetBalanceRem = ( addressRem ) => {
-  return 0
+export const RemGetBalanceRem = async ( addressRem ) => {
+    try{
+        const res = await fetch(`${network.backendAddress}/api/getAccount/${addressRem}`);
+        const json = await res.json();
+        if(json.hasOwnProperty('account') && json.hasOwnProperty('balance')){
+            return json.balance.total_balance;
+        }else{
+            return 0;
+        }
+    }catch (e) {
+        return 0;
+    }
 }
 
 export const RemRandomKeys = async () => {
@@ -80,7 +109,7 @@ export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestam
           "rampayer": techAccount,
           "receiver": receiver,
           "txid": txid.substring(2),
-          "swap_pubkey": swap_pubkey,
+          "swap_pubkey_str": swap_pubkey,
           "quantity": `${Number(asset).toFixed(4)} REM`,
           "return_address": return_address.substring(2),
           "return_chain_id": EthReturnChainId,
@@ -95,4 +124,84 @@ export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestam
     expireSeconds: 30,
   });
   return result.transaction_id
+}
+
+export const EthStartSwap = async (AccountNameRem, amount, addressEth) => {
+    const connected = await ScatterJS.connect(network.account, {net});
+    if (!connected) return false;
+    const scatter = ScatterJS.scatter;
+
+    await scatter.getIdentity({accounts: [net]});
+    const account = scatter.identity.accounts.find(x => x.blockchain === net.blockchain);
+    const trx = await eos.transact({
+        actions: [{
+            account: 'rem.token',
+            name: 'transfer',
+            authorization: [{
+                actor: AccountNameRem,
+                permission: account.authority,
+            }],
+            data: {
+                from: account.name,
+                to: 'rem.swap',
+                quantity: Number(amount).toFixed(4) + ` ${network.coin}`,
+                memo:  network.chainId + ' ' + addressEth,
+            }
+        }]
+    }, {
+        blocksBehind: 3,
+        expireSeconds: 30,
+    });
+    return trx.transaction_id;
+}
+
+const getTransactionsByAccount = async (account, startBlockNumber, endBlockNumber) => {
+
+    if (endBlockNumber == null) {
+        endBlockNumber = await web3.eth.getBlockNumber();
+        console.log("Using endBlockNumber: " + endBlockNumber);
+    }
+
+    if (startBlockNumber == null) {
+        startBlockNumber = endBlockNumber - 100;
+        console.log("Using startBlockNumber: " + startBlockNumber);
+    }
+
+    console.log("Searching for transactions to/from account \"" + account + "\" within blocks "  + startBlockNumber + " and " + endBlockNumber);
+
+    for (let i = startBlockNumber; i <= endBlockNumber; i++) {
+        if (i % 1000 === 0) {
+            console.log("Searching block " + i);
+        }
+        const block = await web3.eth.getBlock(i, true);
+
+        if (block != null && block.transactions != null) {
+            for(let j = 0; j < block.transactions.length; j++){
+                let e = block.transactions[j];
+                if (
+                    account === "*" ||
+                    account === e.to
+                    // && e.from === "0x9f21......................."
+                ) {
+                    // console.log("  tx hash          : " + e.hash + "\n"
+                    //     + "   nonce           : " + e.nonce + "\n"
+                    //     + "   blockHash       : " + e.blockHash + "\n"
+                    //     + "   blockNumber     : " + e.blockNumber + "\n"
+                    //     + "   transactionIndex: " + e.transactionIndex + "\n"
+                    //     + "   from            : " + e.from + "\n"
+                    //     + "   to              : " + e.to + "\n"
+                    //     + "   value           : " + e.value + "\n"
+                    //     + "   time            : " + block.timestamp + " " + new Date(block.timestamp * 1000).toGMTString() + "\n"
+                    //     + "   gasPrice        : " + e.gasPrice + "\n"
+                    //     + "   gas             : " + e.gas + "\n"
+                    //     + "   input           : " + e.input);
+                    return e.hash;
+                }
+            }
+        }
+    }
+}
+
+export const EthFinishSwap = async (addressEth) => {
+    return await getTransactionsByAccount(addressEth);
 }

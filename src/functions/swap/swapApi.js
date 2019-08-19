@@ -6,7 +6,9 @@ import {
   EthRawTransactionApprove,
   RemRandomKeys,
   RemGenSwapId,
-  RemFinishSwap
+  RemFinishSwap,
+  EthStartSwap,
+  EthFinishSwap
 } from '../swap';
 
 export const taskList = {
@@ -67,11 +69,17 @@ export const taskList = {
     exeption: "Error"
   }
   ],
-  1: [{ // REM
-    id: "SwapId",
-    title: "Create SwapId",
-    exeption: "SwapId was not generated"
-  },
+  1: [
+    { // REM
+      id: "SwapTransaction",
+      title: "Create Swap Transaction",
+      exeption: "Swap Transaction error"
+    },
+    {
+      id: "SwapFinalize",
+      title: "Finalizing Swap on REMChain",
+      exeption: "Error"
+    },
   ]
 }
 
@@ -145,8 +153,11 @@ const actions = {
   },
 
   1: {
-    SwapId: () => {
-      return "11";
+    SwapTransaction: async ({ AccountNameRem, amount, addressEth }) => {
+      return await EthStartSwap(AccountNameRem, amount, addressEth);
+    },
+    SwapFinalize: async ({ addressEth }) => {
+      return await EthFinishSwap(addressEth);
     },
     // SwapSecret: () => {
     //   return randomHex(8);

@@ -1,3 +1,7 @@
+import Web3 from 'web3';
+import { EthNetworkConfig } from "../config";
+const web3 = new Web3(new Web3.providers.HttpProvider(EthNetworkConfig));
+
 export const newAccountValidator = (item, value, callback) => {
 
   if (value.length !== 12) {
@@ -16,6 +20,15 @@ export const newAccountValidator = (item, value, callback) => {
     callback("First character can't be '.'.");
   }
 
+  callback();
+};
+
+export const ethAddressValidator = async (item, value, callback) => {
+  if(!value){
+    callback("Please input ethereum address!");
+  }else if(!await web3.utils.isAddress(value)){
+    callback("Invalid ethereum address!");
+  }
   callback();
 };
 

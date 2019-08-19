@@ -64,8 +64,9 @@ export const EthMetamaskAccountAddress = () => {
   return window.ethereum.selectedAddress
 }
 
-export const EthPrivateKeyToAddress = ( PrivateKeyEth ) => {
+export const EthPrivateKeyToAddress = async ( PrivateKeyEth ) => {
   if (PrivateKeyEth === "metamask") { return EthMetamaskAccountAddress(); }
+  if(await web3.utils.isAddress(PrivateKeyEth)) { return PrivateKeyEth;}
   const privBuffer = new Buffer(PrivateKeyEth, 'hex');
   const PubKey = util.privateToPublic(privBuffer);
   const Address = "0x" + util.publicToAddress(PubKey).toString('hex');
