@@ -68,30 +68,33 @@ class StepRemWallet extends Component {
 
   connect = async () => {
     const {onSubmit} = this.props;
-    const connected = await ScatterJS.connect(network.account, {net});
-    if (!connected) {
-      return false;
-    }
-
-    await ScatterJS.logout();
-
-    const login = await ScatterJS.login({accounts: [net]});
-    if (!login) return console.error('no identity');
-
-    const account = await ScatterJS.account(network.blockchain);
-
-    if (!account) {
-      message.error('No accounts');
+    try {
+      await ScatterJS.connect(network.account, {net});
+      await ScatterJS.logout();
+    } catch (e) {
+      message.error("Connection error. Please restart your Scatter client.", 2);
       return false;
     }
 
     try {
+      const login = await ScatterJS.login({accounts: [net]});
+      if (!login) return console.error('no identity');
+
+      const account = await ScatterJS.account(network.blockchain);
+
+      if (!account) {
+        message.error('No accounts');
+        return false;
+      }
+
       const res = await fetch(`${network.backendAddress}/api/getAccount/${account.name}`);
       const json = await res.json();
+
       if (!json.account) {
         message.error("Account not found.", 2);
         return false;
       }
+
       onSubmit({
         PrivateKeyRem: 'scatter',
         AccountNameRem: account.name,

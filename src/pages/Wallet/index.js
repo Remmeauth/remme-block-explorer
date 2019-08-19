@@ -153,34 +153,29 @@ class Wallet extends Component {
     window.location.reload(false);
   }
 
-  login = () => {
-    if (ScatterJS.account) {
-      const account = ScatterJS.account('rem');
-      console.log(account);
-      if (account) {
-        this.handleAccountInfo(account.name, account.authority);
-      } else {
-        this.logout();
+  login = async () => {
+      try {
+          await ScatterJS.connect(network.account, {net});
+          await ScatterJS.logout();
+      } catch (e) {
+          message.error("Connection error. Please restart your Scatter client.", 2);
+          return false;
       }
-    } else {
-      ScatterJS.connect(network.account, {net}).then(connected => {
-        if(!connected) {
-          return
-        }
-        ScatterJS.login({ accounts: [net]}).then(id => {
-            if(!id) return console.error('no identity');
-            const account = ScatterJS.account(network.blockchain);
-            console.log(account);
-            if (account) {
-              this.handleAccountInfo(account.name, account.authority);
-            } else {
+
+      try {
+          const login = await ScatterJS.login({accounts: [net]});
+          if (!login) return console.error('no identity');
+
+          const account = await ScatterJS.account(network.blockchain);
+          if (!account) {
               message.error('No accounts');
-            }
-        });
-      });
-    }
-
-
+              return false;
+          }
+          this.handleAccountInfo(account.name, account.authority);
+      } catch (e) {
+          message.error('No accounts');
+          return false;
+      }
   }
 
   render() {
