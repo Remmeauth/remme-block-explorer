@@ -48,7 +48,7 @@ export const getProducer = async (url) => {
     const bp = JSON.parse(await producerInfo(url + "/bp.json"));
     return bp;
   } catch (e) {
-    console.log(e);
+    console.log(e.message);
     return {}
   }
 }
@@ -79,7 +79,6 @@ const calcBalance = (account, balance) => {
     const self_delegated_bandwidth = account.self_delegated_bandwidth ? (Number(account.self_delegated_bandwidth.cpu_weight.split(' ')[0]) + Number(account.self_delegated_bandwidth.net_weight.split(' ')[0])) : accInfo.staked;
     accInfo.staked_by_others = round(total_resources - self_delegated_bandwidth, 4)
     accInfo.total_balance = round(accInfo.unstaked + accInfo.staked, 4)
-    console.log("accInfo", accInfo);
     return accInfo;
   } catch (e) {
     console.log(e.message);
@@ -121,7 +120,6 @@ export const getAccount = async (id) => {
     let accountInfo = {};
     accountInfo.marketChart = chainInfo.marketChart;
     const account = JSON.parse(await api('POST','chain', 'get_account', '{"account_name":"' + id + '"}'));
-    console.log("account", account);
     accountInfo.account = account.account_name ? normalizeAccount(account) : false;
     const balanceInfo = JSON.parse(await api('POST','chain', 'get_currency_balance', '{"code":"'+network.account+'.token", "account":"'+id+'"}'));
     accountInfo.balance = calcBalance(accountInfo.account, balanceInfo);
