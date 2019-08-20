@@ -28,7 +28,6 @@ app.get('/api/getBlock/:id', async (req, res) => {
 
 app.get('/api/getTransaction/:id', async (req, res) => {
   const responce = await getTransaction(req.params.id);
-  console.log(responce);
   res.json(responce);
 });
 

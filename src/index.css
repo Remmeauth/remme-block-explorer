@@ -101,9 +101,9 @@ p {
     background: #ffffff; }
   .theme-dark .ant-collapse {
     background: #272c33; }
-  .theme-light .ant-collapse {
+  .theme-light .ant-collapse .ant-collapse-item {
     border-bottom: solid 1px #e7e7f3; }
-  .theme-dark .ant-collapse {
+  .theme-dark .ant-collapse .ant-collapse-item {
     border-bottom: solid 1px #323840; }
   .ant-collapse .ant-collapse-content {
     border-radius: 0; }
@@ -362,6 +362,35 @@ p {
   .theme-dark .ant-table-wrapper .ant-table-thead > tr > th {
     background: #323840;
     color: #8b9296; }
+
+.theme-light .table-filter {
+  color: #8e8ea8; }
+
+.theme-dark .table-filter {
+  color: #8b9296; }
+
+.table-filter span {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  display: inline-block; }
+
+.table-filter .ant-tag-checkable {
+  cursor: pointer;
+  margin-bottom: 10px; }
+  .theme-light .table-filter .ant-tag-checkable {
+    background: #ffffff;
+    color: #8e8ea8;
+    border-color: #e7e7f3; }
+  .theme-dark .table-filter .ant-tag-checkable {
+    background: #323840;
+    color: #8b9296;
+    border-color: #323840; }
+  .theme-light .table-filter .ant-tag-checkable.ant-tag-checkable-checked {
+    background: #364FCC;
+    color: #fff; }
+  .theme-dark .table-filter .ant-tag-checkable.ant-tag-checkable-checked {
+    background: #568fff;
+    color: #fff; }
 
 .theme-light .ant-tabs-nav .ant-tabs-tab {
   color: #8e8ea8; }
