@@ -24,7 +24,7 @@ export const getTransaction = async (id) => {
 
 export const getActions = async (id) => {
   try {
-    const chainInfo = JSON.parse(await api('POST','history', 'get_actions', '{"pos":"-1","offset":"-50","account_name":"'+id+'"}'));
+    const chainInfo = JSON.parse(await api('POST','history', 'get_actions', '{"pos":"-1","offset":"-1000","account_name":"'+id+'"}'));
     return chainInfo
   } catch (e) {
     console.log(e.message);

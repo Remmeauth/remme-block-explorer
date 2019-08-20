@@ -163,7 +163,9 @@ p {
   @include customize(theme) { background: getValue(cardBackground); }
   border: 0;
   border-radius: 0;
-  @include customize(theme) { border-bottom: solid 1px getValue(tableBorder); }
+  .ant-collapse-item {
+    @include customize(theme) { border-bottom: solid 1px getValue(tableBorder); }
+  }
   .ant-collapse-content {
     border-radius: 0;
     @include customize(theme) {
@@ -399,6 +401,36 @@ p {
       color: getValue(textColor);
     }
   }
+}
+
+.table-filter {
+  @include customize(theme) {
+    color: getValue(textColor);
+  }
+
+  span {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+
+  .ant-tag-checkable {
+    cursor: pointer;
+    margin-bottom: 10px;
+    @include customize(theme) {
+      background: getValue(tableHeader);
+      color: getValue(textColor);
+      border-color: getValue(tableBorder);
+    }
+
+    &.ant-tag-checkable-checked {
+      @include customize(theme) {
+        background: getValue(textColorDark);
+        color: #fff;
+      }
+    }
+  }
+
 }
 
 .ant-tabs-nav {
