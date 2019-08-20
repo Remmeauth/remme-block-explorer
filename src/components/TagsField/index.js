@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Tag, Input, Tooltip, Icon, message } from 'antd';
 
 import { newAccountValidator } from '../../schemes/validators.js'

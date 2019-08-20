@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
-import {Router } from 'react-router-dom';
 import { Menu, Dropdown, Icon, Input } from 'antd';
 
 const { Search } = Input;
-
-
-
 
 class SearchButton extends Component {
 
@@ -14,12 +10,12 @@ class SearchButton extends Component {
   }
 
   find = (value) => {
-    if (!isNaN(parseInt(value))) {
+    if (value.length === 64) {
+      window.location.href = '/transaction/' + value
+    } else if (!isNaN(parseInt(value))) {
       window.location.href = '/block/' + value
     } else if (value === 'rem' || value.length === 12) {
       window.location.href = '/account/' + value
-    } else if (value.length === 64) {
-      window.location.href = '/transaction/' + value
     } else {
       window.location.href = '/404'
     }

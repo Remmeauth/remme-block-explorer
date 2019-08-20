@@ -1,6 +1,5 @@
 import ecc from 'eosjs-ecc'
 import CryptoJS from "crypto-js";
-import bigInt from "big-integer"
 import moment from 'moment';
 import ScatterJS from '@scatterjs/core';
 import ScatterEOS from '@scatterjs/eosjs2';
@@ -14,9 +13,7 @@ import {
     techPrivkey,
     techAccount,
     EthReturnChainId,
-    EthNetworkConfig,
-    EthTokenAbi,
-    EthTokenContractAddress, decimal
+    EthNetworkConfig
 } from '../../config';
 
 

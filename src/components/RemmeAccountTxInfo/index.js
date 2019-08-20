@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import ReactJson from 'react-json-view'
 import { Table, Tag } from 'antd';
 import Moment from 'react-moment';
 
@@ -96,7 +95,7 @@ class RemmeAccountTxInfo extends Component {
   }
 
   render() {
-    const {actions, loading, dataSource, dataFilter, selectedTags} = this.state;
+    const { loading, dataSource, dataFilter, selectedTags} = this.state;
     return (
       <React.Fragment>
         {

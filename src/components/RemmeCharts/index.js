@@ -49,8 +49,6 @@ class RemmeCharts extends Component {
   render() {
     const {show} = this.state
     const { totalBlocks, producer, marketChart, producers } = this.props.data
-    console.log(this.props.data);
-
     return (
       <React.Fragment>
         <h4>Network Stats</h4>
@@ -63,16 +61,20 @@ class RemmeCharts extends Component {
           <Col className="gutter-row" sm={24} md={12} lg={8} xl={7}>
             { show &&
               <QueueAnim type="right"  >
-                <BlockInfoComponent icon="code-sandbox" title="Total Blocks" value={totalBlocks} color="#f9b22b" key='1'/>
-                <BlockInfoComponent icon="user" title="Total Producers" value={producers.length} color="#56c0d8" key='2'/>
+                <div key='1'>
+                  <BlockInfoComponent icon="code-sandbox" title="Total Blocks" value={totalBlocks} color="#f9b22b" key='1'/>
+                  <BlockInfoComponent icon="user" title="Total Producers" value={producers.length} color="#56c0d8" key='2'/>
+                </div>
               </QueueAnim>
             }
           </Col>
           <Col className="gutter-row" sm={24} md={12} lg={8} xl={7}>
             { show &&
-              <QueueAnim type="right" >
-                <BlockInfoComponent icon="column-width" title="Total Transactions" color="#ef534f" value="-" key='3'/>
-                <BlockInfoComponent classes="blockinfo-producer" icon="check-circle" title="Producer" value={producer} color="#4cd79c" key='4'/>
+              <QueueAnim type="right" delay={300} >
+                <div key='1'>
+                  <BlockInfoComponent icon="column-width" title="Total Transactions" color="#ef534f" value="-" key='3'/>
+                  <BlockInfoComponent classes="blockinfo-producer" icon="check-circle" title="Producer" value={producer} color="#4cd79c" key='4'/>
+                </div>
               </QueueAnim>
             }
           </Col>

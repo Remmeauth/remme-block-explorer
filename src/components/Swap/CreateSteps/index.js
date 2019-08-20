@@ -1,7 +1,7 @@
 import './style.css';
 
 import React, { Component } from "react";
-import { Steps, Popover, Button, Icon } from 'antd';
+import { Steps, Popover } from 'antd';
 
 import StepContent from '../StepContent';
 
