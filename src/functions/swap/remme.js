@@ -59,8 +59,8 @@ export const RemRandomKeys = async () => {
   return [privateKey, publicKey]
 }
 
-export const RemSignDigest = (receiver, txid, swap_pubkey, asset, return_address, timestamp, privkey) => {
-  const digest_to_sign = receiver + "*" + txid.substring(2) + "*" + network.chainId + "*" + `${Number(asset).toFixed(4)} REM` + "*" + return_address.substring(2) + "*" + EthReturnChainId + "*" + timestamp
+export const RemSignDigest = (receiver, txid, swap_pubkey, asset, return_address, timestamp, privkey, active_pubkey, owner_pubkey) => {
+  const digest_to_sign = receiver + "*" + ((active_pubkey && owner_pubkey) ? owner_pubkey + "*" + active_pubkey + "*" : '') + txid.substring(2) + "*" + network.chainId + "*" + `${Number(asset).toFixed(4)} REM` + "*" + return_address.substring(2) + "*" + EthReturnChainId + "*" + timestamp
   console.log("Pub:", swap_pubkey );
   console.log("Priv:", privkey );
   console.log("digest_to_sign", digest_to_sign);
@@ -93,28 +93,31 @@ export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestam
   const signatureProvider = new JsSignatureProvider([techPrivkey]);
   const rpc = new JsonRpc(`${network.protocol}://${network.host}:${network.port}`, { fetch });
   const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
+  const data = {
+      "rampayer": techAccount,
+      "receiver": receiver,
+      "txid": txid.substring(2),
+      "swap_pubkey_str": swap_pubkey,
+      "quantity": `${Number(asset).toFixed(4)} REM`,
+      "return_address": return_address.substring(2),
+      "return_chain_id": EthReturnChainId,
+      "swap_timestamp": moment.utc(timestamp*1000).format("YYYY-MM-DDTHH:mm:ss"),
+      "sign": sig
+  };
+  if(active_pubkey && owner_pubkey){
+      data['active_pubkey_str'] = active_pubkey;
+      data['owner_pubkey_str'] = owner_pubkey;
+  }
 
   const result = await api.transact({
     actions: [{
       account: 'rem.swap',
-      name: 'finish',
+      name: data.hasOwnProperty('active_pubkey_str') ? 'finishnewacc' : 'finish',
       authorization: [{
         actor: techAccount,
         permission: 'active',
       }],
-      data: {
-          "rampayer": techAccount,
-          "receiver": receiver,
-          "txid": txid.substring(2),
-          "swap_pubkey_str": swap_pubkey,
-          "quantity": `${Number(asset).toFixed(4)} REM`,
-          "return_address": return_address.substring(2),
-          "return_chain_id": EthReturnChainId,
-          "swap_timestamp": moment.utc(timestamp*1000).format("YYYY-MM-DDTHH:mm:ss"),
-          "sign": sig,
-          //"active_pubkey": active_pubkey,
-          //"owner_pubkey": owner_pubkey,
-      },
+      data,
     }]
   }, {
     blocksBehind: 3,
@@ -150,56 +153,4 @@ export const EthStartSwap = async (AccountNameRem, amount, addressEth) => {
         expireSeconds: 30,
     });
     return trx.transaction_id;
-}
-
-const getTransactionsByAccount = async (account, startBlockNumber, endBlockNumber) => {
-
-    if (endBlockNumber == null) {
-        endBlockNumber = await web3.eth.getBlockNumber();
-        console.log("Using endBlockNumber: " + endBlockNumber);
-    }
-
-    if (startBlockNumber == null) {
-        startBlockNumber = endBlockNumber - 100;
-        console.log("Using startBlockNumber: " + startBlockNumber);
-    }
-
-    console.log("Searching for transactions to/from account \"" + account + "\" within blocks "  + startBlockNumber + " and " + endBlockNumber);
-
-    for (let i = startBlockNumber; i <= endBlockNumber; i++) {
-        if (i % 1000 === 0) {
-            console.log("Searching block " + i);
-        }
-        const block = await web3.eth.getBlock(i, true);
-
-        if (block != null && block.transactions != null) {
-            for(let j = 0; j < block.transactions.length; j++){
-                let e = block.transactions[j];
-                console.log(e.to);
-                if (
-                    account === "*" ||
-                    account === e.to
-                    // && e.from === "0x9f21......................."
-                ) {
-                    // console.log("  tx hash          : " + e.hash + "\n"
-                    //     + "   nonce           : " + e.nonce + "\n"
-                    //     + "   blockHash       : " + e.blockHash + "\n"
-                    //     + "   blockNumber     : " + e.blockNumber + "\n"
-                    //     + "   transactionIndex: " + e.transactionIndex + "\n"
-                    //     + "   from            : " + e.from + "\n"
-                    //     + "   to              : " + e.to + "\n"
-                    //     + "   value           : " + e.value + "\n"
-                    //     + "   time            : " + block.timestamp + " " + new Date(block.timestamp * 1000).toGMTString() + "\n"
-                    //     + "   gasPrice        : " + e.gasPrice + "\n"
-                    //     + "   gas             : " + e.gas + "\n"
-                    //     + "   input           : " + e.input);
-                    return e.hash;
-                }
-            }
-        }
-    }
-}
-
-export const EthFinishSwap = async (addressEth) => {
-    return await getTransactionsByAccount(addressEth);
 }

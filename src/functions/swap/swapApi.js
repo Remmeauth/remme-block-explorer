@@ -7,8 +7,7 @@ import {
   RemRandomKeys,
   RemGenSwapId,
   RemFinishSwap,
-  EthStartSwap,
-  EthFinishSwap
+  EthStartSwap
 } from '../swap';
 
 export const taskList = {
@@ -132,8 +131,8 @@ const actions = {
       return await EthTransactionStatus( SwapTransaction )
     },
 
-    SwapSignDigest: ({ AccountNameRem, SwapTransaction, SwapSecret, amount, addressEth, SwapTransactionStatus  }) => {
-      return RemSignDigest( AccountNameRem, SwapTransaction, SwapSecret[1], amount, addressEth, SwapTransactionStatus, SwapSecret[0])
+    SwapSignDigest: ({ AccountNameRem, SwapTransaction, SwapSecret, amount, addressEth, SwapTransactionStatus, ActiveKeyRem, OwnerKeyRem  }) => {
+      return RemSignDigest( AccountNameRem, SwapTransaction, SwapSecret[1], amount, addressEth, SwapTransactionStatus, SwapSecret[0], ActiveKeyRem, OwnerKeyRem)
     },
 
     SwapID: ({ SwapTransaction, SwapSecret, amount, SwapTransactionStatus, addressEth }) => {
