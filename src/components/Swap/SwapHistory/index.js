@@ -70,7 +70,7 @@ class SwapHistory extends Component {
   }
 
   render() {
-    const { type, amount, SwapTransaction, SwapFinalize } = this.props
+    const { type, amount, SwapTransaction, SwapFinalize, addressEth } = this.props
     const { current, taksStatus, currentStatus } = this.state
     return (
       <React.Fragment>
@@ -82,7 +82,7 @@ class SwapHistory extends Component {
           <div className="success-block align-center">
             <h4 className="status-success">Success!</h4>
             <h6>
-              <b>{amount} Remme tokens</b> have been sent: <BlockexplorerLink tx={ type ? SwapTransaction : SwapFinalize} type={type} />
+              <BlockexplorerLink tx={ type ? addressEth : SwapFinalize} type={type} amount={amount} />
             </h6>
           </div>
          }

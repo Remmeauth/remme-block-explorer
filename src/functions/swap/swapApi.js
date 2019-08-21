@@ -75,11 +75,6 @@ export const taskList = {
       title: "Create Swap Transaction",
       exeption: "Swap Transaction error"
     },
-    {
-      id: "SwapFinalize",
-      title: "Finalizing Swap on REMChain",
-      exeption: "Error"
-    },
   ]
 }
 
@@ -156,36 +151,5 @@ const actions = {
     SwapTransaction: async ({ AccountNameRem, amount, addressEth }) => {
       return await EthStartSwap(AccountNameRem, amount, addressEth);
     },
-    SwapFinalize: async ({ addressEth }) => {
-      return await EthFinishSwap(addressEth);
-    },
-    // SwapSecret: () => {
-    //   return randomHex(8);
-    // },
-    // SwapRawTransaction: async ({ amount, addressEth, SwapId, SwapSecret }) => {
-    //   return await RemRawTransactionSwap( amount, addressEth, SwapId, SwapSecret )
-    // },
-    // SwapTransaction: async ({ SwapId, type, SwapRawTransaction, PrivateKeyRem, amount, addressEth, NodeSwap }) => {
-    //   return await RemTransactionSwap(PrivateKeyRem, SwapRawTransaction, NodeSwap);
-    // },
-    // SwapApproveTransaction: ({ SwapTransaction, SwapId, type, SwapRawTransaction, PrivateKeyRem, amount, addressEth }) => {
-    //   return new Promise((resolve, reject) => {
-    //     request.post(backendUrl,{
-    //       json:    { SwapId, type, key: PrivateKeyRem, amount, addressEth, SwapTransaction }
-    //     }, function(error, response, body){
-    //       if (error) {
-    //         resolve(null)
-    //       } else {
-    //         try {
-    //           if (body.status === 2) { resolve(null) }
-    //           else if (body.status === 1) { resolve(body.message) }
-    //           else { reject(new Error("Swap was not approved")) }
-    //         } catch (e) {
-    //           reject(new Error(e.message))
-    //         }
-    //       }
-    //     });
-    //   });
-    // }
   }
 }
