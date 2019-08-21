@@ -29,7 +29,7 @@ class SimpleMarkers extends Component {
         markers: markers
       })
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
     }
 
 

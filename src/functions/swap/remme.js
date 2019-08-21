@@ -142,7 +142,7 @@ export const EthStartSwap = async (AccountNameRem, amount, addressEth) => {
                 from: account.name,
                 to: 'rem.swap',
                 quantity: Number(amount).toFixed(4) + ` ${network.coin}`,
-                memo:  network.chainId + ' ' + addressEth,
+                memo:  EthReturnChainId + ' ' + addressEth,
             }
         }]
     }, {
@@ -175,6 +175,7 @@ const getTransactionsByAccount = async (account, startBlockNumber, endBlockNumbe
         if (block != null && block.transactions != null) {
             for(let j = 0; j < block.transactions.length; j++){
                 let e = block.transactions[j];
+                console.log(e.to);
                 if (
                     account === "*" ||
                     account === e.to

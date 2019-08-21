@@ -52,7 +52,7 @@ class RemmeAccountTxInfo extends Component {
       const response = await fetch(`${network.backendAddress}/api/getActions/${id}`);
       const json = await response.json();
 
-      console.log(json);
+      //console.log(json);
 
       var dataSource = [];
       var dataFilter = [];
