@@ -1,21 +1,24 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-import { Result, Button } from 'antd';
+import { Button, Row, Col, Card } from 'antd';
 
 class RemmeResult extends Component {
   render() {
-    const { error } = this.props;
+    const { error, description } = this.props;
     return (
-      <Result
-        title={error}
-        extra={
-          <Link to="/">
-            <Button type="primary" key="console">
-              Go Dashboard
-            </Button>
-          </Link>
-        }
-      />
+      <Row>
+        <Col className="align-center" key="1">
+          <Card className="card-with-padding" >
+            <h4>{error}</h4>
+            <p>{description}</p>
+            <Link to="/">
+              <Button type="primary" key="console">
+                Go Dashboard
+              </Button>
+            </Link>
+          </Card>
+        </Col>
+      </Row>
     )
   }
 }

@@ -1,5 +1,4 @@
 import { newAccountValidator } from './validators.js'
-import { network } from '../config.js'
 
 export const walletVote = [
   {

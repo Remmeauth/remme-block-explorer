@@ -85,7 +85,7 @@ class RemmeProducerInfo extends Component {
           producerDataSource: accountDataSource
         });
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
       const accountDataSource = [
           {
             key: '0',

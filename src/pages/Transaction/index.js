@@ -34,7 +34,6 @@ class Transaction extends Component {
     try {
       const response = await fetch( network.backendAddress + `/api/getTransaction/` + id);
       const json = await response.json();
-      console.log(json);
       this.setState({
         error: false,
         loading: false,

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { Row, Col, Spin, Icon  } from 'antd';
+import QueueAnim from 'rc-queue-anim';
+
+import { RemmeResult } from '../../components'
 
 class NotFound extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <h2 className="align-center">Content not found</h2> 
-      </React.Fragment>
+      <QueueAnim type="right" gutter={30}>
+        <RemmeResult key="1" error="404" description="Content not found" />
+      </QueueAnim>
     )
   }
 }

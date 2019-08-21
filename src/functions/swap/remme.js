@@ -1,6 +1,5 @@
 import ecc from 'eosjs-ecc'
 import CryptoJS from "crypto-js";
-import bigInt from "big-integer"
 import moment from 'moment';
 import ScatterJS from '@scatterjs/core';
 import ScatterEOS from '@scatterjs/eosjs2';
@@ -14,9 +13,7 @@ import {
     techPrivkey,
     techAccount,
     EthReturnChainId,
-    EthNetworkConfig,
-    EthTokenAbi,
-    EthTokenContractAddress, decimal
+    EthNetworkConfig
 } from '../../config';
 
 
@@ -145,7 +142,7 @@ export const EthStartSwap = async (AccountNameRem, amount, addressEth) => {
                 from: account.name,
                 to: 'rem.swap',
                 quantity: Number(amount).toFixed(4) + ` ${network.coin}`,
-                memo:  network.chainId + ' ' + addressEth,
+                memo:  EthReturnChainId + ' ' + addressEth,
             }
         }]
     }, {
@@ -178,6 +175,7 @@ const getTransactionsByAccount = async (account, startBlockNumber, endBlockNumbe
         if (block != null && block.transactions != null) {
             for(let j = 0; j < block.transactions.length; j++){
                 let e = block.transactions[j];
+                console.log(e.to);
                 if (
                     account === "*" ||
                     account === e.to

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import App from '../App';
 import Home from '../pages/Home';
@@ -25,7 +25,6 @@ export default () => (
         <Route exact path="/init-swap" component={SwapInit} />
         <PrivateRouter exact path="/swap" component={Swap} />
         <Route exact path="/coming" component={Coming} />
-
         <Route component={NotFound} />
       </Switch>
     </App>

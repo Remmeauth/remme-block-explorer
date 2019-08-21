@@ -72,7 +72,7 @@ class Wallet extends Component {
     const form = this.form4;
     form.validateFields((err, values) => {
       if (err) { return; }
-      if (!producers || producers.length == 0) {
+      if (!producers || producers.length === 0) {
         message.error('Pls. Set producers.');
         return;
       }

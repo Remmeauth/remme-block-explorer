@@ -20,7 +20,6 @@ class Account extends Component {
     try {
       const response = await fetch(`${network.backendAddress}/api/getAccount/${id}`);
       const json = await response.json();
-      console.log(json);
       if (!json.account.account_name) {
         this.setState({
           error: "Unknown Account",
@@ -92,10 +91,11 @@ class Account extends Component {
                  <Panel header={"Account Permissions ("+raw.account.permissions.length+")"} key="2">
                    <ReactJson src={raw.account.permissions} collapsed={2} theme="ocean" />
                  </Panel>
-                 <Panel header="Actions" key="3">
-                   <RemmeAccountTxInfo id={raw.account.account_name}/>
-                 </Panel>
                 </Collapse>
+                <div key="2">
+                  <h4>Actions:</h4>
+                  <RemmeAccountTxInfo id={raw.account.account_name}/>
+                </div>
               </QueueAnim>
             </React.Fragment>
           )

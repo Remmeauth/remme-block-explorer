@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { Row, Col, Spin, Icon  } from 'antd';
+import QueueAnim from 'rc-queue-anim';
+
+import { RemmeResult } from '../../components'
 
 class Coming extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <h2 className="align-center">Coming Soon</h2>
-      </React.Fragment>
+      <QueueAnim type="right" gutter={30}>
+        <RemmeResult key="1" error="Coming Soon" description="We are actively working on it, so check back soon!" />
+      </QueueAnim>
     )
   }
 }
