@@ -76,17 +76,16 @@ class StepRemWallet extends Component {
       return false;
     }
 
+    let account;
     try {
-      const login = await ScatterJS.login({accounts: [net]});
-      if (!login) return console.error('no identity');
+      await ScatterJS.login({accounts: [net]});
+      account = await ScatterJS.account(network.blockchain);
+    } catch (e) {
+      message.error("No accounts", 2);
+      return false;
+    }
 
-      const account = await ScatterJS.account(network.blockchain);
-
-      if (!account) {
-        message.error('No accounts');
-        return false;
-      }
-
+    try {
       const res = await fetch(`${network.backendAddress}/api/getAccount/${account.name}`);
       const json = await res.json();
 
