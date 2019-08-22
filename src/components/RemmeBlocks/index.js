@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import QueueAnim from 'rc-queue-anim';
 import { Row, Col, Card, Icon } from 'antd';
-import Moment from 'react-moment';
 
-import { dateFormat } from '../../config.js'
+import { TimeStamp } from '../../components'
 
 import './style.css'
 
@@ -65,7 +64,7 @@ class RemmeBlocks extends Component {
                   <Card className="block-item" title=<Link to={"/block/" + item.block_num}><Icon type="code-sandbox" /> {item.block_num}</Link> bordered={true}>
                     <span className="block-transactions">{item.transactions} Transactions</span>
                     <span className="block-producer">Producer: <Link to={"/account/" + item.producer}><b>{item.producer}</b></Link></span>
-                    <span className="block-time"><Moment format={dateFormat}>{item.timestamp}</Moment></span>
+                    <span className="block-time"><TimeStamp timestamp={item.timestamp} /></span>
                   </Card>
                 </Col>
               )}

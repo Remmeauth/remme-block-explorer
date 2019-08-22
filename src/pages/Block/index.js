@@ -71,7 +71,7 @@ class Block extends Component {
         }).map(( item, index ) => {
           return {
             key: index,
-            id: item["trx"]["id"],
+            tx: item["trx"]["id"],
             expiration: item["trx"]["transaction"]["expiration"],
             cpu_usage_us: item["cpu_usage_us"],
             net_usage_words: item["net_usage_words"],
@@ -117,7 +117,7 @@ class Block extends Component {
                </Panel>
              </Collapse>
              <h4>Transactions:</h4>
-             <Table className="block-transactions" dataSource={dataSourceTx} columns={tableColunm(["id", "expiration", "cpu", "net", "status", "actions"])} pagination={false} />
+             <Table className="block-transactions" dataSource={dataSourceTx} columns={tableColunm(["tx", "expiration", "cpu", "net", "status", "actions"])} pagination={false} />
             </React.Fragment>
           )
         }

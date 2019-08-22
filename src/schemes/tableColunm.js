@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import { Icon, Tag } from 'antd';
-import Moment from 'react-moment';
 
-import { dateFormat } from '../config.js'
+import { TimeStamp } from '../components'
 
 export const tableColunm = (columns) => {
   return columns.map(name => {
@@ -46,18 +45,25 @@ const list = {
     render: (text) => (<span>{JSON.stringify(text)}</span>)
   },
 
-  'id': {
-    title: 'ID',
-    dataIndex: 'id',
-    key: 'id',
+  'tx': {
+    title: 'TX ID',
+    dataIndex: 'tx',
+    key: 'tx',
     render: (text) => (<Link to={'/transaction/' + text}>{text.substring(0,10) + '...' + text.slice(-10)}</Link>)
+  },
+
+  'date': {
+    title: 'Date',
+    dataIndex: 'date',
+    key: 'date',
+    render: text => (<TimeStamp timestamp={text} />)
   },
 
   'expiration': {
     title: 'Expiration',
     dataIndex: 'expiration',
     key: 'expiration',
-    render: text => (<Moment format={dateFormat}>{text}</Moment>)
+    render: text => (<TimeStamp timestamp={text} />)
   },
 
   'cpu': {
