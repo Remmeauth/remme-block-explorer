@@ -35,7 +35,7 @@ const list = {
     title: 'Account',
     dataIndex: 'account',
     key: 'account',
-    render: text => (<span><Icon type="bell" /> {text}</span> )
+    render: text => (<span><Icon type="bell" /> <Link to={'/account/' + text}>{text}</Link></span> )
   },
 
   'data': {
@@ -49,7 +49,8 @@ const list = {
     title: 'TX ID',
     dataIndex: 'tx',
     key: 'tx',
-    render: (text) => (<Link to={'/transaction/' + text}>{text.substring(0,10) + '...' + text.slice(-10)}</Link>)
+    //render: (text) => (<Link to={'/transaction/' + text}>{text.substring(0,10) + '...' + text.slice(-10)}</Link>)
+    render: (text) => (<Link to={'/transaction/' + text}>{text.substring(0,10) + '..'}</Link>)
   },
 
   'date': {

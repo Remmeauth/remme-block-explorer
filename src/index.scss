@@ -251,6 +251,22 @@ p {
   overflow: hidden;
 }
 
+.ant-table-pagination {
+  padding: 0 15px;
+
+  .ant-pagination-item-link-icon {
+    @include customize(theme) { color: getValue(textColorDark); }
+  }
+
+  .ant-pagination-item-ellipsis {
+    @include customize(theme) { color: getValue(textColor); }
+  }
+}
+
+.ant-table-row-expand-icon {
+  @include customize(theme) { color: getValue(textColor); }
+}
+
 .ant-layout-content {
   padding: 0 50px;
   @include customize(theme) { background: getValue(bodyBackground);  }
