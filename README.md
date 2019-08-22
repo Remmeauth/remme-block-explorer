@@ -4,7 +4,7 @@
 
 REMME Block Explorer is an open source web tool that allows to view information about blocks and transactions on the REMME blockchain.
 
-![Image](https://rawcdn.githack.com/Remmeauth/remme-block-explorer/b1fc97698043e0261351e041f30c3714030ddfe1/src/assets/screen.png)
+![Image](https://rawcdn.githack.com/Remmeauth/remme-block-explorer/778389ba26afddff7af82bdc38f03f6e07e36029/src/assets/screen.png)
 
 ## Get started
 0. Install dependencies.
