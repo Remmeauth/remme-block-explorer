@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
 
-import logo from './assets/logo.png';
+
 import { Navigation, DayNightMode, Search } from './components'
 
 const { Header, Content, Footer } = Layout;
@@ -17,7 +17,6 @@ class App extends Component {
           <div className="header-wrap">
             <Link to="/">
               <h2 style={{float: 'left', marginRight: '20px'}}>Explorer</h2>
-              {this.sad && <img className="logo" src={logo} alt="Logo" />}
             </Link>
             <Navigation />
             <DayNightMode />
