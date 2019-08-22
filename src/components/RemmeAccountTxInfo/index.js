@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { Table, Tag } from 'antd';
-import Moment from 'react-moment';
 
 import { RemmeSpin } from '../../components'
-import { network, dateFormat } from '../../config.js'
+import { network } from '../../config.js'
+import { tableColunm } from '../../schemes'
 
 const { CheckableTag } = Tag;
 
@@ -12,72 +11,45 @@ const unique = (value, index, self) => {
   return self.indexOf(value) === index
 }
 
-const columns = [
-  {
-    title: 'TX',
-    dataIndex: 'tx',
-    key: 'tx',
-    render: (text) => (<Link to={'/transaction/' + text}>{text.substring(0,10) + '...' + text.slice(-10)}</Link>)
-  },
-  {
-    title: 'Date',
-    dataIndex: 'date',
-    key: 'date',
-    render: (text) => (<Moment format={dateFormat}>{text}</Moment>)
-  },
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => (<Tag color="#ef534f">{text}</Tag>),
-  },
-  {
-    title: 'Data',
-    dataIndex: 'data',
-    key: 'data',
-  }
-];
-
 class RemmeAccountTxInfo extends Component {
 
   state = {
     selectedTags: [],
     loading: true,
-    actions: {}
   }
 
   handleUpdate = async () => {
     const { id } = this.props;
+
     try {
       const response = await fetch(`${network.backendAddress}/api/getActions/${id}`);
       const json = await response.json();
-
-      //console.log(json);
+      const actions = json.actions.reverse()
 
       var dataSource = [];
       var dataFilter = [];
-      const actions = json.actions.reverse()
 
       actions.forEach(item => {
-        if (!dataSource.some(el => el.hex_data === item.action_trace.act.hex_data)) {
+        if (!dataSource.some(el => el.hex_data === item.action_trace.act.hex_data && el.block_time === item.block_time )) {
           dataFilter.push(item.action_trace.act.name)
           dataSource.push({
             key: item.global_action_seq,
             tx: item.action_trace.trx_id,
             date: item.block_time,
             name: item.action_trace.act.name,
-            data: JSON.stringify(item.action_trace.act.data),
-            hex_data: item.action_trace.act.hex_data
+            data: item.action_trace.act.data,
+            hex_data: item.action_trace.act.hex_data,
+            block_time: item.block_time
           })
         }
       });
 
       this.setState({
         loading:false,
-        actions: actions,
         dataSource: dataSource,
         dataFilter: dataFilter.filter(unique)
       });
+
     } catch (e) {
       console.log(e.message);
     }
@@ -91,7 +63,6 @@ class RemmeAccountTxInfo extends Component {
     const { selectedTags } = this.state;
     const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
     this.setState({ selectedTags: nextSelectedTags });
-
   }
 
   render() {
@@ -114,7 +85,7 @@ class RemmeAccountTxInfo extends Component {
                 </CheckableTag>
               ))}
               </div>
-              <Table dataSource={dataSource.filter(el => { if (!selectedTags.length) return true; return selectedTags.includes(el.name); })} pagination={{ pageSize: 25 }} columns={columns} />
+              <Table dataSource={dataSource.filter(el => { if (!selectedTags.length) return true; return selectedTags.includes(el.name); })} pagination={{ pageSize: 25 }} columns={tableColunm(["tx", "date", "name", "data"])} />
             </div>
         }
       </React.Fragment>

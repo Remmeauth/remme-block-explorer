@@ -550,6 +550,16 @@ p {
   .theme-dark .ant-form .ant-form-item-label > label {
     color: #8b9296; }
 
+.tabs-card {
+  padding: 10px 20px 20px;
+  border: 1px solid; }
+  .theme-light .tabs-card {
+    border-color: #e7e7f3;
+    background: #ffffff; }
+  .theme-dark .tabs-card {
+    border-color: #323840;
+    background: #272c33; }
+
 .form-wit-tags-field {
   margin-bottom: 15px; }
   .form-wit-tags-field .ant-form-item {
