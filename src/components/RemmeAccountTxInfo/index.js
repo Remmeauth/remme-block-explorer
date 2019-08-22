@@ -52,14 +52,14 @@ class RemmeAccountTxInfo extends Component {
       const response = await fetch(`${network.backendAddress}/api/getActions/${id}`);
       const json = await response.json();
 
-      //console.log(json);
+      console.log(json);
 
       var dataSource = [];
       var dataFilter = [];
       const actions = json.actions.reverse()
 
       actions.forEach(item => {
-        if (!dataSource.some(el => el.hex_data === item.action_trace.act.hex_data)) {
+        if (!dataSource.some(el => el.hex_data === item.action_trace.act.hex_data && el.block_time === item.block_time )) {
           dataFilter.push(item.action_trace.act.name)
           dataSource.push({
             key: item.global_action_seq,
@@ -67,7 +67,8 @@ class RemmeAccountTxInfo extends Component {
             date: item.block_time,
             name: item.action_trace.act.name,
             data: JSON.stringify(item.action_trace.act.data),
-            hex_data: item.action_trace.act.hex_data
+            hex_data: item.action_trace.act.hex_data,
+            block_time: item.block_time
           })
         }
       });

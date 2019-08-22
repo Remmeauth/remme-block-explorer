@@ -15,6 +15,8 @@ import RemmeAccountTxInfo from "./RemmeAccountTxInfo";
 import CreateForm from './CreateForm';
 import TagsField from './TagsField';
 import Search from './Search';
+import TimeStamp from './TimeStamp';
+
 export {
   Navigation,
   SmartLink,
@@ -32,5 +34,6 @@ export {
   RemmeAccountTxInfo,
   CreateForm,
   TagsField,
-  Search
+  Search,
+  TimeStamp
 };
