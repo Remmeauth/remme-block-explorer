@@ -37,14 +37,14 @@ class RemmeAccountInfo extends Component {
         value: `${data.balance.staked} ${network.coin}`
       },
       {
+        key: '6',
+        title: 'Unstaking',
+        value: `${data.balance.unstaking} ${network.coin}`
+      },
+      {
         key: '9',
         title: 'Staked by Others',
         value: `${data.balance.staked_by_others} ${network.coin}`
-      },
-      {
-        key: '6',
-        title: 'Other tokens',
-        value: '-'
       },
       {
         key: '7',

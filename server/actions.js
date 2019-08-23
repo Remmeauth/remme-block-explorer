@@ -33,10 +33,7 @@ export const getActions = async (id) => {
 
 export const getSwapInfo= async (id) => {
   try {
-    console.log();
     const swapInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'.swap", "scope": "'+network.account+'.swap", "table": "swaps", "limit": "500", "index_position": "secondary", "key_type": "sha256", "lower_bound": "'+id+'", "upper_bound": "'+id+'" }' ));
-    console.log("Swap info: ");
-    console.log(swapInfo);
     return swapInfo
   } catch (e) {
     console.log(e.message);
@@ -62,6 +59,7 @@ const calcBalance = (account, balance) => {
   let accInfo = {
     staked: 0,
     unstaked: 0,
+    unstaking: 0,
     total_balance: 0,
     balance: []
   };
@@ -75,10 +73,15 @@ const calcBalance = (account, balance) => {
         accInfo.unstaked = !isNaN(Number(elem.split(' ')[0])) ? Number(elem.split(' ')[0]) : 0;
       }
     });
+
+    if (account.refund_request) {
+      accInfo.unstaking = Number(account.refund_request.resource_amount.split(' ')[0])
+    }
+
     const total_resources = Number(account.total_resources.cpu_weight.split(' ')[0]) + Number(account.total_resources.net_weight.split(' ')[0]);
     const self_delegated_bandwidth = account.self_delegated_bandwidth ? (Number(account.self_delegated_bandwidth.cpu_weight.split(' ')[0]) + Number(account.self_delegated_bandwidth.net_weight.split(' ')[0])) : accInfo.staked;
     accInfo.staked_by_others = round(total_resources - self_delegated_bandwidth, 4)
-    accInfo.total_balance = round(accInfo.unstaked + accInfo.staked, 4)
+    accInfo.total_balance = round(accInfo.unstaked + accInfo.staked + accInfo.unstaking, 4)
     return accInfo;
   } catch (e) {
     console.log(e.message);
@@ -133,8 +136,10 @@ export const getAccount = async (id) => {
     if (accountInfo.producer) {
       accountInfo.producer.bp = await getProducer(accountInfo.producer.url);
     }
+    //console.log(accountInfo);
 
     return accountInfo
+
   } catch (e) {
     console.log(e.message);
     return {}

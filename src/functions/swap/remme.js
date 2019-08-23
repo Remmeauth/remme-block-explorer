@@ -81,8 +81,9 @@ export const RemGetSwapInfo = async (SwapID) => {
   const le = formatSwapIdToLittleEnd(SwapID);
   const response = await fetch( network.backendAddress + `/api/getSwapInfo/${le}`);
   const json = await response.json();
+  console.log(json);
   if (json.hasOwnProperty('rows') && json.rows.length) {
-    if (json.rows[0].provided_approvals.length > 1) {
+    if (json.rows[0].provided_approvals.length > 10) {
       return "approved"
     }
   }
