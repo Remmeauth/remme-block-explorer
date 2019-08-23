@@ -33,6 +33,7 @@ class RemmeProducerInfo extends Component {
 
   componentDidMount() {
     const { data } = this.props
+    console.log(data);
     try {
       const accountDataSource = [
           {

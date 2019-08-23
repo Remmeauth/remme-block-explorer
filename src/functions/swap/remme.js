@@ -83,7 +83,7 @@ export const RemGetSwapInfo = async (SwapID) => {
   const json = await response.json();
   console.log(json);
   if (json.hasOwnProperty('rows') && json.rows.length) {
-    if (json.rows[0].provided_approvals.length > 10) {
+    if (json.rows[0].status === 1) {
       return "approved"
     }
   }

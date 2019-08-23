@@ -62,8 +62,8 @@ class StepInitiate extends Component {
     if (isNaN(parseFloat(value)) && !isFinite(value)) {
       callback("Please enter a valid number!");
     }
-    if (parseFloat(value) < 21) {
-      callback("Min deposit is 21 REM.");
+    if (parseFloat(value) < 200) {
+      callback("Min deposit is 200 REM.");
     }
     if (parseFloat(value) > remBalance) {
       callback( `You have only ${remBalance} REM.` );
