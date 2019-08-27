@@ -22,17 +22,28 @@ class Transaction extends Component {
       const response = await fetch( network.backendAddress + `/api/getTransaction/` + id);
       const json = await response.json();
 
+      const actions = json.trx ?
+      json.trx.trx.actions.map((i, index) => {
+        return {
+          ...i,
+          key: index
+        }
+      }) :
+      json.traces.map((i, index) => {
+        if (i.creator_action_ordinal === 0) {
+          return {
+            ...i.act,
+            key: index
+          }
+        }
+      })
+
       this.setState({
         error: false,
         loading: false,
         raw: json,
         dataTraces: tracesToTree(json.traces),
-        dataActions: json.trx.trx.actions.map((i, index) => {
-          return {
-            ...i,
-            key: index
-          }
-        }),
+        dataActions: actions,
         dataSource: [
           {
             key: '1',
@@ -52,16 +63,17 @@ class Transaction extends Component {
           {
             key: '4',
             title: 'Actions',
-            value: json.trx.trx.actions.length
+            value: actions.length
           },
           {
             key: '5',
             title: 'Status',
-            value: json.trx.receipt.status
+            value: json.trx ? json.trx.receipt.status : "executed"
           }
         ],
       });
     } catch (error) {
+      console.log(error.message);
       this.setState({
         error: "Unknown Transaction",
         loading: false
