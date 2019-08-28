@@ -33,6 +33,27 @@ class RemmeResourcesInfo extends Component {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 
+  timeConversion = (sec) => {
+
+       var seconds = (sec).toFixed(2);
+
+       var minutes = (sec / 60).toFixed(2);
+
+       var hours = (sec / (60 * 60)).toFixed(2);
+
+       var days = (sec / (60 * 60 * 24)).toFixed(2);
+
+       if (seconds < 60) {
+           return seconds + " Sec";
+       } else if (minutes < 60) {
+           return minutes + " Min";
+       } else if (hours < 24) {
+           return hours + " Hrs";
+       } else {
+           return days + " Days"
+       }
+   }
+
   render() {
     const { data } = this.props;
     return (
@@ -43,7 +64,7 @@ class RemmeResourcesInfo extends Component {
             <h5>Used:</h5>
             <Row gutter={10}>
               <Col sm={24} md={8}><Pie percent={this.percent(data.account.ram_usage / data.account.ram_quota * 100)} color="#398bf7" animate={true} subTitle="RAM" total={this.total(data.account.ram_usage / data.account.ram_quota * 100).toFixed(2) + "%"} height={140} /><p className="align-center">{ this.formatBytes(data.account.ram_usage / 1024)} / { this.formatBytes(data.account.ram_quota) } kb</p></Col>
-              <Col sm={24} md={8}><Pie percent={this.percent(data.account.cpu_limit.used / data.account.cpu_limit.max * 100)} color="#725af2" animate={true} subTitle="CPU" total={this.total(data.account.cpu_limit.used / data.account.cpu_limit.max * 100).toFixed(2) + "%"} height={140} /><p className="align-center">{ this.total(data.account.cpu_limit.used / 1000000).toFixed(2) } sec / { (data.account.cpu_limit.max / 1000000).toFixed(2) } sec</p></Col>
+              <Col sm={24} md={8}><Pie percent={this.percent(data.account.cpu_limit.used / data.account.cpu_limit.max * 100)} color="#725af2" animate={true} subTitle="CPU" total={this.total(data.account.cpu_limit.used / data.account.cpu_limit.max * 100).toFixed(2) + "%"} height={140} /><p className="align-center">{ this.timeConversion(this.total(data.account.cpu_limit.used / 1000000)) } / { this.timeConversion(data.account.cpu_limit.max / 1000000) }</p></Col>
               <Col sm={24} md={8}><Pie percent={this.percent(data.account.net_limit.used / data.account.cpu_limit.max * 100)} color="#c787f5" animate={true} subTitle="NET" total={this.total(data.account.net_limit.used / data.account.cpu_limit.max * 100).toFixed(2) + "%"} height={140} /><p className="align-center">{ this.formatBytes(data.account.net_limit.used)} / { this.formatBytes(data.account.net_limit.max)  }</p></Col>
             </Row>
           </Card.Grid>
