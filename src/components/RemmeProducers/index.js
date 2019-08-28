@@ -54,6 +54,11 @@ class RemmeProducers extends Component {
                                      <div><span className="ant-table-column-title">Total votes</span><span className="ant-table-column-sorter"></span></div>
                                   </span>
                                </th>
+                               <th className="">
+                                  <span className="ant-table-header-column">
+                                     <div><span className="ant-table-column-title">Rate</span><span className="ant-table-column-sorter"></span></div>
+                                  </span>
+                               </th>
                             </tr>
                           </thead>
                           <tbody className="ant-table-tbody">
@@ -62,7 +67,8 @@ class RemmeProducers extends Component {
                                  <td className="">{ index + 1 }</td>
                                  <td className=""><Link to={'/account/' + item.owner}>{ item.owner }</Link></td>
                                  <td className="">{index < 21 ? <Tag color="#4cd79c">TOP 21</Tag> : <Tag color="#f9b22b">Standby</Tag>}</td>
-                                 <td className="">{numeral(item.total_votes).format('0,0')}</td>
+                                 <td className="">{item.total_votes}</td>
+                                 <td className="">{item.rate} %</td>
                               </tr>
                             )}
                           </tbody>

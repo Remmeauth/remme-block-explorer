@@ -75,7 +75,7 @@ class Account extends Component {
               </QueueAnim>
               { raw.producer && <QueueAnim delay={900} interval={200} type="right" component={Row} gutter={30}>
                 <Col lg={24} xl={12} key="1">
-                  <RemmeProducerInfo data={raw}/>
+                  <RemmeProducerInfo forceUpdate={this.forceUpdate} data={raw}/>
                 </Col>
                 <Col lg={24} xl={12} key="2">
                   <MapContainer data={raw}/>

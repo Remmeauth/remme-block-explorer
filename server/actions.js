@@ -50,6 +50,15 @@ export const getProducer = async (url) => {
   }
 }
 
+export const getVoters = async () => {
+  try {
+    const votersInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'", "scope": "'+network.account+'", "table": "voters", "limit": "500" }' ));
+    return votersInfo;
+  } catch (e) {
+    console.log(e.message);
+    return {}
+  }
+}
 
 const round = (value, decimals) => {
  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);

@@ -16,6 +16,7 @@ import CreateForm from './CreateForm';
 import TagsField from './TagsField';
 import Search from './Search';
 import TimeStamp from './TimeStamp';
+import RemmeVoter from './RemmeVoter';
 
 export {
   Navigation,
@@ -35,5 +36,6 @@ export {
   CreateForm,
   TagsField,
   Search,
-  TimeStamp
+  TimeStamp,
+  RemmeVoter
 };
