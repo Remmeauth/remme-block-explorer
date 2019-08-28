@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
-import { Modal, Button } from 'antd';
+import { Modal, Button, Icon } from 'antd';
+import jwt from "jsonwebtoken";
+import { secret } from "../../config";
 
 import { logout, cancel } from "../../actions";
 import SwapHistory from "../../components/Swap/SwapHistory";
@@ -26,6 +28,49 @@ class Swap extends Component {
     });
   };
 
+  download = () => {
+    let swap, token;
+    try {
+      swap = localStorage.getItem('swap');
+      if(swap){
+        swap = JSON.parse(swap);
+        if(swap.hasOwnProperty('SwapRawTransaction'))
+          swap.SwapRawTransaction = JSON.parse(swap.SwapRawTransaction);
+        if(swap.hasOwnProperty('SwapRawTransactionApprove'))
+          swap.SwapRawTransactionApprove = JSON.parse(swap.SwapRawTransactionApprove);
+      }
+
+      token = localStorage.getItem('token');
+      if(token){
+        token = jwt.decode(token,secret);
+      }
+    }catch (e) {
+      console.log(e.message);
+      token = swap = {};
+    }
+
+    const data = {
+      swap,
+      token
+    };
+
+    const file = new Blob([JSON.stringify(data, null, "\t")], {type: "text/plain"});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+      window.navigator.msSaveOrOpenBlob(file, "report.json");
+    else { // Others
+      const a = document.createElement("a"),
+          url = URL.createObjectURL(file);
+      a.href = url;
+      a.download = "report.json";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function() {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 0);
+    }
+  };
+
   render() {
     return (
       <div className="Div">
@@ -33,6 +78,7 @@ class Swap extends Component {
         <div className="swap-wrapper">
           <SwapHistory/>
           <div className="align-center">
+            <Button type="default" onClick={this.download}><Icon type="download" /> Report</Button>
             <Button type="primary" onClick={this.lock}>Init new Swap</Button>
           </div>
         </div>
