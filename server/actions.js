@@ -121,6 +121,7 @@ export const getAccount = async (id) => {
   try {
     const chainInfo = getInfo();
     let accountInfo = {};
+    accountInfo.chainInfo = chainInfo;
     accountInfo.marketChart = chainInfo.marketChart;
     const account = JSON.parse(await api('POST','chain', 'get_account', '{"account_name":"' + id + '"}'));
     accountInfo.account = account.account_name ? normalizeAccount(account) : false;

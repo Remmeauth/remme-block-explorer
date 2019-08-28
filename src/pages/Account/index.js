@@ -6,8 +6,6 @@ import ReactJson from 'react-json-view'
 import { network } from '../../config.js'
 import { MapContainer, RemmeSpin, RemmeResult, RemmeAccountInfo, RemmeResourcesInfo, RemmeProducerInfo, RemmeAccountTxInfo } from '../../components'
 
-import './style.css'
-
 const { Panel } = Collapse;
 
 class Account extends Component {
@@ -20,6 +18,7 @@ class Account extends Component {
     try {
       const response = await fetch(`${network.backendAddress}/api/getAccount/${id}`);
       const json = await response.json();
+      console.log(json);
       if (!json.account.account_name) {
         this.setState({
           error: "Unknown Account",
