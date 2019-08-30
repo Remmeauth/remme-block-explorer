@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
-import { Modal, Button, Icon } from 'antd';
+import { Modal, Button, Tooltip } from 'antd';
 import jwt from "jsonwebtoken";
 import { secret } from "../../config";
 
 import { logout, cancel } from "../../actions";
 import SwapHistory from "../../components/Swap/SwapHistory";
+import './style.css'
 
 const confirm = Modal.confirm;
 
@@ -28,7 +29,8 @@ class Swap extends Component {
     });
   };
 
-  download = () => {
+  download = (e) => {
+    e.preventDefault();
     let swap, token;
     try {
       swap = localStorage.getItem('swap');
@@ -77,9 +79,11 @@ class Swap extends Component {
         <h2 className="align-center">Swap process</h2>
         <div className="swap-wrapper">
           <SwapHistory/>
-          <div className="align-center">
-            <Button type="default" onClick={this.download}><Icon type="download" /> Report</Button>
-            <Button type="primary" onClick={this.lock}>Init new Swap</Button>
+          <div className={"swap-buttons"}>
+            <Button type="primary" onClick={this.lock} className={"new-swap"}>Init new Swap</Button>
+            <Tooltip placement="topRight" title="This action will save all technical information of the current swap for diagnosis purposes. This data contains sensitive information that will allow anyone to manage (or finish) the swap. Do not share it with anyone that you do not trust!">
+              <a href={"#"} onClick={this.download} className={"swap-data"}>Save swap private data</a>
+            </Tooltip>
           </div>
         </div>
       </div>
