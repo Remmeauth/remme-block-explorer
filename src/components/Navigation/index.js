@@ -43,10 +43,17 @@ const NavigationItems = [
   // },
   {
     title: 'Swap',
-    link: '/coming',
-    icon: 'team',
+    link: '/swap',
+    icon: 'swap',
     type: 'simple',
     key: 5,
+  },
+  {
+    title: 'Producers',
+    link: '/producers',
+    icon: 'check-circle',
+    type: 'simple',
+    key: 6,
   },
 ];
 

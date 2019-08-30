@@ -53,7 +53,7 @@ class RemmeProducerInfo extends Component {
           },
           {
             key: '8',
-            name: 'Rate',
+            name: 'Vote maturity',
             value: `${data.producer.rate} %`
           },
           {
@@ -115,7 +115,7 @@ class RemmeProducerInfo extends Component {
           },
           {
             key: '8',
-            name: 'Rate',
+            name: 'Vote maturity',
             value: `${data.producer.rate} %`
           },
           {
