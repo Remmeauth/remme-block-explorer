@@ -1,0 +1,21 @@
+.swap-buttons{
+  text-align: left;
+}
+.swap-buttons .new-swap{
+  margin: 0;
+}
+.swap-buttons .swap-data{
+  float: right;
+  line-height: 38px;
+}
+
+@media screen and (max-width: 400px){
+  .swap-buttons{
+    text-align: center;
+  }
+  .swap-buttons .swap-data{
+    display: block;
+    float: none;
+    margin-top: 10px;
+  }
+}
