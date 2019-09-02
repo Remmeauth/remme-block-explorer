@@ -90,6 +90,18 @@ export const RemGetSwapInfo = async (SwapID) => {
   return null
 }
 
+export const RemGetSwapFee = async (SwapID) => {
+  const response = await fetch( network.backendAddress + `/api/getSwapFee`);
+  const json = await response.json();
+  return Number(json)
+}
+
+export const RemGetAccountCreatingFee = async (SwapID) => {
+  const response = await fetch( network.backendAddress + `/api/getInfo`);
+  const json = await response.json();
+  return json.global.min_account_stake / 10000
+}
+
 export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestamp, sig, active_pubkey, owner_pubkey, return_address) => {
   const signatureProvider = new JsSignatureProvider([techPrivkey]);
   const rpc = new JsonRpc(`${network.protocol}://${network.host}:${network.port}`, { fetch });

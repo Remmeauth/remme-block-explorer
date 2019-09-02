@@ -4,7 +4,7 @@ import path from "path";
 import bodyParser from "body-parser";
 import cors from "cors";
 
-import { getBlock, getTransaction, getAccount, getBalance, getProducer, getActions, getSwapInfo, getVoters } from './actions'
+import { getBlock, getTransaction, getAccount, getBalance, getProducer, getActions, getSwapInfo, getVoters, getSwapFee } from './actions'
 import { getInfo, startDaemons } from './daemons'
 
 const corsOptions = {
@@ -19,6 +19,11 @@ app.use(bodyParser.json());
 
 app.get('/api/getInfo', async (req, res) => {
   res.json(getInfo());
+});
+
+app.get('/api/getSwapFee', async (req, res) => {
+  const result = await getSwapFee()
+  res.json(result);
 });
 
 app.get('/api/getBlock/:id', async (req, res) => {

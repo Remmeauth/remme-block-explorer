@@ -9,7 +9,7 @@ import CreateForm from '../../CreateForm';
 import { login } from "../../../actions";
 import { secret } from "../../../config";
 
-import { EthPrivateKeyToAddress, RemGetBalanceRem, EthGetBalanceRem, EthGetBalanceEth } from '../../../functions/swap';
+import { EthPrivateKeyToAddress, RemGetBalanceRem, EthGetBalanceRem, EthGetBalanceEth, RemGetAccountCreatingFee, RemGetSwapFee } from '../../../functions/swap';
 import SwapParamsView from "../SwapParamsView"
 
 
@@ -40,6 +40,7 @@ class StepInitiate extends Component {
       const SwapData = {
         SwapInitiated: true,
         amount: values.amount,
+        accountCreatingFee: 0,
         PrivateKeyEth,
         PrivateKeyRem,
         AccountNameRem,
@@ -57,13 +58,16 @@ class StepInitiate extends Component {
   };
 
   amountValidator = (item, value, callback) => {
-    const { type, balanceRemRem, balanceEthRem } = this.state
+    const { type, balanceRemRem, balanceEthRem, OwnerKeyRem, accountCreatingFee, swapFee } = this.state
+
     const remBalance = type ? balanceRemRem : balanceEthRem
+    const minDeposit = OwnerKeyRem ? accountCreatingFee + swapFee + 1 : swapFee + 1
+
     if (isNaN(parseFloat(value)) && !isFinite(value)) {
       callback("Please enter a valid number!");
     }
-    if (parseFloat(value) < 200) {
-      callback("Min deposit is 200 REM.");
+    if (parseFloat(value) < minDeposit) {
+      callback("Min deposit is "+minDeposit+" REM.");
     }
     if (parseFloat(value) > remBalance) {
       callback( `You have only ${remBalance} REM.` );
@@ -84,8 +88,12 @@ class StepInitiate extends Component {
 
       const balanceRemRem = await RemGetBalanceRem(addressRem);
 
+      const accountCreatingFee = await RemGetAccountCreatingFee();
+      const swapFee = await RemGetSwapFee();
 
       this.setState({
+        accountCreatingFee,
+        swapFee,
         addressEth,
         addressRem,
         balanceRemRem,

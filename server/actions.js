@@ -40,6 +40,16 @@ export const getSwapInfo= async (id) => {
   }
 }
 
+export const getSwapFee= async () => {
+  try {
+    const swapInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'.swap", "scope": "'+network.account+'.swap", "table": "prodsreward", "limit": "500" }' ));
+    const value = swapInfo.rows[0].quantity.split(' ')[0]
+    return value
+  } catch (e) {
+    console.log(e.message);
+  }
+}
+
 export const getProducer = async (url) => {
   try {
     const bp = JSON.parse(await producerInfo(url + "/bp.json"));
