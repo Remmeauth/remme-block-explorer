@@ -123,6 +123,7 @@ const actions = {
       if (PrivateKeyEth === "metamask") {
         return new Promise((resolve, reject) => {
           window.web3.eth.sendTransaction(JSON.parse(SwapRawTransaction), function(err, transactionHash) {
+            console.log(err);
             if (err) {reject(new Error(err.message));}
             else {resolve(transactionHash);}
           })

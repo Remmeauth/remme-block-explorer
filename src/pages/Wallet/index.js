@@ -119,6 +119,14 @@ class Wallet extends Component {
     });
   };
 
+  handleClaim = (e) => {
+    const {name} = this.state;
+    const data = {
+        owner: name,
+    }
+    this.initTransaction('','claimrewards', data);
+  };
+
   handleAccountInfo = async (name,authority) => {
     this.setState({ loading: true });
     try {
@@ -205,6 +213,10 @@ class Wallet extends Component {
                             <h5>Unstake:</h5>
                             <CreateForm scheme={walletStake} ref={form => this.form3 = form}/>
                             <Button type="primary" onClick={this.handleUnstake}>Generate Transaction</Button>
+                          </TabPane>
+                          <TabPane tab="Claim Reward" key="5">
+                            <h5>Claim:</h5>
+                            <Button type="primary" onClick={this.handleClaim}>Generate Transaction</Button>
                           </TabPane>
                           <TabPane tab="Vote" key="4">
                             <h5>Vote:</h5>

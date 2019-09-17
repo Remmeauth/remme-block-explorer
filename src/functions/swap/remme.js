@@ -39,7 +39,7 @@ export const RemGetBalanceRem = async ( addressRem ) => {
         const res = await fetch(`${network.backendAddress}/api/getAccount/${addressRem}`);
         const json = await res.json();
         if(json.hasOwnProperty('account') && json.hasOwnProperty('balance')){
-            return json.balance.total_balance;
+            return json.balance.unstaked;
         }else{
             return 0;
         }
