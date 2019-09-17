@@ -8,7 +8,7 @@ import { logout, cancel } from "../../actions";
 import SwapHistory from "../../components/Swap/SwapHistory";
 import './style.css'
 
-const confirm = Modal.confirm;
+const { confirm } = Modal;
 
 class Swap extends Component {
 
@@ -23,8 +23,7 @@ class Swap extends Component {
         logout();
         cancel();
         window.location.reload();
-      },
-      onCancel() {},
+      }
     });
   };
 

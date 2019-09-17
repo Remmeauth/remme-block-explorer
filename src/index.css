@@ -326,6 +326,9 @@ p {
   background: #568fff;
   border-color: #568fff; }
 
+.ant-modal-body .ant-btn {
+  background: #364FCC; }
+
 .theme-light .antd-pro-number-info-numberInfo .antd-pro-number-info-numberInfoSubTitle, .theme-light
 .antd-pro-charts-chart-card-chartCard .antd-pro-charts-chart-card-meta {
   color: #8e8ea8; }

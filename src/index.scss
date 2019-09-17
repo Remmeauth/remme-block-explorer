@@ -375,6 +375,10 @@ p {
   }
 }
 
+.ant-modal-body .ant-btn  {
+  background: #364FCC;
+}
+
 .antd-pro-number-info-numberInfo .antd-pro-number-info-numberInfoSubTitle,
 .antd-pro-charts-chart-card-chartCard .antd-pro-charts-chart-card-meta {
   @include customize(theme) { color: getValue(textColor); }

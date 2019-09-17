@@ -78,15 +78,19 @@ export const taskList = {
 }
 
 export const doSwapTask = async (current, props, callback) => {
-  const { id } = taskList[props.type][current];
+  const { id, exeption } = taskList[props.type][current];
   if (props[id]) {
     callback(null, props[id]);
   } else {
-    const response = await actions[props.type][id](props);
-    if (response instanceof Error) {
-      callback(response.message)
-    } else {
-      callback(null, response)
+    try {
+      const response = await actions[props.type][id](props);
+      if (response instanceof Error) {
+        callback(response.message)
+      } else {
+        callback(null, response)
+      }
+    } catch (e) {
+      callback(exeption)
     }
   }
 }
@@ -103,7 +107,7 @@ const actions = {
       if (PrivateKeyEth === "metamask") {
         return new Promise((resolve, reject) => {
           window.web3.eth.sendTransaction(JSON.parse(SwapRawTransactionApprove), function(err, transactionHash) {
-            if (err) {reject(new Error(err));}
+            if (err) {reject(new Error(err.message));}
             else {resolve(transactionHash);}
           })
         });
@@ -119,7 +123,7 @@ const actions = {
       if (PrivateKeyEth === "metamask") {
         return new Promise((resolve, reject) => {
           window.web3.eth.sendTransaction(JSON.parse(SwapRawTransaction), function(err, transactionHash) {
-            if (err) {reject(new Error(err));}
+            if (err) {reject(new Error(err.message));}
             else {resolve(transactionHash);}
           })
         });
