@@ -3,7 +3,6 @@ import CryptoJS from "crypto-js";
 import moment from 'moment';
 import ScatterJS from '@scatterjs/core';
 import ScatterEOS from '@scatterjs/eosjs2';
-import Web3 from 'web3';
 
 import { Api, JsonRpc } from 'eosjs';
 import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
@@ -13,11 +12,7 @@ import {
     techPrivkey,
     techAccount,
     EthReturnChainId,
-    EthNetworkConfig
 } from '../../config';
-
-
-const web3 = new Web3(new Web3.providers.HttpProvider(EthNetworkConfig));
 
 ScatterJS.plugins( new ScatterEOS() );
 const net = ScatterJS.Network.fromJson(network);
@@ -60,20 +55,15 @@ export const RemRandomKeys = async () => {
 }
 
 export const RemSignDigest = (receiver, txid, swap_pubkey, asset, return_address, timestamp, privkey, active_pubkey, owner_pubkey) => {
-  const digest_to_sign = receiver + "*" + ((active_pubkey && owner_pubkey) ? owner_pubkey + "*" + active_pubkey + "*" : '') + txid.substring(2) + "*" + network.chainId + "*" + `${Number(asset).toFixed(4)} REM` + "*" + return_address.substring(2) + "*" + EthReturnChainId + "*" + timestamp
-  console.log("Pub:", swap_pubkey );
-  console.log("Priv:", privkey );
-  console.log("digest_to_sign", digest_to_sign);
+  const pubKeys = ((active_pubkey && owner_pubkey) ? owner_pubkey + "*" + active_pubkey + "*" : '')
+  const digest_to_sign = `${receiver}*${pubKeys}${txid.substring(2)}*${network.chainId}*${Number(asset).toFixed(4)} REM*${return_address.substring(2)}*${EthReturnChainId}*${timestamp}`
   return ecc.signHash(CryptoJS.SHA256(digest_to_sign).toString(CryptoJS.enc.Hex), privkey)
 }
 
 export const RemGenSwapId = (txid, swap_pubkey, asset, timestamp, return_address) => {
-  const amount = `${Number(asset).toFixed(4)} REM`
-  const swap_str = swap_pubkey.substring(3) + "*" + txid.substring(2) + "*" + network.chainId + "*" + amount + "*" + return_address.substring(2) + "*" + EthReturnChainId + "*" + timestamp
-  console.log("swap_str", swap_str);
+  const swap_str = `${swap_pubkey.substring(3)}*${txid.substring(2)}*${network.chainId}*${Number(asset).toFixed(4)} REM*${return_address.substring(2)}*${EthReturnChainId}*${timestamp}`
   const hashed = CryptoJS.SHA256(swap_str);
   const result = hashed.toString(CryptoJS.enc.Hex);
-  console.log("swap_id", result);
   return result
 }
 

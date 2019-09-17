@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import QueueAnim from 'rc-queue-anim';
 import { Tag, Icon, Button } from 'antd';
-import numeral from 'numeral';
 
 import { SmartLink } from '../../components'
 

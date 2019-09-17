@@ -76,7 +76,8 @@ body {
 }
 
 
-a {
+a, .link {
+  cursor: pointer;
   @include customize(theme) { color: getValue(textColorDark); }
 }
 

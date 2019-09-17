@@ -12,7 +12,6 @@ const confirm = Modal.confirm;
 
 class Swap extends Component {
 
-
   lock = () => {
     const { logout, cancel } = this.props;
     confirm({
@@ -82,7 +81,7 @@ class Swap extends Component {
           <div className={"swap-buttons"}>
             <Button type="primary" onClick={this.lock} className={"new-swap"}>Init new Swap</Button>
             <Tooltip placement="topRight" title="This action will save all technical information of the current swap for diagnosis purposes. This data contains sensitive information that will allow anyone to manage (or finish) the swap. Do not share it with anyone that you do not trust!">
-              <a href={"#"} onClick={this.download} className={"swap-data"}>Save swap private data</a>
+              <h6  href={"#"} onClick={this.download} className={"swap-data link"}>Save swap private data</h6>
             </Tooltip>
           </div>
         </div>

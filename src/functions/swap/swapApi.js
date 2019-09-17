@@ -78,17 +78,15 @@ export const taskList = {
 }
 
 export const doSwapTask = async (current, props, callback) => {
-  const { type }         = props;
-  const { id, exeption } = taskList[type][current];
+  const { id } = taskList[props.type][current];
   if (props[id]) {
     callback(null, props[id]);
   } else {
-    try {
-      const response = await actions[type][id](props);
+    const response = await actions[props.type][id](props);
+    if (response instanceof Error) {
+      callback(response.message)
+    } else {
       callback(null, response)
-    } catch (e) {
-      console.log(e.message);
-      callback(new Error(exeption))
     }
   }
 }

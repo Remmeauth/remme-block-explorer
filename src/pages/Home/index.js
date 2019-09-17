@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Spin, Icon  } from 'antd';
+import { Spin, Icon  } from 'antd';
 
 import { network } from '../../config.js'
 import { RemmeCharts, RemmeBlocks, RemmeTransactions, RemmeProducers } from '../../components';

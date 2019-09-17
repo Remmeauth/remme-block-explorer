@@ -21,7 +21,6 @@ class Transaction extends Component {
     try {
       const response = await fetch( network.backendAddress + `/api/getTransaction/` + id);
       const json = await response.json();
-
       const actions = json.trx ?
       json.trx.trx.actions.map((i, index) => {
         return {
@@ -29,13 +28,13 @@ class Transaction extends Component {
           key: index
         }
       }) :
-      json.traces.map((i, index) => {
-        if (i.creator_action_ordinal === 0) {
+      json.traces
+        .filter(item => item.creator_action_ordinal === 0)
+        .map((item, index) => {
           return {
-            ...i.act,
+            ...item.act,
             key: index
           }
-        }
       })
 
       this.setState({

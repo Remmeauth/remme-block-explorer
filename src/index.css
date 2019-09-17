@@ -5,11 +5,12 @@ body {
   margin: 0;
   font-family: 'Open Sans', sans-serif; }
 
-.theme-light a {
-  color: #364FCC; }
-
-.theme-dark a {
-  color: #568fff; }
+a, .link {
+  cursor: pointer; }
+  .theme-light a, .theme-light .link {
+    color: #364FCC; }
+  .theme-dark a, .theme-dark .link {
+    color: #568fff; }
 
 h1 {
   font-size: 38px; }

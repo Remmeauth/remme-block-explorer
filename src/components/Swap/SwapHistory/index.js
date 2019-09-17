@@ -21,7 +21,7 @@ class SwapHistory extends Component {
   updateLocalStorage = ( data ) => {
     let { start } = this.props;
     let ls = localStorage.getItem('swap');
-    ls = ls ? JSON.parse(ls) : {}
+    ls = ls ? JSON.parse(ls) : false
     const updatedParams = {
       ...ls,
       ...data
@@ -33,9 +33,8 @@ class SwapHistory extends Component {
   taskCallback = (error, responce) => {
     let { current, taksStatus } = this.state ;
     const { type } = this.props
-
       if (error) {
-        taksStatus[current] = error.message;
+        taksStatus[current] = error;
         this.setState({
           taksStatus,
           currentStatus: "error"
@@ -70,7 +69,7 @@ class SwapHistory extends Component {
   }
 
   render() {
-    const { type, amount, SwapTransaction, SwapFinalize, addressEth } = this.props
+    const { type, amount, SwapFinalize, addressEth } = this.props
     const { current, taksStatus, currentStatus } = this.state
     return (
       <React.Fragment>
