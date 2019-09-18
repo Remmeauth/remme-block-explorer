@@ -97,8 +97,10 @@ const calcBalance = (account, balance) => {
       accInfo.unstaking = Number(account.refund_request.resource_amount.split(' ')[0])
     }
 
-    const total_resources = Number(account.total_resources.cpu_weight.split(' ')[0]) + Number(account.total_resources.net_weight.split(' ')[0]);
-    const self_delegated_bandwidth = account.self_delegated_bandwidth ? (Number(account.self_delegated_bandwidth.cpu_weight.split(' ')[0]) + Number(account.self_delegated_bandwidth.net_weight.split(' ')[0])) : accInfo.staked;
+    //const total_resources = Number(account.total_resources.cpu_weight.split(' ')[0]) + Number(account.total_resources.net_weight.split(' ')[0]);
+    //const self_delegated_bandwidth = account.self_delegated_bandwidth ? (Number(account.self_delegated_bandwidth.cpu_weight.split(' ')[0]) + Number(account.self_delegated_bandwidth.net_weight.split(' ')[0])) : accInfo.staked;
+    const total_resources = Number(account.total_resources.cpu_weight.split(' ')[0]);
+    const self_delegated_bandwidth = account.self_delegated_bandwidth ? (Number(account.self_delegated_bandwidth.cpu_weight.split(' ')[0]) ) : accInfo.staked;
     accInfo.staked_by_others = round(total_resources - self_delegated_bandwidth, 4)
     accInfo.total_balance = round(accInfo.unstaked + accInfo.staked + accInfo.unstaking, 4)
     return accInfo;
