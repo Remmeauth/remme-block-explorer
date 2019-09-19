@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Row, Col, Card } from 'antd';
 import { Pie } from 'ant-design-pro/lib/Charts';
 
+import { network } from '../../config.js'
+
 const gridStyle = {
   width: '100%',
   overflow: "hidden"
@@ -71,9 +73,9 @@ class RemmeResourcesInfo extends Component {
           <Card.Grid style={gridStyle}>
             <h5 style={{ marginBottom: 26}}>Total:</h5>
             <Row gutter={10}>
-              <Col sm={24} md={8}><h6> CPU weight: </h6><p className="align-center">{ data.account.total_resources.cpu_weight }</p></Col>
-              <Col sm={24} md={8}><h6> NET weight: </h6><p className="align-center">{ data.account.total_resources.net_weight }</p></Col>
-              <Col sm={24} md={8}><h6> Owner: </h6><p className="align-center">{ data.account.total_resources.owner }</p></Col>
+              <Col sm={24} md={8}><h6> Staked by Others: </h6><p className="align-center">{ data.balance.staked_by_others } {network.coin}</p></Col>
+              <Col sm={24} md={8}><h6> Staked by Me: </h6><p className="align-center">{ Number(data.account.total_resources.cpu_weight.split(' ')[0]) - data.balance.staked_by_others } {network.coin}</p></Col>
+              <Col sm={24} md={8}><h6> Total Stake: </h6><p className="align-center">{ data.account.total_resources.cpu_weight }</p></Col>
             </Row>
           </Card.Grid>
         </Card>

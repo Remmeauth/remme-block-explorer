@@ -6,6 +6,14 @@ import { tableColunm } from '../../schemes'
 import { network } from '../../config.js'
 import { TimeStamp } from '../../components'
 
+const  ClaimedRewards = (props) => {
+  if (props.text !== 0) {
+    return (<span style={{color: '#4cd79c'}}>{props.text.toFixed(2)} {network.coin}</span>)
+  } else {
+    return (<span>{props.text.toFixed(2)} {network.coin}</span>)
+  }
+}
+
 class RemmeAccountInfo extends Component {
 
   render() {
@@ -43,8 +51,8 @@ class RemmeAccountInfo extends Component {
       },
       {
         key: '9',
-        title: 'Staked by Others',
-        value: `${data.balance.staked_by_others} ${network.coin}`
+        title: 'Not Claimed Rewards',
+        value: (<ClaimedRewards text={(data.balance.producer_per_stake_pay ? data.balance.producer_per_stake_pay + data.balance.producer_per_vote_pay : 0)} />)
       },
       {
         key: '7',

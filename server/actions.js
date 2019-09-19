@@ -100,7 +100,7 @@ const calcBalance = (account, balance) => {
     //const total_resources = Number(account.total_resources.cpu_weight.split(' ')[0]) + Number(account.total_resources.net_weight.split(' ')[0]);
     //const self_delegated_bandwidth = account.self_delegated_bandwidth ? (Number(account.self_delegated_bandwidth.cpu_weight.split(' ')[0]) + Number(account.self_delegated_bandwidth.net_weight.split(' ')[0])) : accInfo.staked;
     const total_resources = Number(account.total_resources.cpu_weight.split(' ')[0]);
-    const self_delegated_bandwidth = account.self_delegated_bandwidth ? (Number(account.self_delegated_bandwidth.cpu_weight.split(' ')[0]) ) : accInfo.staked;
+    const self_delegated_bandwidth = account.self_delegated_bandwidth ? (Number(account.self_delegated_bandwidth.cpu_weight.split(' ')[0]) ) : 0;
     accInfo.staked_by_others = round(total_resources - self_delegated_bandwidth, 4)
     accInfo.total_balance = round(accInfo.unstaked + accInfo.staked + accInfo.unstaking, 4)
     return accInfo;
@@ -153,8 +153,18 @@ export const getAccount = async (id) => {
       if (chainInfo.producers[i].owner === accountInfo.account.account_name){
          accountInfo.producer = chainInfo.producers[i];
          accountInfo.producer.position = i+1;
+
+         accountInfo.balance.producer_per_stake_pay = accountInfo.producer.pending_perstake_reward / 10000
+         accountInfo.balance.producer_per_vote_pay = accountInfo.producer.pending_pervote_reward / 10000
+
+         if (accountInfo.producer.unpaid_blocks != accountInfo.producer.expected_produced_blocks && accountInfo.producer.expected_produced_blocks > 0) {
+              accountInfo.balance.producer_per_vote_pay = ((accountInfo.producer.pending_pervote_reward * accountInfo.producer.unpaid_blocks) / accountInfo.producer.expected_produced_blocks) / 10000;
+         }
       }
     }
+
+
+
     if (accountInfo.producer) {
       accountInfo.producer.bp = await getProducer(accountInfo.producer.url);
     }
