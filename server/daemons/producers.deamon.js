@@ -1,6 +1,7 @@
 import { api } from '../helpers'
 import { network } from '../../config'
 import { getGlobalInfo } from './global.deamon.js'
+import { getRewards } from './rewards.deamon.js'
 
 let PRODUCERS_LIST = [];
 
@@ -70,7 +71,7 @@ const countRate = (data, totalProducerVoteWeight) => {
     data.forEach((elem, index) => {
       elem.index   = index + 1;
       elem.rate    = (elem.all_votes / totalProducerVoteWeight * 100).toLocaleString();
-      elem.rewards = `${ countRewards(elem.all_votes, elem.index, totalProducerVoteWeight, votesToRemove) } ${network.coin}`;
+      elem.rewards = `~ ${ ((elem.all_votes / totalProducerVoteWeight ) * getRewards()).toFixed(0) } ${network.coin}`;
     });
     return data;
 }

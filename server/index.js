@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 import { getBlock, getTransaction, getAccount, getBalance, getProducer, getActions, getSwapInfo, getVoters, getSwapFee } from './actions'
-import { getInfo, startDaemons } from './daemons'
+import { getInfo, startDaemons, startRewardsDaemon } from './daemons'
 
 const corsOptions = {
   origin: '*',
@@ -65,3 +65,4 @@ const sleep = (ms) => {
 };
 
 startDaemons();
+startRewardsDaemon();

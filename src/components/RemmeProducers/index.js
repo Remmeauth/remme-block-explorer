@@ -67,7 +67,7 @@ class RemmeProducers extends Component {
                                </th>
                                <th className="">
                                   <span className="ant-table-header-column">
-                                     <div><span className="ant-table-column-title">Rewards</span><span className="ant-table-column-sorter"></span></div>
+                                     <div><span className="ant-table-column-title">Rewards (per day)</span><span className="ant-table-column-sorter"></span></div>
                                   </span>
                                </th>
                                <th className="">
