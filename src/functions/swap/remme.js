@@ -118,7 +118,7 @@ export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestam
       name: data.hasOwnProperty('active_pubkey_str') ? 'finishnewacc' : 'finish',
       authorization: [{
         actor: techAccount,
-        permission: 'active',
+        permission: 'bot',
       }],
       data,
     }]
