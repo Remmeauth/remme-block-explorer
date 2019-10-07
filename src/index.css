@@ -481,12 +481,12 @@ p {
 .ant-steps {
   margin-bottom: 15px; }
 
-.theme-light .ant-steps-item-process > .ant-steps-item-content > .ant-steps-item-title, .theme-light
-.ant-steps-item-finish > .ant-steps-item-content > .ant-steps-item-title {
+.theme-light .ant-steps-item-process .ant-steps-item-content > .ant-steps-item-title, .theme-light
+.ant-steps-item-finish .ant-steps-item-content > .ant-steps-item-title {
   color: #364FCC; }
 
-.theme-dark .ant-steps-item-process > .ant-steps-item-content > .ant-steps-item-title, .theme-dark
-.ant-steps-item-finish > .ant-steps-item-content > .ant-steps-item-title {
+.theme-dark .ant-steps-item-process .ant-steps-item-content > .ant-steps-item-title, .theme-dark
+.ant-steps-item-finish .ant-steps-item-content > .ant-steps-item-title {
   color: #568fff; }
 
 .theme-light .ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon .ant-steps-icon-dot, .theme-light
@@ -515,12 +515,12 @@ p {
 .theme-dark .ant-steps-item-wait > .ant-steps-item-content > .ant-steps-item-title {
   color: #8b9296; }
 
-.theme-light .ant-steps-item-finish > .ant-steps-item-content > .ant-steps-item-description, .theme-light
-.ant-steps-item-process > .ant-steps-item-content > .ant-steps-item-description {
+.theme-light .ant-steps-item-finish .ant-steps-item-content > .ant-steps-item-description, .theme-light
+.ant-steps-item-process .ant-steps-item-content > .ant-steps-item-description {
   color: #343747; }
 
-.theme-dark .ant-steps-item-finish > .ant-steps-item-content > .ant-steps-item-description, .theme-dark
-.ant-steps-item-process > .ant-steps-item-content > .ant-steps-item-description {
+.theme-dark .ant-steps-item-finish .ant-steps-item-content > .ant-steps-item-description, .theme-dark
+.ant-steps-item-process .ant-steps-item-content > .ant-steps-item-description {
   color: #ffffff; }
 
 .theme-light .ant-steps-vertical .ant-steps-item-icon {

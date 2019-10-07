@@ -523,8 +523,8 @@ p {
   margin-bottom: 15px;
 }
 
-.ant-steps-item-process > .ant-steps-item-content > .ant-steps-item-title,
-.ant-steps-item-finish > .ant-steps-item-content > .ant-steps-item-title {
+.ant-steps-item-process .ant-steps-item-content > .ant-steps-item-title,
+.ant-steps-item-finish .ant-steps-item-content > .ant-steps-item-title {
   @include customize(theme) {
     color: getValue(textColorDark);
   }
@@ -552,8 +552,8 @@ p {
   }
 }
 
-.ant-steps-item-finish > .ant-steps-item-content > .ant-steps-item-description,
-.ant-steps-item-process > .ant-steps-item-content > .ant-steps-item-description {
+.ant-steps-item-finish .ant-steps-item-content > .ant-steps-item-description,
+.ant-steps-item-process .ant-steps-item-content > .ant-steps-item-description {
   @include customize(theme) { color: getValue(titleText);}
 }
 
