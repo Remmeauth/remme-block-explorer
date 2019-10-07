@@ -540,13 +540,13 @@ p {
 
 .ant-steps-item-wait .ant-steps-item-icon > .ant-steps-icon .ant-steps-icon-dot,
 .ant-steps-item-process > .ant-steps-item-tail::after,
-.ant-steps-item-wait > .ant-steps-item-tail::after {
+.ant-steps-item-wait .ant-steps-item-tail::after {
   @include customize(theme) {
     background: getValue(textColor);
   }
 }
 
-.ant-steps-item-wait > .ant-steps-item-content > .ant-steps-item-title {
+.ant-steps-item-wait .ant-steps-item-content > .ant-steps-item-title {
   @include customize(theme) {
     color: getValue(textColor);
   }
