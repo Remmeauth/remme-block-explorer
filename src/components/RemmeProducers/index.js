@@ -93,7 +93,7 @@ class RemmeProducers extends Component {
                                  <td className="">{ index + 1 }</td>
                                  <td className=""><Link to={'/account/' + item.owner}>{ item.owner }</Link></td>
                                  <td className=""><div className="producer-links">{item.url && <SmartLink link={item.url}><Icon type="link" /></SmartLink>}</div></td>
-                                 <td className="">{index < 21 ? <Tag color="#4cd79c">TOP 21</Tag> : <Tag color="#f9b22b">Standby</Tag>}</td>
+                                 <td className="">{index < 25 ? <Tag color="#4cd79c">TOP 25</Tag> : <Tag color="#f9b22b">Standby</Tag>}</td>
                                  <td className="">{item.total_votes}</td>
                                  <td className="">{item.rate} %</td>
                                  <td className="">{item.rewards}</td>

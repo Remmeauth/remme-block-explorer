@@ -55,6 +55,7 @@ export const producerInfo = (url) => {
         var options = {
           method: 'GET',
           url: url,
+          timeout: 3000
         };
         request(options, function (error, response) {
           if (error) reject(error);

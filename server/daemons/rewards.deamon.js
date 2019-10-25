@@ -31,15 +31,9 @@ const getTotalRewards = async () => {
         pos = pos - 1000;
       }
 
-
-
       difference = DifferenceInDays(date1, actions.slice(-1)[0].block_time);
-
-      console.log(difference);
-
       actions.forEach(i => {
         if (i.action_trace.act.name == "torewards" && DifferenceInDays(date1, i.block_time) < 4) {
-          //console.log(i.block_time);
           sum = sum + Number(i.action_trace.act.data.amount.split(' ')[0])
         }
       })

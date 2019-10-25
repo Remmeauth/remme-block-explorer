@@ -4,7 +4,7 @@ import QueueAnim from 'rc-queue-anim';
 import ReactJson from 'react-json-view'
 
 import { network } from '../../config.js'
-import { MapContainer, RemmeSpin, RemmeResult, RemmeAccountInfo, RemmeResourcesInfo, RemmeProducerInfo, RemmeAccountTxInfo } from '../../components'
+import { MapContainer, RemmeSpin, RemmeResult, RemmeAccountInfo, RemmeResourcesInfo, RemmeProducerInfo, RemmeAccountTxInfo, RemmeGuardianInfo } from '../../components'
 
 const { Panel } = Collapse;
 
@@ -20,6 +20,7 @@ class Account extends Component {
       const json = await response.json();
       console.log(json);
       if (!json.account.account_name) {
+
         this.setState({
           error: "Unknown Account",
           loading: false
@@ -60,6 +61,12 @@ class Account extends Component {
 
   render() {
     const { raw, loading, error } = this.state;
+    var staked_by_me = 0
+
+    if (raw) {
+      staked_by_me = Number(raw.account.total_resources.cpu_weight.split(' ')[0]) - raw.balance.staked_by_others
+    }
+
     return (
       <React.Fragment>
         { loading ? (<RemmeSpin/>) :
@@ -73,7 +80,17 @@ class Account extends Component {
                   <RemmeResourcesInfo data={raw}/>
                 </Col>
               </QueueAnim>
-              { raw.producer && <QueueAnim delay={900} interval={200} type="right" component={Row} gutter={30}>
+
+              { raw.guardian && <QueueAnim delay={900} interval={200} type="right" component={Row} gutter={30}>
+                <Col lg={24} xl={12} key="1">
+                  <RemmeGuardianInfo data={raw}/>
+                </Col>
+                <Col lg={24} xl={12} key="2">
+
+                </Col>
+              </QueueAnim> }
+
+              { raw.producer && <QueueAnim delay={1200} interval={200} type="right" component={Row} gutter={30}>
                 <Col lg={24} xl={12} key="1">
                   <RemmeProducerInfo forceUpdate={this.forceUpdate} data={raw}/>
                 </Col>
@@ -82,7 +99,7 @@ class Account extends Component {
                 </Col>
               </QueueAnim> }
 
-              <QueueAnim delay={1200} interval={300} type="right"  >
+              <QueueAnim delay={1500} interval={300} type="right"  >
                 <Collapse className="account-raw" accordion defaultActiveKey={['3']} key='1'>
                  <Panel header="Account Raw Data" key="1">
                    <ReactJson src={raw.account} collapsed={2} theme="ocean" />

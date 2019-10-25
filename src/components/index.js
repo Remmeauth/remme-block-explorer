@@ -17,6 +17,7 @@ import TagsField from './TagsField';
 import Search from './Search';
 import TimeStamp from './TimeStamp';
 import RemmeVoter from './RemmeVoter';
+import RemmeGuardianInfo from './RemmeGuardianInfo';
 
 export {
   Navigation,
@@ -37,5 +38,6 @@ export {
   TagsField,
   Search,
   TimeStamp,
-  RemmeVoter
+  RemmeVoter,
+  RemmeGuardianInfo
 };

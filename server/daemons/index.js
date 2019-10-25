@@ -5,6 +5,7 @@ import { startTransactionsDeamon, getTransactionList } from './transactions.deam
 import { startProducersDeamon, getProducerList } from './producers.deamon.js'
 import { startGlobalDeamon, getGlobalInfo } from './global.deamon.js'
 import { startRewardsDeamon, getRewards } from './rewards.deamon.js'
+import { startGuardiansDeamon } from './guardians.deamon.js'
 
 let infoData = {};
 
@@ -49,6 +50,7 @@ export const startDaemons = async () => {
 }
 
 export const startRewardsDaemon = async () => {
+  await startGuardiansDeamon();
   await startRewardsDeamon();
   await sleep(1000 * 60 * 60); //1h
   startRewardsDaemon();

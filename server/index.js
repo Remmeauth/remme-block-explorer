@@ -38,6 +38,7 @@ app.get('/api/getTransaction/:id', async (req, res) => {
 
 app.get('/api/getAccount/:id', async (req, res) => {
   const responce = await getAccount(req.params.id);
+  console.log(responce);
   res.json(responce);
 });
 

@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Spin, Icon  } from 'antd';
 
 import { network } from '../../config.js'
-import { RemmeCharts, RemmeBlocks, RemmeTransactions, RemmeProducers } from '../../components';
+import { RemmeProducers } from '../../components';
 
 const loadIcon = <Icon type="setting" rotate={180} style={{ fontSize: 24 }} spin />;
 
-class Home extends Component {
+class Producers extends Component {
   intervalID = 0;
 
   state = {
@@ -34,7 +34,6 @@ class Home extends Component {
 
   componentDidMount() {
     this.handleUpdate();
-    this.intervalID = setInterval(this.handleUpdate, 4000);
   }
 
   componentWillUnmount() {
@@ -45,14 +44,7 @@ class Home extends Component {
     const {loading, data} = this.state
     return (
       <React.Fragment>
-        {!loading ? (
-          <React.Fragment>
-            <RemmeCharts wait={300} data={data}/>
-            <RemmeBlocks wait={600} data={data.blocks}/>
-            <RemmeProducers data={data.producers} wait={1500} size={25} title="Producers" viewAll={true}/>
-            <RemmeTransactions data={data.transactions} wait={1800}/>
-          </React.Fragment>
-        ) : (
+        {!loading ? <RemmeProducers data={data.producers} wait={300} size={1000} title="Producers"/> : (
           <div className="preload-block">
             <Spin indicator={loadIcon} />
           </div>
@@ -62,4 +54,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default Producers;

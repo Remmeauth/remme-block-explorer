@@ -20,27 +20,6 @@ const NavigationItems = [
     type: 'simple',
     key: 2,
   },
-  // {
-  //   title: 'Blocks',
-  //   link: '/blocks',
-  //   icon: 'code-sandbox',
-  //   type: 'simple',
-  //   key: 2,
-  // },
-  // {
-  //   title: 'Transactions',
-  //   link: '/transactions',
-  //   icon: 'column-width',
-  //   type: 'simple',
-  //   key: 3,
-  // },
-  // {
-  //   title: 'RAM',
-  //   link: '/ram',
-  //   icon: 'line-chart',
-  //   type: 'simple',
-  //   key: 4,
-  // },
   {
     title: 'Swap',
     link: '/swap',
@@ -55,6 +34,13 @@ const NavigationItems = [
     type: 'simple',
     key: 6,
   },
+  {
+    title: 'Guardians',
+    link: '/guardian',
+    icon: 'user',
+    type: 'simple',
+    key: 7,
+  }
 ];
 
 class Navigation extends Component {

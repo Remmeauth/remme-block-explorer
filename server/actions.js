@@ -1,5 +1,6 @@
 import { api, producerInfo } from './helpers'
 import { getInfo } from './daemons'
+import { getVoterInfo } from './daemons/guardians.deamon.js'
 import { network } from '../config'
 
 const ToInt = 10000;
@@ -141,6 +142,7 @@ const normalizeAccount = (account) => {
 export const getAccount = async (id) => {
   try {
     const chainInfo = getInfo();
+
     let accountInfo = {};
     accountInfo.chainInfo = chainInfo;
     accountInfo.marketChart = chainInfo.marketChart;
@@ -163,7 +165,14 @@ export const getAccount = async (id) => {
       }
     }
 
+    let voter = getVoterInfo(accountInfo.account.account_name);
+    accountInfo.voter = voter.length ? voter[0] : false
 
+    // for (var i = 0; i < guardiansInfo.length; i++) {
+    //   if (guardiansInfo[i].owner === accountInfo.account.account_name){
+    //     accountInfo.guardian = guardiansInfo.guardians[i]
+    //   }
+    // }
 
     if (accountInfo.producer) {
       accountInfo.producer.bp = await getProducer(accountInfo.producer.url);
@@ -173,7 +182,7 @@ export const getAccount = async (id) => {
     return accountInfo
 
   } catch (e) {
-    console.log(e.message);
+    console.log('\x1b[31m%s\x1b[0m', '[ACTION getAccount] ERROR: ', e.message);
     return {}
   }
 }

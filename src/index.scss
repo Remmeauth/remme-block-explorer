@@ -132,6 +132,9 @@ h6 {
 p {
   @include customize(theme) { color: getValue(textColor); }
   font-size: 16px;
+  .ant-badge .ant-badge-status-text {
+    @include customize(theme) { color: getValue(textColor); }
+  }
 }
 
 .color-background {
@@ -398,6 +401,10 @@ p {
   display: none;
 }
 
+.ant-progress-text {
+    @include customize(theme) { color: getValue(titleText); }
+}
+
 .ant-table-wrapper {
   @include customize(theme) { background: getValue(cardBackground); }
   margin-bottom: 30px;
@@ -482,6 +489,10 @@ p {
 }
 .ant-card-body {
   padding: 10px 25px;
+
+  .ant-badge span {
+    display: inline-block;
+  }
 
   p {
     font-size: 15px;

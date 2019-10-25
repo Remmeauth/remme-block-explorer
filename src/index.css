@@ -71,6 +71,10 @@ p {
     color: #8e8ea8; }
   .theme-dark p {
     color: #8b9296; }
+  .theme-light p .ant-badge .ant-badge-status-text {
+    color: #8e8ea8; }
+  .theme-dark p .ant-badge .ant-badge-status-text {
+    color: #8b9296; }
 
 .theme-light .color-background {
   background: #364FCC; }
@@ -352,6 +356,12 @@ p {
 .details-info .ant-table-thead tr {
   display: none; }
 
+.theme-light .ant-progress-text {
+  color: #343747; }
+
+.theme-dark .ant-progress-text {
+  color: #ffffff; }
+
 .ant-table-wrapper {
   margin-bottom: 30px; }
   .theme-light .ant-table-wrapper {
@@ -444,6 +454,8 @@ p {
 
 .ant-card-body {
   padding: 10px 25px; }
+  .ant-card-body .ant-badge span {
+    display: inline-block; }
   .ant-card-body p {
     font-size: 15px; }
   .ant-card-body span {
