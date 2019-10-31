@@ -34,7 +34,9 @@ export const getActions = async (id) => {
 
 export const getSwapInfo= async (id) => {
   try {
+    console.log(id);
     const swapInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'.swap", "scope": "'+network.account+'.swap", "table": "swaps", "limit": "500", "index_position": "secondary", "key_type": "sha256", "lower_bound": "'+id+'", "upper_bound": "'+id+'" }' ));
+    console.log(swapInfo);
     return swapInfo
   } catch (e) {
     console.log(e.message);
@@ -44,6 +46,7 @@ export const getSwapInfo= async (id) => {
 export const getSwapFee= async () => {
   try {
     const swapInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'.swap", "scope": "'+network.account+'.swap", "table": "swapparams", "limit": "500" }' ));
+    console.log(swapInfo);
     const value = swapInfo.rows[0].in_swap_fee / 10000
     return value
   } catch (e) {
