@@ -36,7 +36,7 @@ const NavigationItems = [
   },
   {
     title: 'Guardians',
-    link: '/guardian',
+    link: '/guardians',
     icon: 'user',
     type: 'simple',
     key: 7,

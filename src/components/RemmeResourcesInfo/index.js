@@ -1,15 +1,9 @@
 import React, { Component } from 'react'
 import { Row, Col, Card, Table, Progress } from 'antd';
-import { Pie } from 'ant-design-pro/lib/Charts';
 
 import { network } from '../../config.js'
-import { tableColunm } from '../../schemes'
+import { tableColunm, gridStyle } from '../../schemes'
 import { TimeStamp } from '../../components'
-
-const gridStyle = {
-  width: '100%',
-  overflow: "hidden"
-};
 
 const DifferenceInWeeks = (d1, d2) => {
   const data2 = new Date(d2 + 'Z')
@@ -39,7 +33,9 @@ class RemmeResourcesInfo extends Component {
   percent = (value) => {
     if (isNaN(value)) return 0.1;
     if (value === Infinity) return 0.1;
-    if (value === 0) return  0.1;
+    if (value === 0) {
+      return  0.1;
+    }
     if (value < 5) return 5;
     return value;
   }
@@ -86,11 +82,8 @@ class RemmeResourcesInfo extends Component {
   render() {
     const { data } = this.props;
     const date1 = new Date();
-    const weeks_to_maturity = DifferenceInWeeks(date1, data.voter.vote_mature_time);
+    const weeks_to_maturity = DifferenceInWeeks(date1, data.account.voter_info.stake_lock_time);
     const maturity = maturityFormatter(weeks_to_maturity)
-
-
-
 
     const accountDataSource = [
       {
@@ -106,17 +99,17 @@ class RemmeResourcesInfo extends Component {
       {
         key: '2',
         title: 'Last reassertion time',
-        value: <TimeStamp timestamp={data.voter.last_reassertion_time} />
+        value: <TimeStamp timestamp={data.account.voter_info.last_reassertion_time} />
       },
       {
         key: '3',
         title: 'Stake locked until',
-        value: <TimeStamp timestamp={data.voter.vote_mature_time} />
+        value: <TimeStamp timestamp={data.account.voter_info.stake_lock_time} />
       },
       {
         key: '4',
         title: 'Weeks to maturity',
-        value: <Progress style={{margin: '6px 0'}} percent={100} successPercent={maturity.percent} format = { (percent, successPercent) => maturity.text } />
+        value: <Progress style={{margin: '6px 0'}} percent={100} status={maturity.percent !== 1 ? 'active' : 'normal'} successPercent={maturity.percent} format = { (percent, successPercent) => maturity.text } />
       },
 
       {
@@ -136,10 +129,22 @@ class RemmeResourcesInfo extends Component {
         <Card  bordered={false}>
           <Card.Grid style={gridStyle}>
             <h5>Used:</h5>
-            <Row gutter={10}>
-              <Col sm={24} md={8}><Pie percent={this.percent(data.account.ram_usage / data.account.ram_quota * 100)} color="#398bf7" animate={true} subTitle="RAM" total={this.total(data.account.ram_usage / data.account.ram_quota * 100).toFixed(2) + "%"} height={140} /><p className="align-center">{ this.formatBytes(data.account.ram_usage / 1024)} / { this.formatBytes(data.account.ram_quota) } kb</p></Col>
-              <Col sm={24} md={8}><Pie percent={this.percent(data.account.cpu_limit.used / data.account.cpu_limit.max * 100)} color="#725af2" animate={true} subTitle="CPU" total={this.total(data.account.cpu_limit.used / data.account.cpu_limit.max * 100).toFixed(2) + "%"} height={140} /><p className="align-center">{ this.timeConversion(this.total(data.account.cpu_limit.used / 1000000)) } / { this.timeConversion(data.account.cpu_limit.max / 1000000) }</p></Col>
-              <Col sm={24} md={8}><Pie percent={this.percent(data.account.net_limit.used / data.account.cpu_limit.max * 100)} color="#c787f5" animate={true} subTitle="NET" total={this.total(data.account.net_limit.used / data.account.cpu_limit.max * 100).toFixed(2) + "%"} height={140} /><p className="align-center">{ this.formatBytes(data.account.net_limit.used)} / { this.formatBytes(data.account.net_limit.max)  }</p></Col>
+            <Row gutter={10} className="resources-card">
+              <Col sm={24} md={8} className="align-center">
+                <h6 className="align-center">RAM</h6>
+                <Progress className="resources-progress" strokeColor="#4cd79c" width={110} type="circle" strokeWidth={10} percent={this.percent(data.account.ram_usage / data.account.ram_quota * 100)} format={percent => `${this.total(data.account.ram_usage / data.account.ram_quota * 100).toFixed(2)} %`} />
+                <p className="align-center">{ this.formatBytes(data.account.ram_usage / 1024)} / { this.formatBytes(data.account.ram_quota) } kb</p>
+              </Col>
+              <Col sm={24} md={8} className="align-center">
+                <h6>CPU</h6>
+                <Progress className="resources-progress" strokeColor="#ef534f" width={110} type="circle" strokeWidth={10} percent={this.percent(data.account.cpu_limit.used / data.account.cpu_limit.max * 100)} format={percent => `${this.total(data.account.net_limit.used / data.account.cpu_limit.max * 100).toFixed(2)} %`} />
+                <p>{ this.timeConversion(this.total(data.account.cpu_limit.used / 1000000)) } / { this.timeConversion(data.account.cpu_limit.max / 1000000) }</p>
+              </Col>
+              <Col sm={24} md={8} className="align-center">
+                <h6>NET</h6>
+                <Progress className="resources-progress" strokeColor="#f9b22b" width={110} type="circle" strokeWidth={10} percent={this.percent(data.account.net_limit.used / data.account.cpu_limit.max * 100)} format={percent => `${this.total(data.account.net_limit.used / data.account.cpu_limit.max * 100).toFixed(2)} %`} />
+                <p>{ this.formatBytes(data.account.net_limit.used)} / { this.formatBytes(data.account.net_limit.max)  }</p>
+              </Col>
             </Row>
           </Card.Grid>
           <Card.Grid style={gridStyle}>

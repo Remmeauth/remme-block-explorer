@@ -1,12 +1,12 @@
 import { api } from '../helpers'
 import { network } from '../../config'
+import { getRewards } from './rewards.deamon.js'
 
 let VOTERS = []
 
 
 export const startGuardiansDeamon = async () => {
   try {
-
     var voters = [];
     var more = true;
     var limit = 50;
@@ -27,16 +27,21 @@ export const startGuardiansDeamon = async () => {
 
 
     var guardians = voters.filter(item => {return item.staked > 2500000000;});
-    var total_guardians_stake = guardians.reduce((a, b) => a + Number(b.staked), 0)
+    var total_guardians_stake = guardians.reduce((a, b) => a + Number(b.staked), 0);
+    var index = 0;
+    VOTERS = voters.sort((a, b) => {
+        return b.staked - a.staked;
+      }).map(item => {
 
-    VOTERS = voters.map(item => {
-      if (item.staked > 2500000000) {
-        item.guardian = true;
-        item.guardian_rate = item.staked / total_guardians_stake * 1;
-        item.total_guardians_stake = total_guardians_stake;
-      }
-      return item
-    })
+        if (item.staked > 2500000000) {
+          console.log(item.owner);
+          item.guardian = true;
+          item.guardian_rate = item.staked / total_guardians_stake * 1;
+          item.rewards = Number(item.guardian_rate * (getRewards() * 0.6));
+          item.total_guardians_stake = total_guardians_stake;
+        }
+        return item
+      })
 
   } catch (e) {
     console.log('\x1b[31m%s\x1b[0m', '[GUARDIANS DEAMON] ERROR: ', e.message);
@@ -47,6 +52,6 @@ export const getVoterInfo = (id) => {
   return VOTERS.filter(item => {return item.owner === id});
 }
 
-export const getGuardiansInfo = () => {
+export const getGuardians = () => {
   return VOTERS.filter(item => {return item.guardian});
 }

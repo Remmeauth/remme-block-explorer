@@ -4,6 +4,11 @@ import { Icon, Tag } from 'antd';
 
 import { TimeStamp } from '../components'
 
+export const gridStyle = {
+  width: '100%',
+  overflow: "hidden"
+};
+
 export const tableColunm = (columns) => {
   return columns.map(name => {
     return list[name];

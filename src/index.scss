@@ -325,18 +325,24 @@ p {
 
 .ant-result {
   margin-bottom: 30px;
+  padding: 30px 20px;
   @include customize(theme) {
     background: getValue(cardBackground);
     border-color: getValue(cardBorder);
   }
+  .ant-result-extra {
+    margin-top: 10px;
+  }
   .ant-result-title {
+    font-size: 18px;
     @include customize(theme) {
       color: getValue(titleText);
     }
   }
   .ant-result-icon i {
+    font-size: 50px;
     @include customize(theme) {
-      color: getValue(textColorDark);
+      color: '#f9b22b';
     }
   }
 }
@@ -399,6 +405,11 @@ p {
 
 .details-info .ant-table-thead tr {
   display: none;
+}
+
+.details-info .ant-table-tbody tr p {
+  margin: 0;
+  font-size: 15px;
 }
 
 .ant-progress-text {
@@ -517,6 +528,20 @@ p {
   margin-right: 5px;
   &:hover {
     opacity: 0.8;
+  }
+}
+.resources-card {
+  h6 {
+    margin-bottom: 14px
+  }
+  p {
+    margin-bottom: 0px;
+  }
+  .resources-progress {
+    margin-bottom: 15px;
+    .ant-progress-text {
+      font-size: 18px
+    }
   }
 }
 

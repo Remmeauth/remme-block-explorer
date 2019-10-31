@@ -8,6 +8,7 @@ import RemmeProducers from "./RemmeProducers";
 import MapContainer from "./MapContainer";
 import RemmeSpin from "./RemmeSpin";
 import RemmeResult from "./RemmeResult";
+import RemmeGuardians from "./RemmeGuardians";
 import RemmeAccountInfo from "./RemmeAccountInfo";
 import RemmeResourcesInfo from "./RemmeResourcesInfo";
 import RemmeProducerInfo from "./RemmeProducerInfo";
@@ -16,8 +17,7 @@ import CreateForm from './CreateForm';
 import TagsField from './TagsField';
 import Search from './Search';
 import TimeStamp from './TimeStamp';
-import RemmeVoter from './RemmeVoter';
-import RemmeGuardianInfo from './RemmeGuardianInfo';
+import ColorAmount from './ColorAmount';
 
 export {
   Navigation,
@@ -38,6 +38,6 @@ export {
   TagsField,
   Search,
   TimeStamp,
-  RemmeVoter,
-  RemmeGuardianInfo
+  ColorAmount,
+  RemmeGuardians
 };

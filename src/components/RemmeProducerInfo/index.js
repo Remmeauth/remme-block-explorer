@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Table, Tag, Icon, Result } from 'antd';
 
-import { SmartLink, RemmeVoter } from '../../components'
+import { SmartLink } from '../../components'
 
 
 const Telegram = () => (
@@ -32,7 +32,7 @@ class RemmeProducerInfo extends Component {
   }
 
   componentDidMount() {
-    const { data, forceUpdate } = this.props
+    const { data } = this.props
     console.log(data);
     try {
       const accountDataSource = [
@@ -49,12 +49,12 @@ class RemmeProducerInfo extends Component {
           {
             key: '2',
             name: 'Votes',
-            value:  `${data.producer.total_votes}`
+            value:  `${data.producer.total_votes.toFixed(0)}`
           },
           {
             key: '8',
             name: 'Rate',
-            value: `${data.producer.rate} %`
+            value: `${Number(data.producer.rate.toFixed(4))} %`
           },
           {
             key: '4',
@@ -106,12 +106,12 @@ class RemmeProducerInfo extends Component {
           {
             key: '2',
             name: 'Votes',
-            value:  `${data.producer.total_votes}`
+            value:  `${data.producer.total_votes.toFixed(0)}`
           },
           {
             key: '8',
             name: 'Rate',
-            value: `${data.producer.rate} %`
+            value: `${Number(data.producer.rate.toFixed(4))} %`
           },
           {
             key: '4',

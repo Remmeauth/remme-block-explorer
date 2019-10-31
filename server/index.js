@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 import { getBlock, getTransaction, getAccount, getBalance, getProducer, getActions, getSwapInfo, getVoters, getSwapFee } from './actions'
+import { getGuardians } from './daemons/guardians.deamon.js'
 import { getInfo, startDaemons, startRewardsDaemon } from './daemons'
 
 const corsOptions = {
@@ -38,7 +39,6 @@ app.get('/api/getTransaction/:id', async (req, res) => {
 
 app.get('/api/getAccount/:id', async (req, res) => {
   const responce = await getAccount(req.params.id);
-  console.log(responce);
   res.json(responce);
 });
 
@@ -54,6 +54,11 @@ app.get('/api/getSwapInfo/:id', async (req, res) => {
 
 app.get('/api/getVotersInfo', async (req, res) => {
   const responce = await getVoters();
+  res.json(responce);
+});
+
+app.get('/api/getGuardians', async (req, res) => {
+  const responce = await getGuardians();
   res.json(responce);
 });
 

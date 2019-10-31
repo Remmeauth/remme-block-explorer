@@ -81,6 +81,8 @@ const calcBalance = (account, balance) => {
     unstaked: 0,
     unstaking: 0,
     total_balance: 0,
+    producerNotClimedRewards: 0,
+    guardianNotClimedRewards: 0,
     balance: []
   };
   try {
@@ -98,8 +100,6 @@ const calcBalance = (account, balance) => {
       accInfo.unstaking = Number(account.refund_request.resource_amount.split(' ')[0])
     }
 
-    //const total_resources = Number(account.total_resources.cpu_weight.split(' ')[0]) + Number(account.total_resources.net_weight.split(' ')[0]);
-    //const self_delegated_bandwidth = account.self_delegated_bandwidth ? (Number(account.self_delegated_bandwidth.cpu_weight.split(' ')[0]) + Number(account.self_delegated_bandwidth.net_weight.split(' ')[0])) : accInfo.staked;
     const total_resources = Number(account.total_resources.cpu_weight.split(' ')[0]);
     const self_delegated_bandwidth = account.self_delegated_bandwidth ? (Number(account.self_delegated_bandwidth.cpu_weight.split(' ')[0]) ) : 0;
     accInfo.staked_by_others = round(total_resources - self_delegated_bandwidth, 4)
@@ -142,22 +142,23 @@ const normalizeAccount = (account) => {
 export const getAccount = async (id) => {
   try {
     const chainInfo = getInfo();
-
+    const marketChart = chainInfo.marketChart;
     let accountInfo = {};
-    accountInfo.chainInfo = chainInfo;
-    accountInfo.marketChart = chainInfo.marketChart;
+
     const account = JSON.parse(await api('POST','chain', 'get_account', '{"account_name":"' + id + '"}'));
     accountInfo.account = account.account_name ? normalizeAccount(account) : false;
+
     const balanceInfo = JSON.parse(await api('POST','chain', 'get_currency_balance', '{"code":"'+network.account+'.token", "account":"'+id+'"}'));
     accountInfo.balance = calcBalance(accountInfo.account, balanceInfo);
-    accountInfo.balance.total_usd_value = (accountInfo.balance.total_balance * accountInfo.marketChart.prices[0].y).toFixed(2)
+    accountInfo.balance.total_usd_value = Number(accountInfo.balance.total_balance * marketChart.prices[0].y)
+    accountInfo.balance.guardianNotClimedRewards = accountInfo.account.voter_info.pending_pervote_reward / 10000
+
     for (var i = 0; i < chainInfo.producers.length; i++){
       if (chainInfo.producers[i].owner === accountInfo.account.account_name){
          accountInfo.producer = chainInfo.producers[i];
          accountInfo.producer.position = i+1;
 
-         accountInfo.balance.producer_per_stake_pay = accountInfo.producer.pending_perstake_reward / 10000
-         accountInfo.balance.producer_per_vote_pay = accountInfo.producer.pending_pervote_reward / 10000
+         accountInfo.balance.producerNotClimedRewards = accountInfo.producer.pending_pervote_reward / 10000
 
          if (accountInfo.producer.unpaid_blocks != accountInfo.producer.expected_produced_blocks && accountInfo.producer.expected_produced_blocks > 0) {
               accountInfo.balance.producer_per_vote_pay = ((accountInfo.producer.pending_pervote_reward * accountInfo.producer.unpaid_blocks) / accountInfo.producer.expected_produced_blocks) / 10000;
@@ -165,20 +166,12 @@ export const getAccount = async (id) => {
       }
     }
 
-    let voter = getVoterInfo(accountInfo.account.account_name);
-    accountInfo.voter = voter.length ? voter[0] : false
-
-    // for (var i = 0; i < guardiansInfo.length; i++) {
-    //   if (guardiansInfo[i].owner === accountInfo.account.account_name){
-    //     accountInfo.guardian = guardiansInfo.guardians[i]
-    //   }
-    // }
+    const voter = getVoterInfo(accountInfo.account.account_name);
+    if (voter.length) { accountInfo.account.voter_info = voter[0]; }
 
     if (accountInfo.producer) {
       accountInfo.producer.bp = await getProducer(accountInfo.producer.url);
     }
-    //console.log(accountInfo);
-
     return accountInfo
 
   } catch (e) {

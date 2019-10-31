@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Spin, Icon  } from 'antd';
 
 import { network } from '../../config.js'
-import { RemmeProducers } from '../../components';
+import { RemmeGuardians } from '../../components';
 
 const loadIcon = <Icon type="setting" rotate={180} style={{ fontSize: 24 }} spin />;
 
-class Producers extends Component {
+class Guardians extends Component {
   intervalID = 0;
 
   state = {
@@ -16,10 +16,9 @@ class Producers extends Component {
 
   handleUpdate = async () => {
     try {
-      const response = await fetch( network.backendAddress + `/api/getInfo`);
+      const response = await fetch( network.backendAddress + `/api/getGuardians`);
       const json = await response.json();
-      console.log(json);
-      if (!json.marketChart) { return false }
+      if (!json.length) { return false }
       this.setState({
         loading: false,
         data: json
@@ -36,15 +35,11 @@ class Producers extends Component {
     this.handleUpdate();
   }
 
-  componentWillUnmount() {
-    clearInterval(this.intervalID);
-  }
-
   render() {
     const {loading, data} = this.state
     return (
       <React.Fragment>
-        {!loading ? <RemmeProducers data={data.producers} wait={300} size={1000} title="Producers"/> : (
+        {!loading ? <RemmeGuardians data={data} wait={300} size={1000}/> : (
           <div className="preload-block">
             <Spin indicator={loadIcon} />
           </div>
@@ -54,4 +49,4 @@ class Producers extends Component {
   }
 }
 
-export default Producers;
+export default Guardians;
