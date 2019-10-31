@@ -22,7 +22,7 @@ const getTotalRewards = async () => {
 
     do {
       const data = JSON.parse(await api('POST','history', 'get_actions', '{"pos":"'+pos+'","offset":"-1000","account_name":"rewards"}'));
-      const actions = data.actions.reverse()
+      const actions = data.actions.reverse();
 
       if (pos === -1) {
         length = actions[0].account_action_seq;

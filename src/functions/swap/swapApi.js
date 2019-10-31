@@ -142,6 +142,7 @@ const actions = {
       return RemGenSwapId( SwapTransaction, SwapSecret[1], amount, SwapTransactionStatus, addressEth )
     },
     SwapWait: async ({SwapID}) => {
+      console.log(SwapID);
       return await RemGetSwapInfo(SwapID);
     },
     SwapFinalize: async ({AccountNameRem, SwapTransaction, SwapSecret, amount, SwapTransactionStatus, SwapSignDigest, ActiveKeyRem, OwnerKeyRem, addressEth }) => {

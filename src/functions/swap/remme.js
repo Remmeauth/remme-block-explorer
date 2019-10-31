@@ -19,16 +19,16 @@ const net = ScatterJS.Network.fromJson(network);
 const rpc = new JsonRpc(net.fullhost());
 const eos = ScatterJS.eos(net, Api, {rpc});
 
-const formatSwapIdToLittleEnd = (str) => {
-    let le = '';
-    const p128 = str.match(/.{1,32}/g);
-    p128.forEach((hash) => {
-        const bytes = hash.match(/.{1,2}/g);
-        bytes.reverse();
-        le += bytes.join('');
-    });
-    return le;
-}
+// const formatSwapIdToLittleEnd = (str) => {
+//     let le = '';
+//     const p128 = str.match(/.{1,32}/g);
+//     p128.forEach((hash) => {
+//         const bytes = hash.match(/.{1,2}/g);
+//         bytes.reverse();
+//         le += bytes.join('');
+//     });
+//     return le;
+// }
 
 export const RemPrivateKeyToAddress = ( PrivateKeyRem ) => {
   return PrivateKeyRem
@@ -68,8 +68,7 @@ export const RemGenSwapId = (txid, swap_pubkey, asset, timestamp, return_address
 }
 
 export const RemGetSwapInfo = async (SwapID) => {
-  const le = formatSwapIdToLittleEnd(SwapID);
-  const response = await fetch( network.backendAddress + `/api/getSwapInfo/${le}`);
+  const response = await fetch( network.backendAddress + `/api/getSwapInfo/${SwapID}`);
   const json = await response.json();
   console.log(json);
   if (json.hasOwnProperty('rows') && json.rows.length) {
