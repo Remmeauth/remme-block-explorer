@@ -69,6 +69,7 @@ $base-size: 15px;
 html, body {
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 #root {
@@ -157,6 +158,7 @@ p {
     left: 0;
     overflow-y: auto;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
 }
 
 .custom-field .ant-tag {

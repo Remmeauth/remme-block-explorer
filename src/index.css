@@ -1,6 +1,7 @@
 html, body {
   overflow-x: hidden;
-  overflow-y: auto; }
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; }
 
 #root {
   min-height: 100%; }
@@ -95,7 +96,8 @@ p {
   height: 100%;
   left: 0;
   overflow-y: auto;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; }
 
 .custom-field .ant-tag {
   margin: 5px; }
