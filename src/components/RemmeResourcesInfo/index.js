@@ -133,7 +133,7 @@ class RemmeResourcesInfo extends Component {
               <Col sm={24} md={8} className="align-center">
                 <h6 className="align-center">RAM</h6>
                 <Progress className="resources-progress" strokeColor="#4cd79c" width={110} type="circle" strokeWidth={10} percent={this.percent(data.account.ram_usage / data.account.ram_quota * 100)} format={percent => `${this.total(data.account.ram_usage / data.account.ram_quota * 100).toFixed(2)} %`} />
-                <p className="align-center">{ this.formatBytes(data.account.ram_usage / 1024)} / { this.formatBytes(data.account.ram_quota) } kb</p>
+                <p className="align-center">{ this.formatBytes(data.account.ram_usage)} / { this.formatBytes(data.account.ram_quota) }</p>
               </Col>
               <Col sm={24} md={8} className="align-center">
                 <h6>CPU</h6>

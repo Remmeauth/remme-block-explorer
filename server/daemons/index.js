@@ -50,8 +50,8 @@ export const startDaemons = async () => {
 }
 
 export const startRewardsDaemon = async () => {
-  await startGuardiansDeamon();
   await startRewardsDeamon();
+  await startGuardiansDeamon();
   await sleep(1000 * 60 * 60); //1h
   startRewardsDaemon();
 }

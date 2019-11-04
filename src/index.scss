@@ -161,8 +161,24 @@ p {
     -webkit-overflow-scrolling: touch;
 }
 
-.custom-field .ant-tag {
-    margin: 5px;
+.custom-field {
+   .ant-tag {
+      margin: 5px;
+      padding: 5px;
+      max-width: 300px;
+      margin: 5px auto;
+      color: #ffffff !important;
+      border-width: 0;
+      background-color: #ef534f !important;
+      font-size: 14px;
+      .anticon-close {color: #ffffff}
+    }
+    .ant-input {
+      width: 300px !important;
+      padding: 5px;
+      height: 30px;
+      text-align: center;
+    }
 }
 
 .ant-tag {

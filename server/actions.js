@@ -115,31 +115,42 @@ const calcBalance = (account, balance) => {
 }
 
 const normalizeAccount = (account) => {
-  if (account.total_resources) {
-    return account;
-  } else {
-    let normalAccount = account;
-    normalAccount.total_resources = {
+  let regularAccount = account
+
+  if (!regularAccount.total_resources) {
+
+    regularAccount.total_resources = {
         "owner": account.account_name,
         "net_weight": "0 " + network.coin,
         "cpu_weight": "0 " + network.coin,
         "ram_bytes": 0
     }
-    normalAccount.ram_quota = account.ram_usage;
-    normalAccount.net_weight = 0;
-    normalAccount.cpu_weight = 0;
-    normalAccount.net_limit = {
+    regularAccount.ram_quota = account.ram_usage;
+    regularAccount.net_weight = 0;
+    regularAccount.cpu_weight = 0;
+    regularAccount.net_limit = {
         "used": 0,
         "available": 0,
         "max": 0
     }
-    normalAccount.cpu_limit = {
+    regularAccount.cpu_limit = {
       "used": 0,
       "available": 0,
       "max": 0
     }
-    return normalAccount;
   }
+
+  if (!regularAccount.voter_info) {
+    regularAccount.voter_info = {
+      "pending_perstake_reward": 0,
+      "producers": [],
+      "last_undelegate_time": "1970-01-01T00:00:00.000",
+      "last_reassertion_time": "1970-01-01T00:00:00.000",
+      "stake_lock_time": "1970-01-01T00:00:00.000",
+    }
+  }
+
+  return regularAccount;
 }
 
 export const getAccount = async (id) => {
@@ -149,12 +160,13 @@ export const getAccount = async (id) => {
     let accountInfo = {};
 
     const account = JSON.parse(await api('POST','chain', 'get_account', '{"account_name":"' + id + '"}'));
+
     accountInfo.account = account.account_name ? normalizeAccount(account) : false;
 
     const balanceInfo = JSON.parse(await api('POST','chain', 'get_currency_balance', '{"code":"'+network.account+'.token", "account":"'+id+'"}'));
     accountInfo.balance = calcBalance(accountInfo.account, balanceInfo);
     accountInfo.balance.total_usd_value = Number(accountInfo.balance.total_balance * marketChart.prices[0].y)
-    accountInfo.balance.guardianNotClimedRewards = accountInfo.account.voter_info.pending_pervote_reward / 10000
+    accountInfo.balance.guardianNotClimedRewards = accountInfo.account.voter_info.pending_perstake_reward / 10000
 
     for (var i = 0; i < chainInfo.producers.length; i++){
       if (chainInfo.producers[i].owner === accountInfo.account.account_name){

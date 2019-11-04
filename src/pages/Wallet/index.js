@@ -6,7 +6,7 @@ import ScatterEOS from '@scatterjs/eosjs2';
 import {JsonRpc, Api} from 'eosjs';
 
 import { network } from '../../config.js'
-import { RemmeSpin, RemmeResult, RemmeAccountInfo, RemmeResourcesInfo, CreateForm, TagsField } from '../../components'
+import { RemmeSpin, RemmeResult, RemmeAccountInfo, RemmeResourcesInfo, CreateForm, TagsField, RemmeAccountTxInfo } from '../../components'
 import { walletTransfer, walletStake, walletVote } from '../../schemes';
 import scatter from "../../assets/scatter.jpg";
 
@@ -45,7 +45,11 @@ class Wallet extends Component {
         expireSeconds: 30,
     }).then(res => {
         console.log('sent: ', res);
-      message.success('Transaction Success, Please check your account page', 2);
+      message.success('Transaction Success', 2);
+      setTimeout(() => {
+        this.handleAccountInfo(name, authority);
+      }, 2000);
+
     }).catch(err => {
       message.error(err.message, 2);
     });
@@ -68,23 +72,21 @@ class Wallet extends Component {
   };
 
   handleVote = () => {
-    const {producers} = this.state;
-    const form = this.form4;
-    form.validateFields((err, values) => {
-      if (err) { return; }
-      if (!producers || producers.length === 0) {
-        message.error('Pls. Set producers.');
-        return;
-      }
-      const data = {
-          voter: values.voter,
-          proxy: '',
-          producers: producers
-      }
-      form.resetFields();
-      this.setState({ producers: [] });
-      this.initTransaction('', 'voteproducer', data);
-    });
+    const {producers, name} = this.state;
+
+    if (!producers || producers.length === 0) {
+      message.error('Pls. Set producers.');
+      return;
+    }
+    const data = {
+        voter: name,
+        proxy: '',
+        producers: producers
+    }
+    this.setState({ producers: [] });
+    this.initTransaction('', 'voteproducer', data);
+
+
   }
 
   handleStake = (e) => {
@@ -221,7 +223,6 @@ class Wallet extends Component {
                           <TabPane tab="Vote" key="4">
                             <h5>Vote:</h5>
                             <div className="form-wit-tags-field">
-                              <CreateForm scheme={walletVote} ref={form => this.form4 = form}/>
                               <p>Add producers:</p>
                               <TagsField onUpdate={this.voteProducers} tags={producers}/>
                             </div>
@@ -238,6 +239,10 @@ class Wallet extends Component {
                     </Col>
                     <Col lg={24} xl={12} key="2">
                       <RemmeResourcesInfo data={raw}/>
+                    </Col>
+                    <Col lg={24} xl={24} key="3">
+                      <h4>Actions:</h4>
+                      <RemmeAccountTxInfo id={raw.account.account_name}/>
                     </Col>
                   </QueueAnim>
                   <QueueAnim delay={1500} interval={300} type="right" component={Row} gutter={30}>

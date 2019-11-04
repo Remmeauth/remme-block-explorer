@@ -67,7 +67,7 @@ class StepInitiate extends Component {
       callback("Please enter a valid number!");
     }
     if (parseFloat(value) < minDeposit) {
-      callback("Min deposit is "+minDeposit+" REM.");
+      callback("Min swap is "+minDeposit+" REM.");
     }
     if (parseFloat(value) > remBalance) {
       callback( `You have only ${remBalance} REM.` );

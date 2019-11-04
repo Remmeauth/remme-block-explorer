@@ -17,7 +17,9 @@ const CoinInfo = ({ dir, coin, address, balance1, balance2 }) => (
       : <Skeleton paragraph={false} active /> }
     <div className="balance">
       <p><b>REM Balance</b>: {balance1}</p>
-      {!coin && (<p><b>ETH Balance</b>: {balance2}</p>)}
+      {
+        //!coin && (<p><b>ETH Balance</b>: {balance2}</p>)
+      }
     </div>
   </Col>
 );
