@@ -32,37 +32,41 @@ class RemmeTransactions extends Component {
                <div className="ant-table ant-table-default ant-table-scroll-position-left">
                   <div className="ant-table-content" style={{overflow: "hidden"}}>
                      <div className="ant-table-body">
-                        <table className="">
-                          <thead className="ant-table-thead">
-                            <tr>
-                               <th>
-                                  <span className="ant-table-header-column">
-                                     <div><span className="ant-table-column-title">Tx Hash</span><span className="ant-table-column-sorter"></span></div>
-                                  </span>
-                               </th>
-                               <th className="">
-                                  <span className="ant-table-header-column">
-                                     <div><span className="ant-table-column-title">Action Name</span><span className="ant-table-column-sorter"></span></div>
-                                  </span>
-                               </th>
-                               <th className="">
-                                  <span className="ant-table-header-column">
-                                     <div><span className="ant-table-column-title">Data</span><span className="ant-table-column-sorter"></span></div>
-                                  </span>
-                               </th>
-                            </tr>
-                          </thead>
-                          <tbody className="ant-table-tbody">
-                            {data.map((item) =>
-                              <tr className="ant-table-row ant-table-row-level-0" key={item.trx.id} data-row-key={item.trx.id}>
-                                 <td className=""><span className="ant-table-row-indent indent-level-0" ></span><Link to={"/transaction/" + item.trx.id} >{item.trx.id.substring(0,10)}...</Link></td>
-                                 <td className=""><Tag color="#ef534f">{item.trx.transaction.actions[0].name}</Tag></td>
-                                 <td className="">{JSON.stringify(item.trx.transaction.actions[0].data).substring(0,440)}</td>
+                       <div class="scroll-table-1">
+                        <div class="scroll-table-2">
+                          <table className="">
+                            <thead className="ant-table-thead">
+                              <tr>
+                                 <th>
+                                    <span className="ant-table-header-column">
+                                       <div><span className="ant-table-column-title">Tx Hash</span><span className="ant-table-column-sorter"></span></div>
+                                    </span>
+                                 </th>
+                                 <th className="">
+                                    <span className="ant-table-header-column">
+                                       <div><span className="ant-table-column-title">Action Name</span><span className="ant-table-column-sorter"></span></div>
+                                    </span>
+                                 </th>
+                                 <th className="">
+                                    <span className="ant-table-header-column">
+                                       <div><span className="ant-table-column-title">Data</span><span className="ant-table-column-sorter"></span></div>
+                                    </span>
+                                 </th>
                               </tr>
-                            )}
+                            </thead>
+                            <tbody className="ant-table-tbody">
+                              {data.map((item) =>
+                                <tr className="ant-table-row ant-table-row-level-0" key={item.trx.id} data-row-key={item.trx.id}>
+                                   <td className=""><span className="ant-table-row-indent indent-level-0" ></span><Link to={"/transaction/" + item.trx.id} >{item.trx.id.substring(0,10)}...</Link></td>
+                                   <td className=""><Tag color="#ef534f">{item.trx.transaction.actions[0].name}</Tag></td>
+                                   <td className="">{JSON.stringify(item.trx.transaction.actions[0].data).substring(0,440)}</td>
+                                </tr>
+                              )}
 
-                          </tbody>
-                        </table>
+                            </tbody>
+                          </table>
+                        </div>
+                       </div>
                      </div>
                   </div>
                </div>

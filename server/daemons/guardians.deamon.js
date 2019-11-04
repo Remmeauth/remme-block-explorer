@@ -34,7 +34,6 @@ export const startGuardiansDeamon = async () => {
       }).map(item => {
 
         if (item.staked > 2500000000) {
-          console.log(item.owner);
           item.guardian = true;
           item.guardian_rate = item.staked / total_guardians_stake * 1;
           item.rewards = Number(item.guardian_rate * (getRewards() * 0.6));

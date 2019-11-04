@@ -34,48 +34,52 @@ class RemmeGuardians extends Component {
                <div className="ant-table ant-table-default ant-table-scroll-position-left">
                   <div className="ant-table-content" style={{overflow: "hidden"}}>
                      <div className="ant-table-body">
-                        <table className="">
-                          <thead className="ant-table-thead">
-                            <tr>
-                              <th>
-                                 <span className="ant-table-header-column">
-                                    <div><span className="ant-table-column-title">#</span><span className="ant-table-column-sorter"></span></div>
-                                 </span>
-                              </th>
-                               <th>
-                                  <span className="ant-table-header-column">
-                                     <div><span className="ant-table-column-title">Name</span><span className="ant-table-column-sorter"></span></div>
-                                  </span>
-                               </th>
-                               <th>
-                                  <span className="ant-table-header-column">
-                                     <div><span className="ant-table-column-title">Staked</span><span className="ant-table-column-sorter"></span></div>
-                                  </span>
-                               </th>
-                               <th>
-                                  <span className="ant-table-header-column">
-                                     <div><span className="ant-table-column-title">Rate</span><span className="ant-table-column-sorter"></span></div>
-                                  </span>
-                               </th>
-                               <th>
-                                  <span className="ant-table-header-column">
-                                     <div><span className="ant-table-column-title">Rewards (per day)</span><span className="ant-table-column-sorter"></span></div>
-                                  </span>
-                               </th>
-                            </tr>
-                          </thead>
-                          <tbody className="ant-table-tbody">
-                            {data.slice(0, size).map((item, index) =>
-                              <tr className="ant-table-row ant-table-row-level-0" key={index} data-row-key={index}>
-                                 <td className="">{ index }</td>
-                                 <td className=""><Link to={'/account/' + item.owner}>{ item.owner }</Link></td>
-                                 <td className="">{ item.staked } {network.coin}</td>
-                                 <td className="">{ Number(item.guardian_rate.toFixed(4)) }</td>
-                                 <td className="">{item.rewards.toFixed(0)}</td>
+                       <div class="scroll-table-1">
+                        <div class="scroll-table-2">
+                          <table className="">
+                            <thead className="ant-table-thead">
+                              <tr>
+                                <th>
+                                   <span className="ant-table-header-column">
+                                      <div><span className="ant-table-column-title">#</span><span className="ant-table-column-sorter"></span></div>
+                                   </span>
+                                </th>
+                                 <th>
+                                    <span className="ant-table-header-column">
+                                       <div><span className="ant-table-column-title">Name</span><span className="ant-table-column-sorter"></span></div>
+                                    </span>
+                                 </th>
+                                 <th>
+                                    <span className="ant-table-header-column">
+                                       <div><span className="ant-table-column-title">Staked</span><span className="ant-table-column-sorter"></span></div>
+                                    </span>
+                                 </th>
+                                 <th>
+                                    <span className="ant-table-header-column">
+                                       <div><span className="ant-table-column-title">Rate</span><span className="ant-table-column-sorter"></span></div>
+                                    </span>
+                                 </th>
+                                 <th>
+                                    <span className="ant-table-header-column">
+                                       <div><span className="ant-table-column-title">Rewards (per day)</span><span className="ant-table-column-sorter"></span></div>
+                                    </span>
+                                 </th>
                               </tr>
-                            )}
-                          </tbody>
-                        </table>
+                            </thead>
+                            <tbody className="ant-table-tbody">
+                              {data.slice(0, size).map((item, index) =>
+                                <tr className="ant-table-row ant-table-row-level-0" key={index} data-row-key={index}>
+                                   <td className="">{ index }</td>
+                                   <td className=""><Link to={'/account/' + item.owner}>{ item.owner }</Link></td>
+                                   <td className="">{ item.staked } {network.coin}</td>
+                                   <td className="">{ Number(item.guardian_rate.toFixed(4)) }</td>
+                                   <td className="">{item.rewards.toFixed(0)}</td>
+                                </tr>
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+                       </div>
                      </div>
                   </div>
                </div>
