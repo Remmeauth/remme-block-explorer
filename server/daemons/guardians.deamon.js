@@ -1,4 +1,4 @@
-import { api } from '../helpers'
+import { api, DifferenceInDays } from '../helpers'
 import { network } from '../../config'
 import { getRewards } from './rewards.deamon.js'
 
@@ -29,18 +29,20 @@ export const startGuardiansDeamon = async () => {
     var guardians = voters.filter(item => {return item.staked > 2500000000;});
     var total_guardians_stake = guardians.reduce((a, b) => a + Number(b.staked), 0);
     var index = 0;
-    VOTERS = voters.sort((a, b) => {
-        return b.staked - a.staked;
-      }).map(item => {
+    var now = new Date()
 
-        if (item.staked > 2500000000) {
-          item.guardian = true;
-          item.guardian_rate = item.staked / total_guardians_stake * 1;
-          item.rewards = Number(item.guardian_rate * (getRewards() * 0.6));
-          item.total_guardians_stake = total_guardians_stake;
-        }
-        return item
-      })
+    VOTERS = voters.sort((a, b) => {
+      return b.staked - a.staked;
+    }).map(item => {
+      const difference = DifferenceInDays(now, item.last_reassertion_time)
+      if (item.staked > 2500000000 && difference < 30 ) {
+        item.guardian = true;
+        item.guardian_rate = item.staked / total_guardians_stake * 1;
+        item.rewards = Number(item.guardian_rate * (getRewards() * 0.6));
+        item.total_guardians_stake = total_guardians_stake;
+      }
+      return item
+    })
 
   } catch (e) {
     console.log('\x1b[31m%s\x1b[0m', '[GUARDIANS DEAMON] ERROR: ', e.message);

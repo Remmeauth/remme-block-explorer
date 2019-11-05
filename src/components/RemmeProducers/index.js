@@ -32,8 +32,8 @@ class RemmeProducers extends Component {
                <div className="ant-table ant-table-default ant-table-scroll-position-left">
                   <div className="ant-table-content" style={{overflow: "hidden"}}>
                      <div className="ant-table-body">
-                     <div class="scroll-table-1">
-                      <div class="scroll-table-2">
+                     <div className="scroll-table-1">
+                      <div className="scroll-table-2">
                         <table className="">
                           <thead className="ant-table-thead">
                             <tr>
@@ -95,7 +95,11 @@ class RemmeProducers extends Component {
                                  <td className="">{ index + 1 }</td>
                                  <td className=""><Link to={'/account/' + item.owner}>{ item.owner }</Link></td>
                                  <td className=""><div className="producer-links">{item.url && <SmartLink link={item.url}><Icon type="link" /></SmartLink>}</div></td>
-                                 <td className="">{index < 25 ? <Tag color="#4cd79c">TOP 25</Tag> : <Tag color="#f9b22b">Standby</Tag>}</td>
+                                 <td className="">
+                                  {item.tag === 'Active' && <Tag color="#4cd79c">Active</Tag>}
+                                  {item.tag === 'Rotated' && <Tag color="#f9b22b">Rotated</Tag>}
+                                  {item.tag === 'Standby' && <Tag color="#e7514c">Standby</Tag>}
+                                 </td>
                                  <td className="">{item.total_votes.toFixed(0)}</td>
                                  <td className="">{Number(item.rate.toFixed(4))} %</td>
                                  <td className="">{item.rewards.toFixed(0)}</td>

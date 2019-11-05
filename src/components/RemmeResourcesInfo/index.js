@@ -98,7 +98,7 @@ class RemmeResourcesInfo extends Component {
       },
       {
         key: '2',
-        title: 'Last reassertion time',
+        title: 'Last vote casted',
         value: <TimeStamp timestamp={data.account.voter_info.last_reassertion_time} />
       },
       {
@@ -108,7 +108,7 @@ class RemmeResourcesInfo extends Component {
       },
       {
         key: '4',
-        title: 'Weeks to maturity',
+        title: 'Weeks to vote maturity',
         value: <Progress style={{margin: '6px 0'}} percent={100} status={maturity.percent !== 1 ? 'active' : 'normal'} successPercent={maturity.percent} format = { (percent, successPercent) => maturity.text } />
       },
 

@@ -8,21 +8,19 @@ import numeral from 'numeral';
 import "./style.css"
 
 const ChartComponent = ({visitData}) => {
-
-  const { prices, market_caps } = visitData;
-
+  const { prices, market_caps, prices_scale, market_caps_scale } = visitData;
   return (
     <ChartCard contentHeight={178}>
       <NumberInfo
         subTitle="Price"
         total={"$"+prices[0].y.toFixed(4)}
       />
-      <MiniArea line height={45} data={prices} color="#398bf7" borderColor="#398bf7"  />
+      <MiniArea line height={45} data={prices} color="#398bf7" borderColor="#398bf7" scale={prices_scale}  />
       <NumberInfo
         subTitle="Market Cap"
         total={"$"+ numeral(market_caps[0].y).format('0,0')}
       />
-      <MiniArea line height={45} data={market_caps} color="#735af2" borderColor="#735af2"  />
+      <MiniArea line height={45} data={market_caps} color="#735af2" borderColor="#735af2" scale={market_caps_scale} />
     </ChartCard>
   )
 }

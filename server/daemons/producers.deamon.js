@@ -19,7 +19,15 @@ export const startProducersDeamon = async () => {
 }
 
 const countRate = (producers, totalProducerVoteWeight) => {
+   const global = getGlobalInfo();
    return producers.map((elem, index) => {
+      const active = global.last_schedule.filter(item => {return item.first === elem.owner});
+      const rotated =  global.standby.filter(item => {return item.first === elem.owner});
+      if (active.length || rotated.length) {
+        elem.tag = active.length ? 'Active' : 'Rotated'
+      } else {
+        elem.tag = 'Standby'
+      }
       elem.total_votes = Number(elem.total_votes)
       elem.index   = index + 1;
       elem.rate    = Number(elem.total_votes / totalProducerVoteWeight * 100);

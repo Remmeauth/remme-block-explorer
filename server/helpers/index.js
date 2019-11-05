@@ -70,3 +70,10 @@ export const producerInfo = (url) => {
       }
     });
 };
+
+export const DifferenceInDays = (d1, d2) => {
+  const data2 = new Date(d2 + 'Z')
+  const DifferenceInTime = d1.getTime() - data2.getTime();
+  const DifferenceInDays = DifferenceInTime / (1000 * 3600 * 24);
+  return DifferenceInDays
+}

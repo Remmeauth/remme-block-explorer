@@ -1,14 +1,7 @@
-import { api } from '../helpers'
+import { api, DifferenceInDays } from '../helpers'
 
 let count = 0;
 let REWARDS = 0;
-
-const DifferenceInDays = (d1, d2) => {
-  const data2 = new Date(d2 + 'Z')
-  const DifferenceInTime = d1.getTime() - data2.getTime();
-  const DifferenceInDays = DifferenceInTime / (1000 * 3600 * 24);
-  return DifferenceInDays
-}
 
 const getTotalRewards = async () => {
     console.log('\x1b[32m%s\x1b[0m', '[REWARDS DEAMON] Start');

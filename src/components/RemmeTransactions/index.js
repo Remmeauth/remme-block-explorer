@@ -32,8 +32,8 @@ class RemmeTransactions extends Component {
                <div className="ant-table ant-table-default ant-table-scroll-position-left">
                   <div className="ant-table-content" style={{overflow: "hidden"}}>
                      <div className="ant-table-body">
-                       <div class="scroll-table-1">
-                        <div class="scroll-table-2">
+                       <div className="scroll-table-1">
+                        <div className="scroll-table-2">
                           <table className="">
                             <thead className="ant-table-thead">
                               <tr>
@@ -62,7 +62,6 @@ class RemmeTransactions extends Component {
                                    <td className="">{JSON.stringify(item.trx.transaction.actions[0].data).substring(0,440)}</td>
                                 </tr>
                               )}
-
                             </tbody>
                           </table>
                         </div>

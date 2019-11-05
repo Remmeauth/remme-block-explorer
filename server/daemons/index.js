@@ -15,8 +15,8 @@ const prepareData = () => {
     infoData.totalBlocks = getBlockList()[0].block_num;
     infoData.producer = getBlockList()[0].producer;
     infoData.transactions = getTransactionList();
-    infoData.producers = getProducerList();
     infoData.global = getGlobalInfo();
+    infoData.producers = getProducerList();
     infoData.rewardsPerDay = getRewards();
     infoData.blocks = getBlockList().map( (item) => {
       return {
@@ -39,11 +39,11 @@ export const getInfo = () => {
 }
 
 export const startDaemons = async () => {
+  await startGlobalDeamon();
   await startBlocksDeamon();
   await startMarketDeamon();
   await startTransactionsDeamon();
   await startProducersDeamon();
-  await startGlobalDeamon();
   prepareData();
   await sleep(1000);
   startDaemons();

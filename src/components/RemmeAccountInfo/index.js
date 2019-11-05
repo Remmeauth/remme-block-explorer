@@ -68,7 +68,7 @@ class RemmeAccountInfo extends Component {
             <Row gutter={10}>
               <Col sm={24} md={8}><h6> Unstaked: </h6>       <ColorAmount className='align-center' amount={ data.balance.unstaked } color="#52c41a" /></Col>
               <Col sm={24} md={8}><h6> Total balance: </h6>  <ColorAmount className='align-center' amount={ data.balance.total_balance } color="#2990ff" /></Col>
-              <Col sm={24} md={8}><h6> Total USD Value: </h6><p className="align-center">{`${data.balance.total_usd_value} $`} </p></Col>
+              <Col sm={24} md={8}><h6> Total USD Value: </h6><p className="align-center">{`${Number(data.balance.total_usd_value.toFixed(2))} $`} </p></Col>
             </Row>
             <Progress
               style={{margin: '6px 0'}}
