@@ -13,7 +13,7 @@ class RemmeAccountInfo extends Component {
     const rewardsDataSource = [
       {
         key: '1',
-        title: 'Rewards per day:',
+        title: 'Rewards per day (estimation):',
         value: ''
       },
       {

@@ -26,7 +26,7 @@ export const startGuardiansDeamon = async () => {
     } while (more);
 
 
-    var guardians = voters.filter(item => {return item.staked > 2500000000;});
+    var guardians = voters.filter(item => {return item.staked >= 2500000000;});
     var total_guardians_stake = guardians.reduce((a, b) => a + Number(b.staked), 0);
     var index = 0;
     var now = new Date()
@@ -35,7 +35,7 @@ export const startGuardiansDeamon = async () => {
       return b.staked - a.staked;
     }).map(item => {
       const difference = DifferenceInDays(now, item.last_reassertion_time)
-      if (item.staked > 2500000000 && difference < 30 ) {
+      if (item.staked >= 2500000000 && difference < 30 ) {
         item.guardian = true;
         item.guardian_rate = item.staked / total_guardians_stake * 1;
         item.rewards = Number(item.guardian_rate * (getRewards() * 0.6));

@@ -81,7 +81,7 @@ class Wallet extends Component {
     const data = {
         voter: name,
         proxy: '',
-        producers: producers
+        producers: producers.sort()
     }
     this.setState({ producers: [] });
     this.initTransaction('', 'voteproducer', data);
