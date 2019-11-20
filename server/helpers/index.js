@@ -8,22 +8,23 @@ export const sleep = (ms) => {
   })
 };
 
-export const api = (method, type, action, body) => {
+export const api = (method, type, action, body, version = 'v1') => {
     return new Promise(function(resolve, reject) {
-
-      if (method == 'GET') {
-        console.log(`${network.protocol}://${network.host}:${network.port}` + '/v1/'+ type +'/' + action);
-      };
+      // if (method == 'GET') {
+      //   console.log(`${network.protocol}://${network.host}:${network.port}` + '/' + version + '/'+ type +'/' + action);
+      // };
       try {
         var options = {
           method: method,
-          url: `${network.protocol}://${network.host}:${network.port}` + '/v1/'+ type +'/' + action,
+          url: `${network.protocol}://${network.host}:${network.port}` + '/' + version + '/'+ type +'/' + action,
           headers: {accept: 'application/json', 'content-type': 'application/json'},
           body: body
         };
 
         request(options, function (error, response, body) {
-          if (error) reject(error);
+          if (error) {
+            reject(error);
+          }
           resolve(body);
         });
       } catch (e) {

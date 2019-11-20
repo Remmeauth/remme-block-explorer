@@ -8,7 +8,7 @@ export const tracesToTree = (arr) => {
     arrElem = arr[i];
     mappedArr[arrElem.action_ordinal] = {
       key: arrElem.action_ordinal,
-      account: arrElem.receiver,
+      account: arrElem.act.account,
       name: arrElem.act.name,
       data: arrElem.act.data,
       creator_action_ordinal: arrElem.creator_action_ordinal,

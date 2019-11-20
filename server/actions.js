@@ -16,7 +16,7 @@ export const getBlock = async (id) => {
 
 export const getTransaction = async (id) => {
   try {
-    const chainInfo = JSON.parse(await api('POST','history', 'get_transaction', '{"id":"' + id + '"}'));
+    const chainInfo = JSON.parse(await api('GET','history', 'get_transaction?id='+id, '', 'v2'));
     return chainInfo
   } catch (e) {
     console.log(e.message);

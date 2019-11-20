@@ -9,28 +9,22 @@ const getTotalRewards = async () => {
     let date1 = new Date();
     let date2 = date1;
 
-    let length = 0;
-    let pos = -1;
+    let skip = 0;
     let difference = 0;
 
     do {
-      const data = JSON.parse(await api('POST','history', 'get_actions', '{"pos":"'+pos+'","offset":"-1000","account_name":"rewards"}'));
+      const data = JSON.parse(await api('GET','history', 'get_actions?account=rewards&limit=1000&filter=rem:torewards&sort=-1&skip='+skip, '', 'v2'));
       const actions = data.actions.reverse();
 
-      if (pos === -1) {
-        length = actions[0].account_action_seq;
-        pos = length - 1000;
-      } else {
-        pos = pos - 1000;
-      }
+      skip = skip + 1000
 
-      difference = DifferenceInDays(date1, actions.slice(-1)[0].block_time);
+      difference = DifferenceInDays(date1, actions.slice(-1)[0]['@timestamp']);
       actions.forEach(i => {
-        if (i.action_trace.act.name == "torewards" && DifferenceInDays(date1, i.block_time) < 4) {
-          sum = sum + Number(i.action_trace.act.data.amount.split(' ')[0])
-        }
+
+      sum = sum + Number(i.act.data.amount.split(' ')[0])
       })
-    } while (pos > 0 && difference < 4);
+
+    } while (difference < 4);
     console.log('\x1b[32m%s\x1b[0m', '[REWARDS DEAMON] Done:', sum);
     return sum / 4
 }
