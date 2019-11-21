@@ -69,7 +69,7 @@ class RemmeGuardians extends Component {
                             <tbody className="ant-table-tbody">
                               {data.slice(0, size).map((item, index) =>
                                 <tr className="ant-table-row ant-table-row-level-0" key={index} data-row-key={index}>
-                                   <td className="">{ index }</td>
+                                   <td className="">{ index + 1 }</td>
                                    <td className=""><Link to={'/account/' + item.owner}>{ item.owner }</Link></td>
                                    <td className="">{ item.staked } {network.coin}</td>
                                    <td className="">{ Number(item.guardian_rate.toFixed(4)) }</td>
