@@ -5,28 +5,31 @@ let REWARDS = 0;
 
 const getTotalRewards = async () => {
     console.log('\x1b[32m%s\x1b[0m', '[REWARDS DEAMON] Start');
+
     let sum = 0;
     let date1 = new Date();
-    let date2 = date1;
 
-    let skip = 0;
+    let before = date1.getTime();
+    let after = date1.getTime() - (60*60*1000);
+
     let difference = 0;
 
     do {
-      const data = JSON.parse(await api('GET','history', 'get_actions?account=rewards&limit=1000&filter=rem:torewards&sort=-1&skip='+skip, '', 'v2'));
-      const actions = data.actions.reverse();
+      const data = JSON.parse(await api('GET','history', 'get_actions?account=rewards&limit=1000&filter=rem:torewards&after='+(new Date(after).toISOString())+'&before='+(new Date(before).toISOString()), '', 'v2'));
+      if (data.actions.length) {
+        const actions = data.actions.reverse();
+        difference = DifferenceInDays(date1, actions.slice(-1)[0]['@timestamp']);
+        actions.forEach(i => {
+          sum = sum + Number(i.act.data.amount.split(' ')[0])
+        })
+      }
 
-      skip = skip + 1000
+      before = before - (60*60*1000);
+      after = after - (60*60*1000);
+    } while (difference < 7);
 
-      difference = DifferenceInDays(date1, actions.slice(-1)[0]['@timestamp']);
-      actions.forEach(i => {
-
-      sum = sum + Number(i.act.data.amount.split(' ')[0])
-      })
-
-    } while (difference < 4);
     console.log('\x1b[32m%s\x1b[0m', '[REWARDS DEAMON] Done:', sum);
-    return sum / 4
+    return sum / 7
 }
 
 export const startRewardsDeamon = async () => {
