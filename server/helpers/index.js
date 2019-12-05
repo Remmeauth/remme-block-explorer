@@ -18,7 +18,8 @@ export const api = (method, type, action, body, version = 'v1') => {
           method: method,
           url: `${network.protocol}://${network.host}:${network.port}` + '/' + version + '/'+ type +'/' + action,
           headers: {accept: 'application/json', 'content-type': 'application/json'},
-          body: body
+          body: body,
+          timeout: 3000
         };
 
         request(options, function (error, response, body) {
@@ -39,6 +40,7 @@ export const coinmarketcap = () => {
         var options = {
           method: 'GET',
           url: marketChartEndpoint,
+          timeout: 3000
         };
         request(options, function (error, response, body) {
           if (error) reject(error);
@@ -58,7 +60,7 @@ export const producerInfo = (url) => {
           url: url,
           timeout: 3000
         };
-        request(options, function (error, response) {
+        request(options, {timeout: 1500} , function (error, response) {
           if (error) reject(error);
           if (response !== undefined) {
             resolve(response.body);
