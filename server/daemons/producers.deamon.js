@@ -8,8 +8,8 @@ let PRODUCERS_LIST = [];
 export const startProducersDeamon = async () => {
     try {
       const global = getGlobalInfo();
-      const blockInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'", "scope": "'+network.account+'", "table": "producers", "limit": "1000" }' ));
-      const sortedProducers = blockInfo.rows.sort((a, b) => {
+      const producersList = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'", "scope": "'+network.account+'", "table": "producers", "limit": "1000" }' ));
+      const sortedProducers = producersList.rows.filter(item => item.is_active ).sort((a, b) => {
           return b.total_votes - a.total_votes;
       });
       PRODUCERS_LIST = countRate(sortedProducers, global.total_producer_vote_weight)

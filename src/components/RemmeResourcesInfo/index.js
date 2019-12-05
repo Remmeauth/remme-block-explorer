@@ -23,7 +23,7 @@ const maturityFormatter = (weeks) => {
   return {
     text: `${Math.floor(left)}/25`,
     percent: 100 / 25 * Math.floor(left),
-    ratio: Number((1 / 25 * left).toFixed(4))
+    ratio: Number((1 / 25 * Math.floor(left)).toFixed(4))
   }
 
 }
@@ -57,15 +57,10 @@ class RemmeResourcesInfo extends Component {
   }
 
   timeConversion = (sec) => {
-
        var seconds = (sec).toFixed(2);
-
        var minutes = (sec / 60).toFixed(2);
-
        var hours = (sec / (60 * 60)).toFixed(2);
-
        var days = (sec / (60 * 60 * 24)).toFixed(2);
-
        if (seconds < 60) {
            return seconds + " Sec";
        } else if (minutes < 60) {
@@ -76,8 +71,6 @@ class RemmeResourcesInfo extends Component {
            return days + " Days"
        }
    }
-
-
 
   render() {
     const { data } = this.props;
@@ -156,10 +149,8 @@ class RemmeResourcesInfo extends Component {
             </Row>
           </Card.Grid>
         </Card>
-
         <h4>Stake info:</h4>
         <Table className="account-info details-info" dataSource={accountDataSource} columns={tableColunm(['title', 'value'])} pagination={false} />
-
 
       </React.Fragment>
     )

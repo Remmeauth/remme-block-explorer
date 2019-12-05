@@ -380,6 +380,9 @@ p {
 .antd-pro-charts-chart-card-chartCard .antd-pro-charts-chart-card-total {
   color: #ffffff; }
 
+.antd-pro-charts-chart-card-chartCard .antd-pro-charts-chart-card-total {
+  font-size: 24px; }
+
 .antd-pro-charts-chart-card-chartCard .antd-pro-charts-chart-card-chartTopMargin .antd-pro-charts-chart-card-avatar {
   font-size: 38px;
   line-height: 60px; }

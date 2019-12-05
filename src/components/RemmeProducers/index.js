@@ -77,6 +77,7 @@ class RemmeProducers extends Component {
                                      <div><span className="ant-table-column-title">Unpaid blocks</span><span className="ant-table-column-sorter"></span></div>
                                   </span>
                                </th>
+                               {/*
                                <th className="">
                                   <span className="ant-table-header-column">
                                      <div><span className="ant-table-column-title">Signed blocks</span><span className="ant-table-column-sorter"></span></div>
@@ -87,6 +88,7 @@ class RemmeProducers extends Component {
                                      <div><span className="ant-table-column-title">Expected blocks</span><span className="ant-table-column-sorter"></span></div>
                                   </span>
                                </th>
+                               */}
                             </tr>
                           </thead>
                           <tbody className="ant-table-tbody">
@@ -104,8 +106,10 @@ class RemmeProducers extends Component {
                                  <td className="">{Number(item.rate.toFixed(4))} %</td>
                                  <td className="">{item.rewards.toFixed(0)}</td>
                                  <td className="">{item.unpaid_blocks}</td>
-                                 <td className="">-</td>
-                                 <td className="">-</td>
+                                 {/*
+                                   <td className="">-</td>
+                                   <td className="">-</td>
+                                 */}
                               </tr>
                             )}
                           </tbody>

@@ -8,11 +8,14 @@ export const startBlocksDeamon = async () => {
     NEW_BLOCKS = [];
     const chainInfo = JSON.parse(await api('POST','chain', 'get_info'));
     const blockExist = BLOCK_LIST.find(block => block.block_num == chainInfo.head_block_num);
-
-    if (blockExist) return false;
+    console.log('\x1b[33m%s\x1b[0m', '[BLOCKS DEAMON] HEAD BLOCK and: ', chainInfo.head_block_num + ', ' + blockExist );
+    if (blockExist) {
+      console.log(blockExist);
+      return false;
+    }
 
     const blockInfo = JSON.parse(await api('POST', 'chain', 'get_block', '{"block_num_or_id":"' + chainInfo.head_block_num + '"}'));
-
+    console.log('get head_block_num', blockInfo.block_num);
     NEW_BLOCKS.push(blockInfo);
 
     for (var i = 0; i < 7; i++) {
@@ -27,6 +30,7 @@ export const startBlocksDeamon = async () => {
         NEW_BLOCKS.push(newBlockInfo);
       }
     }
+    console.log('get 7 blocks', NEW_BLOCKS.length);
     BLOCK_LIST = NEW_BLOCKS.concat(BLOCK_LIST);
     BLOCK_LIST = BLOCK_LIST.slice(0, 8);
   } catch (e) {

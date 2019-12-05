@@ -24,22 +24,22 @@ class RemmeAccountTxInfo extends Component {
     try {
       const response = await fetch(`${network.backendAddress}/api/getActions/${id}`);
       const json = await response.json();
-      const actions = json.actions.reverse()
+      const actions = json.actions
 
       var dataSource = [];
       var dataFilter = [];
 
       actions.forEach(item => {
-        if (!dataSource.some(el => el.hex_data === item.action_trace.act.hex_data && el.block_time === item.block_time )) {
-          dataFilter.push(item.action_trace.act.name)
+        if (!dataSource.some(el => el.hex_data === item.act.hex_data && el.block_time === item.block_time )) {
+          dataFilter.push(item.act.name)
           dataSource.push({
-            key: item.global_action_seq,
-            tx: item.action_trace.trx_id,
-            date: item.block_time,
-            name: item.action_trace.act.name,
-            data: item.action_trace.act.data,
-            hex_data: item.action_trace.act.hex_data,
-            block_time: item.block_time
+            key: item.global_sequence,
+            tx: item.trx_id,
+            date: item['@timestamp'],
+            name: item.act.name,
+            data: item.act.data,
+            hex_data: '',
+            block_time: ''
           })
         }
       });

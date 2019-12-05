@@ -5,7 +5,7 @@ import { startTransactionsDeamon, getTransactionList } from './transactions.deam
 import { startProducersDeamon, getProducerList } from './producers.deamon.js'
 import { startGlobalDeamon, getGlobalInfo } from './global.deamon.js'
 import { startRewardsDeamon, getRewards } from './rewards.deamon.js'
-import { startGuardiansDeamon } from './guardians.deamon.js'
+import { startGuardiansDeamon, getGuardians } from './guardians.deamon.js'
 
 let infoData = {};
 
@@ -16,6 +16,7 @@ const prepareData = () => {
     infoData.producer = getBlockList()[0].producer;
     infoData.transactions = getTransactionList();
     infoData.global = getGlobalInfo();
+    infoData.guardians = getGuardians().length
     infoData.producers = getProducerList();
     infoData.rewardsPerDay = getRewards();
     infoData.blocks = getBlockList().map( (item) => {

@@ -5,6 +5,8 @@ import NumberInfo from 'ant-design-pro/lib/NumberInfo';
 import { ChartCard, MiniArea } from 'ant-design-pro/lib/Charts';
 import numeral from 'numeral';
 
+import {decimal} from "../../config";
+
 import "./style.css"
 
 const ChartComponent = ({visitData}) => {
@@ -30,7 +32,6 @@ const BlockInfoComponent = ({icon, title, value, color, classes}) => (
 )
 
 class RemmeCharts extends Component {
-
   state = {
     show: false
   }
@@ -46,7 +47,7 @@ class RemmeCharts extends Component {
 
   render() {
     const {show} = this.state
-    const { totalBlocks, producer, marketChart, producers } = this.props.data
+    const { totalBlocks, producer, marketChart, producers, global, guardians } = this.props.data
     return (
       <React.Fragment>
         <h4>Network Stats</h4>
@@ -70,8 +71,8 @@ class RemmeCharts extends Component {
             { show &&
               <QueueAnim type="right" delay={300} >
                 <div key='1'>
-                  <BlockInfoComponent icon="column-width" title="Total Transactions" color="#ef534f" value="-" key='3'/>
-                  <BlockInfoComponent classes="blockinfo-producer" icon="check-circle" title="Producer" value={producer} color="#4cd79c" key='4'/>
+                  <BlockInfoComponent icon="column-width" title="Total Stake" color="#ef534f" value={ (Number(global.total_activated_stake) / decimal).toFixed(0)} key='3'/>
+                  <BlockInfoComponent classes="blockinfo-guardians" icon="check-circle" title="Total Guardians" value={guardians} color="#4cd79c" key='4'/>
                 </div>
               </QueueAnim>
             }

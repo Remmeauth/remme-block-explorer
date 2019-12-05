@@ -21,6 +21,7 @@ class Transaction extends Component {
     try {
       const response = await fetch( network.backendAddress + `/api/getTransaction/` + id);
       const json = await response.json();
+      console.log(json);
       const actions = json.actions ? json.actions.map((i, index) => {
         return {
           ...i.act,
@@ -48,7 +49,7 @@ class Transaction extends Component {
           {
             key: '3',
             title: 'Block Time',
-            value: <TimeStamp timestamp={json.block_time}/>
+            value: <TimeStamp timestamp={json.actions[0]['@timestamp']}/>
           },
           {
             key: '4',
