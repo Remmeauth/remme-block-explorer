@@ -60,7 +60,7 @@ export const producerInfo = (url) => {
           url: url,
           timeout: 3000
         };
-        request(options, {timeout: 1500} , function (error, response) {
+        request(options, function (error, response) {
           if (error) reject(error);
           if (response !== undefined) {
             resolve(response.body);
