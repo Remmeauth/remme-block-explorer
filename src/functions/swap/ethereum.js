@@ -43,8 +43,8 @@ const genTransaction = async ( myAddress, toAddress, data ) => {
   const rawTransaction = {
       "from": myAddress,
       "nonce": web3.utils.toHex(count),
-      gasLimit: toHex(Math.ceil(gasLimit * 1.5)),
-      gasPrice: toHex(Number(gasPrice) * 1.5),
+      //gasLimit: toHex(Math.ceil(gasLimit * 1.5)),
+      //gasPrice: toHex(Number(gasPrice) * 1.5),
       "to": toAddress,
       "value": "0x00",
       "data": data,
