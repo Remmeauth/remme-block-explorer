@@ -114,6 +114,10 @@ h6 {
   margin-bottom: 5px;
 }
 
+.small {
+  font-size: 14px;
+}
+
 b, strong {
     font-weight: 600;
 }
@@ -644,6 +648,12 @@ p {
 
 
 // SWAP
+
+.amount-color {
+  @include customize(theme) {
+    color: getValue(textColorDark);
+  }
+}
 
 .swap-wrapper {
   width: 100%;

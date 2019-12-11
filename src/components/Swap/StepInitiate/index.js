@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 import { amount } from '../../../schemes';
 import CreateForm from '../../CreateForm';
 import { login } from "../../../actions";
-import { secret } from "../../../config";
+import { secret, network } from "../../../config";
 
 import { EthPrivateKeyToAddress, RemGetBalanceRem, EthGetBalanceRem, EthGetBalanceEth, RemGetAccountCreatingFee, RemGetSwapFee } from '../../../functions/swap';
 import SwapParamsView from "../SwapParamsView"
@@ -121,7 +121,7 @@ class StepInitiate extends Component {
 
   render() {
     const { onSubmit } = this.props;
-    const { type, addressEth, addressRem, balanceRemRem, balanceEthRem, balanceEthEth } = this.state
+    const { type, addressEth, addressRem, balanceRemRem, balanceEthRem, balanceEthEth, swapFee, OwnerKeyRem, accountCreatingFee } = this.state
     const scheme = amount({ amountValidator: this.amountValidator });
     return (
       <React.Fragment>
@@ -129,7 +129,11 @@ class StepInitiate extends Component {
           <div className="swap-initiate-section">
             <SwapParamsView type={type} addressEth={addressEth} addressRem={addressRem} balanceRemRem={balanceRemRem} balanceEthRem={balanceEthRem} balanceEthEth={balanceEthEth}/>
           </div>
-          <p>Tokens to swap</p>
+          <p>Commission will be charged:</p>
+          <p className="small">Swap action: <span className="amount-color">{swapFee} {network.coin}</span>
+            { OwnerKeyRem && <React.Fragment><br/>Account creation action: <span className="amount-color">{accountCreatingFee} {network.coin}</span></React.Fragment> }
+          </p>
+          <p>Tokens to swap:</p>
           <CreateForm
             scheme={scheme}
             className="amount-form"
@@ -137,7 +141,6 @@ class StepInitiate extends Component {
           />
           <Button onClick={() => onSubmit({ current:2 })}> <Icon type="left" /> Back</Button>
           <Button className="init-swap" onClick={this.handleSubmit}>Init Swap</Button>
-
         </Spin>
       </React.Fragment>
     )
