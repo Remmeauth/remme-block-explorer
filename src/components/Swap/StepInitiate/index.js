@@ -60,8 +60,10 @@ class StepInitiate extends Component {
   amountValidator = (item, value, callback) => {
     const { type, balanceRemRem, balanceEthRem, OwnerKeyRem, accountCreatingFee, swapFee } = this.state
 
+    this.setState({ willGet: value });
+
     const remBalance = type ? balanceRemRem : balanceEthRem
-    const minDeposit = OwnerKeyRem ? accountCreatingFee + swapFee + 1 : swapFee + 1
+    const minDeposit = accountCreatingFee + swapFee + 1
 
     if (isNaN(parseFloat(value)) && !isFinite(value)) {
       callback("Please enter a valid number!");
@@ -121,7 +123,13 @@ class StepInitiate extends Component {
 
   render() {
     const { onSubmit } = this.props;
-    const { type, addressEth, addressRem, balanceRemRem, balanceEthRem, balanceEthEth, swapFee, OwnerKeyRem, accountCreatingFee } = this.state
+    const { type, addressEth, addressRem, balanceRemRem, balanceEthRem, balanceEthEth, swapFee, OwnerKeyRem, accountCreatingFee, willGet } = this.state
+    const minimalAmountToSwap = accountCreatingFee + swapFee + 1
+
+
+    const userWillGet = OwnerKeyRem ? (willGet - minimalAmountToSwap + 1) : (willGet - swapFee)
+    const userWillGetAmount = willGet >= Number(minimalAmountToSwap) ? userWillGet : false
+
     const scheme = amount({ amountValidator: this.amountValidator });
     return (
       <React.Fragment>
@@ -129,16 +137,19 @@ class StepInitiate extends Component {
           <div className="swap-initiate-section">
             <SwapParamsView type={type} addressEth={addressEth} addressRem={addressRem} balanceRemRem={balanceRemRem} balanceEthRem={balanceEthRem} balanceEthEth={balanceEthEth}/>
           </div>
-          <p>Commission will be charged:</p>
+          <h6>Commission will be charged:</h6>
           <p className="small">Swap action: <span className="amount-color">{swapFee} {network.coin}</span>
             { OwnerKeyRem && <React.Fragment><br/>Account creation action: <span className="amount-color">{accountCreatingFee} {network.coin}</span></React.Fragment> }
           </p>
-          <p>Tokens to swap:</p>
+          <h6>Tokens to swap:</h6>
           <CreateForm
             scheme={scheme}
             className="amount-form"
             ref={form => this.form = form}
           />
+          <p className="small">Minimal amount for swap: <span className="amount-color">{minimalAmountToSwap} {network.coin}</span>
+            {userWillGetAmount && <React.Fragment><br/>You will get: <span className="amount-color">{userWillGetAmount} {network.coin}</span></React.Fragment>}
+          </p>
           <Button onClick={() => onSubmit({ current:2 })}> <Icon type="left" /> Back</Button>
           <Button className="init-swap" onClick={this.handleSubmit}>Init Swap</Button>
         </Spin>

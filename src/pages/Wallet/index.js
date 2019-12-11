@@ -4,6 +4,7 @@ import QueueAnim from 'rc-queue-anim';
 import ScatterJS from '@scatterjs/core';
 import ScatterEOS from '@scatterjs/eosjs2';
 import {JsonRpc, Api} from 'eosjs';
+import queryString from 'query-string';
 
 import { network } from '../../config.js'
 import { RemmeSpin, RemmeResult, RemmeAccountInfo, RemmeResourcesInfo, CreateForm, TagsField, RemmeAccountTxInfo } from '../../components'
@@ -21,7 +22,16 @@ class Wallet extends Component {
 
   state = {
     producers: [],
+    defaultActiveKey: "stake",
     loading: false,
+  }
+
+  componentDidMount() {
+    const search = queryString.parse(this.props.location.search, {arrayFormat: 'comma'});
+    this.setState({
+      producers: search.producers ? search.producers : [],
+      defaultActiveKey: search.tab ? search.tab : "stake"
+    });
   }
 
   voteProducers = (tags) => {
@@ -189,7 +199,7 @@ class Wallet extends Component {
   }
 
   render() {
-    const { raw, loading, error, producers } = this.state;
+    const { raw, loading, error, producers, defaultActiveKey } = this.state;
     return (
       <React.Fragment>
         { loading ? (<RemmeSpin/>) :
@@ -200,18 +210,18 @@ class Wallet extends Component {
                     <Col key="1">
                       <h4>Web Wallet:</h4>
                       <Card className="card-with-padding align-center" >
-                        <Tabs defaultActiveKey="1">
-                          <TabPane tab="Stake Resources" key="1">
+                        <Tabs defaultActiveKey={defaultActiveKey}>
+                          <TabPane tab="Stake Resources" key="stake">
                             <h5>Stake:</h5>
                             <CreateForm scheme={walletStake} ref={form => this.form2 = form}/>
                             <Button type="primary" onClick={this.handleStake}>Generate Transaction</Button>
                           </TabPane>
-                          <TabPane tab="Unstake Resources" key="2">
+                          <TabPane tab="Unstake Resources" key="unstake">
                             <h5>Unstake:</h5>
                             <CreateForm scheme={walletStake} ref={form => this.form3 = form}/>
                             <Button type="primary" onClick={this.handleUnstake}>Generate Transaction</Button>
                           </TabPane>
-                          <TabPane tab="Vote" key="3">
+                          <TabPane tab="Vote" key="vote">
                             <h5>Vote:</h5>
                             <div className="form-wit-tags-field">
                               <p>Add producers:</p>
@@ -219,11 +229,11 @@ class Wallet extends Component {
                             </div>
                             <Button type="primary" onClick={this.handleVote}>Generate Transaction</Button>
                           </TabPane>
-                          <TabPane tab="Claim Reward" key="4">
+                          <TabPane tab="Claim Reward" key="claim">
                             <h5>Claim:</h5>
                             <Button type="primary" onClick={this.handleClaim}>Generate Transaction</Button>
                           </TabPane>
-                          <TabPane tab="Token transfer" key="5">
+                          <TabPane tab="Token transfer" key="transfer">
                             <h5>Transfer Tokens:</h5>
                             <CreateForm scheme={walletTransfer} ref={form => this.form1 = form}/>
                             <Button type="primary" onClick={this.handleTransaction}>Generate Transaction</Button>

@@ -638,6 +638,9 @@ p {
     background: #272c33;
     border-color: #323840; }
 
+.ant-form-item {
+  margin-bottom: 10px; }
+
 .ant-form {
   max-width: 460px;
   margin: 0 auto; }

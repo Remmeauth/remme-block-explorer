@@ -2,7 +2,8 @@ import { api, DifferenceInDays } from '../helpers'
 import { network } from '../../config'
 import { getRewards } from './rewards.deamon.js'
 
-let VOTERS = []
+let VOTERS = [];
+let GUARDIANS = [];
 
 
 export const startGuardiansDeamon = async () => {
@@ -25,13 +26,15 @@ export const startGuardiansDeamon = async () => {
       }
     } while (more);
 
+    VOTERS = voters;
 
-    var guardians = voters.filter(item => {return item.staked >= 2500000000;});
-    var total_guardians_stake = guardians.reduce((a, b) => a + Number(b.staked), 0);
-    var index = 0;
-    var now = new Date()
+    var now = new Date();
+    var total_guardians_stake = voters.filter(item => {
+      const difference = DifferenceInDays(now, item.last_reassertion_time)
+      return item.staked >= 2500000000 && difference < 30;
+    }).reduce((a, b) => a + Number(b.staked), 0);
 
-    VOTERS = voters.sort((a, b) => {
+    GUARDIANS = VOTERS.sort((a, b) => {
       return b.staked - a.staked;
     }).map(item => {
       const difference = DifferenceInDays(now, item.last_reassertion_time)
@@ -54,5 +57,5 @@ export const getVoterInfo = (id) => {
 }
 
 export const getGuardians = () => {
-  return VOTERS.filter(item => {return item.guardian});
+  return GUARDIANS.filter(item => {return item.guardian});
 }

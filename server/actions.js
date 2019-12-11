@@ -1,9 +1,7 @@
 import { api, producerInfo } from './helpers'
 import { getInfo } from './daemons'
 import { getVoterInfo } from './daemons/guardians.deamon.js'
-import { network } from '../config'
-
-const ToInt = 10000;
+import { network, decimal } from '../config'
 
 export const getBlock = async (id) => {
   try {
@@ -45,10 +43,9 @@ export const getSwapInfo= async (id) => {
 
 export const getSwapFee= async () => {
   try {
-    const swapInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'.swap", "scope": "'+network.account+'.swap", "table": "swapparams", "limit": "500" }' ));
-    console.log(swapInfo);
-    const value = swapInfo.rows[0].in_swap_fee / 10000
-    return value
+    const swapInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'.swap", "scope": "'+network.account+'.swap", "table": "chains", "limit": "500" }' ));
+    const row = swapInfo.rows.filter(i => { return i.chain === network.ethenv });
+    return row[0] ? row[0].in_swap_min_amount / decimal : 0
   } catch (e) {
     console.log(e.message);
   }
@@ -90,7 +87,7 @@ const calcBalance = (account, balance) => {
   };
   try {
     if (account && account.voter_info && account.voter_info.staked){
-      accInfo.staked = account.voter_info.staked / ToInt;
+      accInfo.staked = account.voter_info.staked / decimal;
     }
     accInfo.balance = Array.isArray(balance) ? balance : [];
     accInfo.balance.forEach((elem) => {
@@ -166,17 +163,17 @@ export const getAccount = async (id) => {
     const balanceInfo = JSON.parse(await api('POST','chain', 'get_currency_balance', '{"code":"'+network.account+'.token", "account":"'+id+'"}'));
     accountInfo.balance = calcBalance(accountInfo.account, balanceInfo);
     accountInfo.balance.total_usd_value = Number(accountInfo.balance.total_balance * marketChart.prices[0].y)
-    accountInfo.balance.guardianNotClimedRewards = accountInfo.account.voter_info.pending_perstake_reward / 10000
+    accountInfo.balance.guardianNotClimedRewards = accountInfo.account.voter_info.pending_perstake_reward / decimal
 
     for (var i = 0; i < chainInfo.producers.length; i++){
       if (chainInfo.producers[i].owner === accountInfo.account.account_name){
          accountInfo.producer = chainInfo.producers[i];
          accountInfo.producer.position = i+1;
 
-         accountInfo.balance.producerNotClimedRewards = accountInfo.producer.pending_pervote_reward / 10000
+         accountInfo.balance.producerNotClimedRewards = accountInfo.producer.pending_pervote_reward / decimal
 
          if (accountInfo.producer.unpaid_blocks != accountInfo.producer.expected_produced_blocks && accountInfo.producer.expected_produced_blocks > 0) {
-              accountInfo.balance.producer_per_vote_pay = ((accountInfo.producer.pending_pervote_reward * accountInfo.producer.unpaid_blocks) / accountInfo.producer.expected_produced_blocks) / 10000;
+              accountInfo.balance.producer_per_vote_pay = ((accountInfo.producer.pending_pervote_reward * accountInfo.producer.unpaid_blocks) / accountInfo.producer.expected_produced_blocks) / decimal;
          }
       }
     }
