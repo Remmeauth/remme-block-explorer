@@ -201,32 +201,32 @@ class Wallet extends Component {
                       <h4>Web Wallet:</h4>
                       <Card className="card-with-padding align-center" >
                         <Tabs defaultActiveKey="1">
-                          <TabPane tab="Token transfer" key="1">
-                            <h5>Transfer Tokens:</h5>
-                            <CreateForm scheme={walletTransfer} ref={form => this.form1 = form}/>
-                            <Button type="primary" onClick={this.handleTransaction}>Generate Transaction</Button>
-                          </TabPane>
-                          <TabPane tab="Stake Resources" key="2">
+                          <TabPane tab="Stake Resources" key="1">
                             <h5>Stake:</h5>
                             <CreateForm scheme={walletStake} ref={form => this.form2 = form}/>
                             <Button type="primary" onClick={this.handleStake}>Generate Transaction</Button>
                           </TabPane>
-                          <TabPane tab="Unstake Resources" key="3">
+                          <TabPane tab="Unstake Resources" key="2">
                             <h5>Unstake:</h5>
                             <CreateForm scheme={walletStake} ref={form => this.form3 = form}/>
                             <Button type="primary" onClick={this.handleUnstake}>Generate Transaction</Button>
                           </TabPane>
-                          <TabPane tab="Claim Reward" key="5">
-                            <h5>Claim:</h5>
-                            <Button type="primary" onClick={this.handleClaim}>Generate Transaction</Button>
-                          </TabPane>
-                          <TabPane tab="Vote" key="4">
+                          <TabPane tab="Vote" key="3">
                             <h5>Vote:</h5>
                             <div className="form-wit-tags-field">
                               <p>Add producers:</p>
                               <TagsField onUpdate={this.voteProducers} tags={producers}/>
                             </div>
                             <Button type="primary" onClick={this.handleVote}>Generate Transaction</Button>
+                          </TabPane>
+                          <TabPane tab="Claim Reward" key="4">
+                            <h5>Claim:</h5>
+                            <Button type="primary" onClick={this.handleClaim}>Generate Transaction</Button>
+                          </TabPane>
+                          <TabPane tab="Token transfer" key="5">
+                            <h5>Transfer Tokens:</h5>
+                            <CreateForm scheme={walletTransfer} ref={form => this.form1 = form}/>
+                            <Button type="primary" onClick={this.handleTransaction}>Generate Transaction</Button>
                           </TabPane>
                         </Tabs>
 

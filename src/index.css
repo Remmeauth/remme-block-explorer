@@ -105,7 +105,7 @@ p {
 .custom-field .ant-tag {
   margin: 5px;
   padding: 5px;
-  max-width: 300px;
+  max-width: 230px;
   margin: 5px auto;
   color: #ffffff !important;
   border-width: 0;
@@ -115,10 +115,15 @@ p {
     color: #ffffff; }
 
 .custom-field .ant-input {
-  width: 300px !important;
+  width: 230px !important;
   padding: 5px;
   height: 30px;
-  text-align: center; }
+  text-align: center;
+  border-radius: 0;
+  font-size: 14px; }
+
+.custom-field .ant-btn.ant-input-search-button {
+  height: 30px; }
 
 .ant-tag {
   min-width: 80px;

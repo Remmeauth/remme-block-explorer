@@ -86,7 +86,7 @@ class RemmeAccountInfo extends Component {
             <Row gutter={10}>
               <Col sm={24} md={8}><h6> Producer: </h6><ColorAmount className='align-center' amount={ data.balance.producerNotClimedRewards } color="#52c41a" /></Col>
               <Col sm={24} md={8}><h6> Guardian: </h6><ColorAmount className='align-center' amount={ data.balance.guardianNotClimedRewards } color="#2990ff" /></Col>
-              <Col sm={24} md={8}><h6> Total:    </h6><ColorAmount className='align-center' amount={ data.balance.producerNotClimedRewards + data.balance.guardianNotClimedRewards } color="#8b9296" /></Col>
+              <Col sm={24} md={8}><h6> Total USD Value: </h6><p className="align-center">{ `${Number(data.balance.NotClimedRewards_usd_value.toFixed(2))} $`}</p></Col>
             </Row>
             <Progress
               style={{margin: '13px 0'}}

@@ -181,6 +181,8 @@ export const getAccount = async (id) => {
       }
     }
 
+    accountInfo.balance.NotClimedRewards_usd_value = Number((accountInfo.balance.producerNotClimedRewards + accountInfo.balance.guardianNotClimedRewards)  * marketChart.prices[0].y)
+
     const voter = getVoterInfo(accountInfo.account.account_name);
     if (voter.length) { accountInfo.account.voter_info = voter[0]; }
 
