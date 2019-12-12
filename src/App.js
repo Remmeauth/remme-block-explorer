@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
 
 
-import { Navigation, DayNightMode, Search } from './components'
+import { Navigation, DayNightMode, Search, SelectNetwork } from './components'
 
 const { Header, Content, Footer } = Layout;
 
@@ -21,6 +21,7 @@ class App extends Component {
             <Navigation />
             <DayNightMode />
             <Search/>
+            <SelectNetwork />
           </div>
         </Header>
         <Content>

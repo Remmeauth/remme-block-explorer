@@ -47,7 +47,7 @@ class RemmeCharts extends Component {
 
   render() {
     const {show} = this.state
-    const { totalBlocks, producer, marketChart, producers, global, guardians } = this.props.data
+    const { totalBlocks, marketChart, producers, global, guardians } = this.props.data
     return (
       <React.Fragment>
         <h4>Network Stats</h4>

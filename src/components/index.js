@@ -18,6 +18,7 @@ import TagsField from './TagsField';
 import Search from './Search';
 import TimeStamp from './TimeStamp';
 import ColorAmount from './ColorAmount';
+import SelectNetwork from './SelectNetwork';
 
 export {
   Navigation,
@@ -39,5 +40,6 @@ export {
   Search,
   TimeStamp,
   ColorAmount,
-  RemmeGuardians
+  RemmeGuardians,
+  SelectNetwork
 };

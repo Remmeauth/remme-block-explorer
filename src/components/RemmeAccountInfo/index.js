@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Table, Row, Col, Card, Tag, Progress } from 'antd';
 
 import { tableColunm, gridStyle } from '../../schemes'
-import { network } from '../../config.js'
 import { TimeStamp, ColorAmount } from '../../components'
 
 class RemmeAccountInfo extends Component {

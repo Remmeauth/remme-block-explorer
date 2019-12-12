@@ -79,10 +79,10 @@ export const RemGetSwapInfo = async (SwapID) => {
   return null
 }
 
-export const RemGetSwapFee = async (SwapID) => {
+export const RemGetSwapFee = async () => {
   const response = await fetch( network.backendAddress + `/api/getSwapFee`);
   const json = await response.json();
-  return Number(json)
+  return json
 }
 
 export const RemGetAccountCreatingFee = async (SwapID) => {

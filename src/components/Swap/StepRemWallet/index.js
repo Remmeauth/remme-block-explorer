@@ -136,7 +136,7 @@ class StepRemWallet extends Component {
 
                 { choice === 'new' &&
                 <React.Fragment>
-                  <CreateForm scheme={newAccount} ref={form => this.form = form}/>
+                  <CreateForm scheme={newAccount} ref={form => this.form = form} onSubmit={this.handleNewAccount}/>
                   <Button onClick={() => onSubmit({ current:1 })}> <Icon type="left" /> Back</Button>
                   <Button type="primary" onClick={this.handleNewAccount}>Next</Button>
                 </React.Fragment>
@@ -144,7 +144,7 @@ class StepRemWallet extends Component {
 
                 { choice === 'existing' &&
                 <React.Fragment>
-                  <CreateForm scheme={existingAccount} ref={form => this.form = form}/>
+                  <CreateForm scheme={existingAccount} ref={form => this.form = form} onSubmit={this.handleExistingAccount}/>
                   <Button onClick={() => onSubmit({ current:1 })}> <Icon type="left" /> Back</Button>
                   <Button type="primary" onClick={this.handleExistingAccount}>Next</Button>
                 </React.Fragment>

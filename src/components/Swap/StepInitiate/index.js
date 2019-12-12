@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 import { amount } from '../../../schemes';
 import CreateForm from '../../CreateForm';
 import { login } from "../../../actions";
-import { secret, network } from "../../../config";
+import { secret, network, decimal } from "../../../config";
 
 import { EthPrivateKeyToAddress, RemGetBalanceRem, EthGetBalanceRem, EthGetBalanceEth, RemGetAccountCreatingFee, RemGetSwapFee } from '../../../functions/swap';
 import SwapParamsView from "../SwapParamsView"
@@ -58,7 +58,7 @@ class StepInitiate extends Component {
   };
 
   amountValidator = (item, value, callback) => {
-    const { type, balanceRemRem, balanceEthRem, OwnerKeyRem, accountCreatingFee, swapFee } = this.state
+    const { type, balanceRemRem, balanceEthRem, accountCreatingFee, swapFee } = this.state
 
     this.setState({ willGet: value });
 
@@ -78,7 +78,7 @@ class StepInitiate extends Component {
   };
 
   updateParams = async () => {
-    const { PrivateKeyEth, AccountNameRem } = this.state
+    const { PrivateKeyEth, AccountNameRem, type } = this.state
     try {
       this.setState({ loading: true });
 
@@ -91,11 +91,12 @@ class StepInitiate extends Component {
       const balanceRemRem = await RemGetBalanceRem(addressRem);
 
       const accountCreatingFee = await RemGetAccountCreatingFee();
-      const swapFee = await RemGetSwapFee();
+      const swapFeeInfo = await RemGetSwapFee();
+      const swapFee = (type ? swapFeeInfo[0].out_swap_min_amount : swapFeeInfo[0].in_swap_min_amount) / decimal
 
       this.setState({
         accountCreatingFee,
-        swapFee,
+        swapFee: swapFee,
         addressEth,
         addressRem,
         balanceRemRem,
@@ -146,6 +147,7 @@ class StepInitiate extends Component {
             scheme={scheme}
             className="amount-form"
             ref={form => this.form = form}
+            onSubmit={this.handleSubmit}
           />
           <p className="small">Minimal amount for swap: <span className="amount-color">{minimalAmountToSwap} {network.coin}</span>
             {userWillGetAmount && <React.Fragment><br/>You will get: <span className="amount-color">{userWillGetAmount} {network.coin}</span></React.Fragment>}

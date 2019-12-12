@@ -5,8 +5,7 @@ import { network, decimal } from '../config'
 
 export const getBlock = async (id) => {
   try {
-    const chainInfo = JSON.parse(await api('POST','chain', 'get_block', '{"block_num_or_id":"' + id + '"}'));
-    return chainInfo
+    return JSON.parse(await api('POST','chain', 'get_block', '{"block_num_or_id":"' + id + '"}'));
   } catch (e) {
     console.log(e.message);
   }
@@ -14,8 +13,7 @@ export const getBlock = async (id) => {
 
 export const getTransaction = async (id) => {
   try {
-    const chainInfo = JSON.parse(await api('GET','history', 'get_transaction?id='+id, '', 'v2'));
-    return chainInfo
+    return JSON.parse(await api('GET','history', 'get_transaction?id='+id, '', 'v2'));
   } catch (e) {
     console.log(e.message);
   }
@@ -23,8 +21,7 @@ export const getTransaction = async (id) => {
 
 export const getActions = async (id) => {
   try {
-    const chainInfo = JSON.parse(await api('GET','history', 'get_actions?account='+id+'&limit=1000', '', 'v2'));
-    return chainInfo
+    return JSON.parse(await api('GET','history', 'get_actions?account='+id+'&limit=1000', '', 'v2'));
   } catch (e) {
     console.log(e.message);
   }
@@ -32,10 +29,7 @@ export const getActions = async (id) => {
 
 export const getSwapInfo= async (id) => {
   try {
-    console.log(id);
-    const swapInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'.swap", "scope": "'+network.account+'.swap", "table": "swaps", "limit": "500", "index_position": "secondary", "key_type": "sha256", "lower_bound": "'+id+'", "upper_bound": "'+id+'" }' ));
-    console.log(swapInfo);
-    return swapInfo
+    return JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'.swap", "scope": "'+network.account+'.swap", "table": "swaps", "limit": "500", "index_position": "secondary", "key_type": "sha256", "lower_bound": "'+id+'", "upper_bound": "'+id+'" }' ));
   } catch (e) {
     console.log(e.message);
   }
@@ -44,8 +38,8 @@ export const getSwapInfo= async (id) => {
 export const getSwapFee= async () => {
   try {
     const swapInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'.swap", "scope": "'+network.account+'.swap", "table": "chains", "limit": "500" }' ));
-    const row = swapInfo.rows.filter(i => { return i.chain === network.ethenv });
-    return row[0] ? row[0].in_swap_min_amount / decimal : 0
+    console.log(swapInfo);
+    return swapInfo.rows.filter(i => { return i.chain === network.ethenv });
   } catch (e) {
     console.log(e.message);
   }
@@ -53,8 +47,7 @@ export const getSwapFee= async () => {
 
 export const getProducer = async (url) => {
   try {
-    const bp = JSON.parse(await producerInfo(url + "/bp.json"));
-    return bp;
+    return JSON.parse(await producerInfo(url + "/bp.json"));
   } catch (e) {
     console.log(e.message);
     return {}
@@ -63,8 +56,7 @@ export const getProducer = async (url) => {
 
 export const getVoters = async () => {
   try {
-    const votersInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'", "scope": "'+network.account+'", "table": "voters", "limit": "500" }' ));
-    return votersInfo;
+    return JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'", "scope": "'+network.account+'", "table": "voters", "limit": "500" }' ));
   } catch (e) {
     console.log(e.message);
     return {}
@@ -169,9 +161,7 @@ export const getAccount = async (id) => {
       if (chainInfo.producers[i].owner === accountInfo.account.account_name){
          accountInfo.producer = chainInfo.producers[i];
          accountInfo.producer.position = i+1;
-
          accountInfo.balance.producerNotClimedRewards = accountInfo.producer.pending_pervote_reward / decimal
-
          if (accountInfo.producer.unpaid_blocks != accountInfo.producer.expected_produced_blocks && accountInfo.producer.expected_produced_blocks > 0) {
               accountInfo.balance.producer_per_vote_pay = ((accountInfo.producer.pending_pervote_reward * accountInfo.producer.unpaid_blocks) / accountInfo.producer.expected_produced_blocks) / decimal;
          }

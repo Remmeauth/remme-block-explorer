@@ -8,7 +8,7 @@ import queryString from 'query-string';
 
 import { network } from '../../config.js'
 import { RemmeSpin, RemmeResult, RemmeAccountInfo, RemmeResourcesInfo, CreateForm, TagsField, RemmeAccountTxInfo } from '../../components'
-import { walletTransfer, walletStake, walletVote } from '../../schemes';
+import { walletTransfer, walletStake } from '../../schemes';
 import scatter from "../../assets/scatter.jpg";
 
 const { TabPane } = Tabs;

@@ -2,7 +2,6 @@ import React from 'react'
 import { Tag, Input, Tooltip, Icon, message } from 'antd';
 
 import { network } from "../../config";
-import { newAccountValidator } from '../../schemes/validators.js'
 
 const { Search } = Input;
 

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import QueueAnim from 'rc-queue-anim';
-import { Tag, Icon, Button } from 'antd';
 
 import { network } from '../../config.js'
-import { SmartLink } from '../../components'
 
 class RemmeGuardians extends Component {
   state = {

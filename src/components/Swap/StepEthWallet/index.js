@@ -46,7 +46,7 @@ class StepEthWallet extends Component {
                 {
                   type === 1 &&
                   <Col className="gutter-row" span={18}>
-                    <CreateForm className={"eth-address"} scheme={ethAddress} ref={form => this.form = form}/>
+                    <CreateForm className={"eth-address"} scheme={ethAddress} ref={form => this.form = form} onSubmit={this.handleEthAddress}/>
                     <Button onClick={() => onSubmit({current: 0})}> <Icon type="left"/> Back</Button>
                     <Button type="primary" onClick={this.handleEthAddress}>Next</Button>
                   </Col>
