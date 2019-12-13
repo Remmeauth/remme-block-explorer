@@ -21,35 +21,43 @@ class Transaction extends Component {
     try {
       const response = await fetch( network.backendAddress + `/api/getTransaction/` + id);
       const json = await response.json();
-      console.log(json);
-      const actions = json.actions ? json.actions.map((i, index) => {
+      const actions = json.trx ?
+      json.trx.trx.actions.map((i, index) => {
         return {
-          ...i.act,
-          key: index,
+          ...i,
+          key: index
         }
-      }) : []
+      }) :
+      json.traces
+        .filter(item => item.creator_action_ordinal === 0)
+        .map((item, index) => {
+          return {
+            ...item.act,
+            key: index
+          }
+      })
 
       this.setState({
         error: false,
         loading: false,
         raw: json,
-        dataTraces: tracesToTree(json.actions),
+        dataTraces: tracesToTree(json.traces),
         dataActions: actions,
         dataSource: [
           {
             key: '1',
             title: 'Block Number',
-            value: (<Link to={'/block/' + json.lib}>{json.lib}</Link>)
+            value: (<Link to={'/block/' + json.block_num}>{json.block_num}</Link>)
           },
           {
             key: '2',
             title: 'Hash',
-            value: json.trx_id
+            value: json.id
           },
           {
             key: '3',
             title: 'Block Time',
-            value: <TimeStamp timestamp={json.actions[0]['@timestamp']}/>
+            value: <TimeStamp timestamp={json.block_time}/>
           },
           {
             key: '4',
@@ -96,7 +104,7 @@ class Transaction extends Component {
               <TabPane tab="Actions" key="1">
                 <Table className="details-info" columns={tableColunm(['account', 'name', 'data'])} dataSource={dataActions} pagination={false} />
               </TabPane>
-              <TabPane tab={`Traces (${raw.actions.length})`}  key="2">
+              <TabPane tab={`Traces (${raw.traces.length})`}  key="2">
                 <Table className="details-info" columns={tableColunm(['account', 'name', 'data'])} dataSource={dataTraces} pagination={false} />
               </TabPane>
             </Tabs>

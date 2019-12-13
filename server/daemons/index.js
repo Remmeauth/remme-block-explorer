@@ -32,7 +32,6 @@ const prepareData = () => {
     console.log(e.message);
     infoData = {}
   }
-
 }
 
 export const getInfo = () => {

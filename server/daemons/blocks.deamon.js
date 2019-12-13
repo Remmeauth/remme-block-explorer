@@ -6,12 +6,12 @@ let BLOCK_LIST = [];
 export const startBlocksDeamon = async () => {
   try {
     NEW_BLOCKS = [];
-    const chainInfo = JSON.parse(await api('POST','chain', 'get_info'));
+    const chainInfo = await api('POST','chain', 'get_info');
     const blockExist = BLOCK_LIST.find(block => block.block_num == chainInfo.head_block_num);
     if (blockExist) {
       return false;
     }
-    const blockInfo = JSON.parse(await api('POST', 'chain', 'get_block', '{"block_num_or_id":"' + chainInfo.head_block_num + '"}'));
+    const blockInfo = await api('POST', 'chain', 'get_block', '{"block_num_or_id":"' + chainInfo.head_block_num + '"}');
     NEW_BLOCKS.push(blockInfo);
 
     for (var i = 0; i < 7; i++) {
@@ -22,7 +22,7 @@ export const startBlocksDeamon = async () => {
       if (alreadyExist) {
         break;
       } else {
-        const newBlockInfo = JSON.parse(await api('POST', 'chain', 'get_block', '{"block_num_or_id":"' + newBlockNum + '"}'));
+        const newBlockInfo = await api('POST', 'chain', 'get_block', '{"block_num_or_id":"' + newBlockNum + '"}');
         NEW_BLOCKS.push(newBlockInfo);
       }
     }

@@ -8,70 +8,53 @@ export const sleep = (ms) => {
   })
 };
 
-export const api = (method, type, action, body, version = 'v1') => {
-    return new Promise(function(resolve, reject) {
-      // if (method == 'GET') {
-      //   console.log(`${network.protocol}://${network.host}:${network.port}` + '/' + version + '/'+ type +'/' + action);
-      // };
-      try {
-        var options = {
-          method: method,
-          url: `${network.protocol}://${network.host}:${network.port}` + '/' + version + '/'+ type +'/' + action,
-          headers: {accept: 'application/json', 'content-type': 'application/json'},
-          body: body,
-          timeout: 3000
-        };
+const asyncRequest = (options) => {
+  return new Promise(function(resolve, reject) {
+    try {
+      request(options, function (error, response, body) {
+        if (error) {
+          reject(error);
+        }
+        try {
+          resolve(JSON.parse(body));
+        } catch (e) {
+          reject(error);
+        }
+      });
+    } catch (e) {
+      reject(e.message);
+    }
+  });
+}
 
-        request(options, function (error, response, body) {
-          if (error) {
-            reject(error);
-          }
-          resolve(body);
-        });
-      } catch (e) {
-        reject(e.message);
-      }
-    });
+export const api = async (method, type, action, body, version = 'v1') => {
+  var options = {
+    method: method,
+    url: `${network.protocol}://${network.host}:${network.port}` + '/' + version + '/'+ type +'/' + action,
+    headers: {accept: 'application/json', 'content-type': 'application/json'},
+    body: body,
+    timeout: 3000
+  };
+  return await asyncRequest(options);
+
 };
 
-export const coinmarketcap = () => {
-    return new Promise(function(resolve, reject) {
-      try {
-        var options = {
-          method: 'GET',
-          url: marketChartEndpoint,
-          timeout: 3000
-        };
-        request(options, function (error, response, body) {
-          if (error) reject(error);
-          resolve(body);
-        });
-      } catch (e) {
-        reject(e.message);
-      }
-    });
+export const coinmarketcap = async () => {
+  var options = {
+    method: 'GET',
+    url: marketChartEndpoint,
+    timeout: 3000
+  };
+  return await asyncRequest(options);
 };
 
-export const producerInfo = (url) => {
-    return new Promise(function(resolve, reject) {
-      try {
-        var options = {
-          method: 'GET',
-          url: url,
-          timeout: 3000
-        };
-        request(options, function (error, response) {
-          if (error) reject(error);
-          if (response !== undefined) {
-            resolve(response.body);
-          } else {
-            resolve({});
-          }
-        });
-      } catch (e) {
-        reject(e.message);
-      }
-    });
+export const producerInfo = async (url) => {
+  var options = {
+    method: 'GET',
+    url: url,
+    timeout: 3000
+  };
+  return await asyncRequest(options);
 };
 
 export const DifferenceInDays = (d1, d2) => {

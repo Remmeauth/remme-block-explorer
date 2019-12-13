@@ -23,38 +23,35 @@ app.get('/api/getInfo', async (req, res) => {
 });
 
 app.get('/api/getSwapFee', async (req, res) => {
-  const result = await getSwapFee()
-  res.json(result);
+  res.json(await getSwapFee());
 });
 
 app.get('/api/getBlock/:id', async (req, res) => {
-  const responce = await getBlock(req.params.id);
-  res.json(responce);
+  res.json(await getBlock(req.params.id));
 });
 
 app.get('/api/getTransaction/:id', async (req, res) => {
-  const responce = await getTransaction(req.params.id);
-  res.json(responce);
+  res.json(await getTransaction(req.params.id));
 });
 
 app.get('/api/getAccount/:id', async (req, res) => {
-  const responce = await getAccount(req.params.id);
-  res.json(responce);
+  res.json(await getAccount(req.params.id));
 });
 
 app.get('/api/getActions/:id', async (req, res) => {
-  const responce = await getActions(req.params.id);
-  res.json(responce);
+  res.json(await getActions(req.params.id));
+});
+
+app.get('/api/getActions/:id/:position', async (req, res) => {
+  res.json(await getActions(req.params.id, req.params.position));
 });
 
 app.get('/api/getSwapInfo/:id', async (req, res) => {
-  const responce = await getSwapInfo(req.params.id);
-  res.json(responce);
+  res.json(await getSwapInfo(req.params.id));
 });
 
 app.get('/api/getVotersInfo', async (req, res) => {
-  const responce = await getVoters();
-  res.json(responce);
+  res.json(await getVoters());
 });
 
 app.get('/api/getGuardians', async (req, res) => {
@@ -63,12 +60,6 @@ app.get('/api/getGuardians', async (req, res) => {
 });
 
 app.listen(port, () => console.log('\x1b[34m%s\x1b[0m',`Blockexplorer backend is running on localhost:${port}`));
-
-const sleep = (ms) => {
-  return new Promise(resolve=>{
-    setTimeout(resolve,ms)
-  })
-};
 
 startDaemons();
 startRewardsDaemon();

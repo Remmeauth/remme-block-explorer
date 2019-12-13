@@ -5,7 +5,7 @@ import { network, decimal } from '../config'
 
 export const getBlock = async (id) => {
   try {
-    return JSON.parse(await api('POST','chain', 'get_block', '{"block_num_or_id":"' + id + '"}'));
+    return await api('POST','chain', 'get_block', '{"block_num_or_id":"' + id + '"}');
   } catch (e) {
     console.log(e.message);
   }
@@ -13,15 +13,17 @@ export const getBlock = async (id) => {
 
 export const getTransaction = async (id) => {
   try {
-    return JSON.parse(await api('GET','history', 'get_transaction?id='+id, '', 'v2'));
+    return await api('POST','history', 'get_transaction', '{"id":"' + id + '"}');
   } catch (e) {
     console.log(e.message);
   }
 }
 
-export const getActions = async (id) => {
+export const getActions = async (id, position) => {
   try {
-    return JSON.parse(await api('GET','history', 'get_actions?account='+id+'&limit=1000', '', 'v2'));
+    const from = position ? position : -1
+    const offset = position ? -24 : -25
+    return await api('POST','history', 'get_actions', '{"pos":"'+from+'","offset":"'+offset+'","account_name":"'+id+'"}')
   } catch (e) {
     console.log(e.message);
   }
@@ -29,7 +31,7 @@ export const getActions = async (id) => {
 
 export const getSwapInfo= async (id) => {
   try {
-    return JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'.swap", "scope": "'+network.account+'.swap", "table": "swaps", "limit": "500", "index_position": "secondary", "key_type": "sha256", "lower_bound": "'+id+'", "upper_bound": "'+id+'" }' ));
+    return await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'.swap", "scope": "'+network.account+'.swap", "table": "swaps", "limit": "500", "index_position": "secondary", "key_type": "sha256", "lower_bound": "'+id+'", "upper_bound": "'+id+'" }' );
   } catch (e) {
     console.log(e.message);
   }
@@ -37,7 +39,7 @@ export const getSwapInfo= async (id) => {
 
 export const getSwapFee= async () => {
   try {
-    const swapInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'.swap", "scope": "'+network.account+'.swap", "table": "chains", "limit": "500" }' ));
+    const swapInfo = await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'.swap", "scope": "'+network.account+'.swap", "table": "chains", "limit": "500" }' );
     console.log(swapInfo);
     return swapInfo.rows.filter(i => { return i.chain === network.ethenv });
   } catch (e) {
@@ -47,16 +49,16 @@ export const getSwapFee= async () => {
 
 export const getProducer = async (url) => {
   try {
-    return JSON.parse(await producerInfo(url + "/bp.json"));
+    return await producerInfo(url + "/bp.json");
   } catch (e) {
-    console.log(e.message);
+    console.log(e ? e.message : null );
     return {}
   }
 }
 
 export const getVoters = async () => {
   try {
-    return JSON.parse(await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'", "scope": "'+network.account+'", "table": "voters", "limit": "500" }' ));
+    return await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'", "scope": "'+network.account+'", "table": "voters", "limit": "500" }' );
   } catch (e) {
     console.log(e.message);
     return {}
@@ -148,11 +150,11 @@ export const getAccount = async (id) => {
     const marketChart = chainInfo.marketChart;
     let accountInfo = {};
 
-    const account = JSON.parse(await api('POST','chain', 'get_account', '{"account_name":"' + id + '"}'));
+    const account = await api('POST','chain', 'get_account', '{"account_name":"' + id + '"}');
 
     accountInfo.account = account.account_name ? normalizeAccount(account) : false;
 
-    const balanceInfo = JSON.parse(await api('POST','chain', 'get_currency_balance', '{"code":"'+network.account+'.token", "account":"'+id+'"}'));
+    const balanceInfo = await api('POST','chain', 'get_currency_balance', '{"code":"'+network.account+'.token", "account":"'+id+'"}');
     accountInfo.balance = calcBalance(accountInfo.account, balanceInfo);
     accountInfo.balance.total_usd_value = Number(accountInfo.balance.total_balance * marketChart.prices[0].y)
     accountInfo.balance.guardianNotClimedRewards = accountInfo.account.voter_info.pending_perstake_reward / decimal
@@ -179,7 +181,7 @@ export const getAccount = async (id) => {
     return accountInfo
 
   } catch (e) {
-    console.log('\x1b[31m%s\x1b[0m', '[ACTION getAccount] ERROR: ', e.message);
+    console.log('\x1b[31m%s\x1b[0m', '[ACTION getAccount] ERROR: ', e);
     return {}
   }
 }

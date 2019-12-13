@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Tag } from 'antd';
+import { Table, Tag, Row, Col, Button} from 'antd';
 
 import { RemmeSpin } from '../../components'
 import { network } from '../../config.js'
@@ -14,44 +14,61 @@ const unique = (value, index, self) => {
 class RemmeAccountTxInfo extends Component {
 
   state = {
+    dataSource: [],
     selectedTags: [],
     loading: true,
+    visible: false
+  }
+
+  pushActions = (actions) => {
+    var { dataSource } = this.state;
+    try {
+      var dataFilter = [];
+      actions.forEach(item => {
+        if (!dataSource.some(el => el.hex_data === item.action_trace.act.hex_data && el.block_time === item.block_time )) {
+          dataFilter.push(item.action_trace.act.name)
+          dataSource.push({
+            key: item.account_action_seq,
+            tx: item.action_trace.trx_id,
+            date: item.block_time,
+            name: item.action_trace.act.name,
+            data: item.action_trace.act.data,
+            hex_data: item.action_trace.act.hex_data,
+            block_time: item.block_time
+          })
+        }
+      });
+      this.setState({
+        loading:false,
+        dataSource: dataSource,
+        dataFilter: dataFilter.filter(unique),
+        visible: actions.pop().account_action_seq !== 0
+      });
+    } catch (e) {
+      console.log(e.message);
+    }
   }
 
   handleUpdate = async () => {
     const { id } = this.props;
-
     try {
       const response = await fetch(`${network.backendAddress}/api/getActions/${id}`);
       const json = await response.json();
-      const actions = json.actions
-
-      var dataSource = [];
-      var dataFilter = [];
-
-      actions.forEach(item => {
-        if (!dataSource.some(el => el.hex_data === item.act.hex_data && el.block_time === item.block_time )) {
-          dataFilter.push(item.act.name)
-          dataSource.push({
-            key: item.global_sequence,
-            tx: item.trx_id,
-            date: item['@timestamp'],
-            name: item.act.name,
-            data: item.act.data,
-            hex_data: '',
-            block_time: ''
-          })
-        }
-      });
-
-      this.setState({
-        loading:false,
-        dataSource: dataSource,
-        dataFilter: dataFilter.filter(unique)
-      });
-
+      this.pushActions(json.actions.reverse());
     } catch (e) {
       console.log(e.message);
+    }
+  }
+
+
+  handleLoadMore = async () => {
+    const { id } = this.props;
+    const { dataSource } = this.state;
+    if (dataSource.length && dataSource.pop().key != 0 ) {
+      const last = dataSource.pop().key
+      const response = await fetch(`${network.backendAddress}/api/getActions/${id}/${last}`);
+      const json = await response.json();
+      this.pushActions(json.actions.reverse());
     }
   }
 
@@ -66,7 +83,7 @@ class RemmeAccountTxInfo extends Component {
   }
 
   render() {
-    const { loading, dataSource, dataFilter, selectedTags} = this.state;
+    const { loading, dataSource, dataFilter, selectedTags, visible} = this.state;
     return (
       <React.Fragment>
         {
@@ -85,7 +102,13 @@ class RemmeAccountTxInfo extends Component {
                 </CheckableTag>
               ))}
               </div>
-              <Table dataSource={dataSource.filter(el => { if (!selectedTags.length) return true; return selectedTags.includes(el.name); })} pagination={{ pageSize: 25 }} columns={tableColunm(["tx", "date", "name", "data"])} />
+              <Table ref={this.actionsTable} dataSource={dataSource.filter(el => { if (!selectedTags.length) return true; return selectedTags.includes(el.name); })} pagination={{ pageSize: 25 }} columns={tableColunm(["tx", "date", "name", "data"])} />
+              { visible && <Row>
+                  <Col lg={24} xl={24} key="1" className="align-center">
+                    <Button type="primary" onClick={this.handleLoadMore}>Load More Pages</Button>
+                  </Col>
+                </Row>
+              }
             </div>
         }
       </React.Fragment>

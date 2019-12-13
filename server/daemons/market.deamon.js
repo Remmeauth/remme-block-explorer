@@ -35,7 +35,7 @@ const scale = (arr) => {
 export const startMarketDeamon = async () => {
   try {
     if (!count) {
-      const info = JSON.parse(await coinmarketcap());
+      const info = await coinmarketcap();
       MARKET_CHART.prices = arrFilter(info.prices);
       MARKET_CHART.prices_scale = scale(MARKET_CHART.prices);
       MARKET_CHART.market_caps = arrFilter(info.market_caps);

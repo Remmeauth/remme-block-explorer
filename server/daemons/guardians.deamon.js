@@ -14,7 +14,7 @@ export const startGuardiansDeamon = async () => {
     var lower_bound = "";
 
     do {
-      const guardiansInfo = JSON.parse(await api('POST','chain', 'get_table_rows', '{ "pos":"1", "lower_bound":"'+lower_bound+'", "json": true, "code": "'+network.account+'", "scope": "'+network.account+'", "table": "voters", "limit": "'+limit+'" }' ));
+      const guardiansInfo = await api('POST','chain', 'get_table_rows', '{ "pos":"1", "lower_bound":"'+lower_bound+'", "json": true, "code": "'+network.account+'", "scope": "'+network.account+'", "table": "voters", "limit": "'+limit+'" }' );
       more = guardiansInfo.more;
       lower_bound = guardiansInfo.rows.slice(-1).pop()['owner'];
 
