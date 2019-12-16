@@ -3,7 +3,6 @@ import CryptoJS from "crypto-js";
 import moment from 'moment';
 import ScatterJS from '@scatterjs/core';
 import ScatterEOS from '@scatterjs/eosjs2';
-import { TextEncoder, TextDecoder } from 'text-encoding';
 
 import { Api, JsonRpc } from 'eosjs';
 import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
@@ -15,6 +14,7 @@ import {
     EthReturnChainId,
 } from '../../config';
 
+const { TextEncoder, TextDecoder } = require('text-encoding');
 ScatterJS.plugins( new ScatterEOS() );
 const net = ScatterJS.Network.fromJson(network);
 const rpc = new JsonRpc(net.fullhost());
