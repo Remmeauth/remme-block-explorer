@@ -92,7 +92,6 @@ class StepInitiate extends Component {
 
       const accountCreatingFee = await RemGetAccountCreatingFee();
       const swapFeeInfo = await RemGetSwapFee();
-      console.log(swapFeeInfo);
       const swapFee = (type ? swapFeeInfo[0].out_swap_min_amount : swapFeeInfo[0].in_swap_min_amount) / decimal
 
       this.setState({

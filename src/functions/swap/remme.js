@@ -3,6 +3,7 @@ import CryptoJS from "crypto-js";
 import moment from 'moment';
 import ScatterJS from '@scatterjs/core';
 import ScatterEOS from '@scatterjs/eosjs2';
+import { TextEncoder, TextDecoder } from 'text-encoding';
 
 import { Api, JsonRpc } from 'eosjs';
 import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
@@ -94,7 +95,7 @@ export const RemGetAccountCreatingFee = async (SwapID) => {
 export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestamp, sig, active_pubkey, owner_pubkey, return_address) => {
   const signatureProvider = new JsSignatureProvider([techPrivkey]);
   const rpc = new JsonRpc(`${network.protocol}://${network.host}:${network.port}`, { fetch });
-  const api = new Api({ rpc, signatureProvider });
+  const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
   const data = {
       "rampayer": techAccount,
       "receiver": receiver,
