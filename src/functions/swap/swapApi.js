@@ -90,7 +90,11 @@ export const doSwapTask = async (current, props, callback) => {
         callback(null, response)
       }
     } catch (e) {
-      callback(exeption)
+      if (e && e.message) {
+        callback(e.message)
+      } else {
+        callback(exeption)
+      }
     }
   }
 }

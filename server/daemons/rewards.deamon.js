@@ -17,6 +17,11 @@ const getTotalRewards = async () => {
       const data = await api('POST','history', 'get_actions', '{"pos":"'+pos+'","offset":"-1000","account_name":"rewards"}');
       const actions = data.actions.reverse();
 
+      if (!actions.length) {
+        console.log('\x1b[31m%s\x1b[0m', '[REWARDS DEAMON] No actions. Check history plugin');
+        return false;
+      }
+
       if (pos === -1) {
         length = actions[0].account_action_seq;
         pos = length - 1000;

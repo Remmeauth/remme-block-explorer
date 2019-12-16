@@ -94,7 +94,7 @@ export const RemGetAccountCreatingFee = async (SwapID) => {
 export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestamp, sig, active_pubkey, owner_pubkey, return_address) => {
   const signatureProvider = new JsSignatureProvider([techPrivkey]);
   const rpc = new JsonRpc(`${network.protocol}://${network.host}:${network.port}`, { fetch });
-  const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
+  const api = new Api({ rpc, signatureProvider });
   const data = {
       "rampayer": techAccount,
       "receiver": receiver,
@@ -106,6 +106,7 @@ export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestam
       "swap_timestamp": moment.utc(timestamp*1000).format("YYYY-MM-DDTHH:mm:ss"),
       "sign": sig
   };
+  console.log(data);
   if(active_pubkey && owner_pubkey){
       data['active_pubkey_str'] = active_pubkey;
       data['owner_pubkey_str'] = owner_pubkey;

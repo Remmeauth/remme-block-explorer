@@ -2,7 +2,7 @@ import Web3 from 'web3';
 import util from "ethereumjs-util"
 import { toHex } from "web3-utils";
 
-import { decimal, network, gasLimit, EthNetworkConfig, EthTokenAbi, EthTokenContractAddress, EthNetworkConfigWS, EthBridgeContractAddress, RemmeBridgeAbi } from "../../config";
+import { decimal, network, EthNetworkConfig, EthTokenAbi, EthTokenContractAddress, EthNetworkConfigWS, EthBridgeContractAddress, RemmeBridgeAbi } from "../../config";
 
 const web3 = new Web3(new Web3.providers.HttpProvider(EthNetworkConfig));
 const web3ws = new Web3(new Web3.providers.WebsocketProvider(EthNetworkConfigWS));
@@ -43,8 +43,6 @@ const genTransaction = async ( myAddress, toAddress, data ) => {
   const rawTransaction = {
       "from": myAddress,
       "nonce": web3.utils.toHex(count),
-      //gasLimit: toHex(Math.ceil(gasLimit * 1.5)),
-      //gasPrice: toHex(Number(gasPrice) * 1.5),
       "to": toAddress,
       "value": "0x00",
       "data": data,
