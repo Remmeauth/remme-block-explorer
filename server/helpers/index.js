@@ -30,7 +30,7 @@ const asyncRequest = (options) => {
 export const api = async (method, type, action, body, version = 'v1') => {
   var options = {
     method: method,
-    url: `${network.protocol}://${network.host}:${network.port}` + '/' + version + '/'+ type +'/' + action,
+    url: `http://localhost:8888` + '/' + version + '/'+ type +'/' + action,
     headers: {accept: 'application/json', 'content-type': 'application/json'},
     body: body,
     timeout: 3000
