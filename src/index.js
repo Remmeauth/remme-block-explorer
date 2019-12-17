@@ -12,7 +12,7 @@ import 'ant-design-pro/dist/ant-design-pro.css';
 import 'antd/dist/antd.css';
 
 import './index.css';
-import registerServiceWorker from './registerServiceWorker';
+import { unregister as unregisterServiceWorker } from './registerServiceWorker';
 
 import Routes from './routes';
 import rootReducer from "./reducers";
@@ -45,4 +45,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-registerServiceWorker();
+unregisterServiceWorker();
