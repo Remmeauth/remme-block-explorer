@@ -200,6 +200,7 @@ class Wallet extends Component {
 
   render() {
     const { raw, loading, error, producers, defaultActiveKey } = this.state;
+    const IE = /MSIE 9/i.test(navigator.userAgent) || /rv:11.0/i.test(navigator.userAgent) || /MSIE 10/i.test(navigator.userAgent) || /Edge\/\d./i.test(navigator.userAgent);
     return (
       <React.Fragment>
         { loading ? (<RemmeSpin/>) :
@@ -267,7 +268,7 @@ class Wallet extends Component {
                     <Card className="card-with-padding" >
                       <h4>WEB Wallet</h4>
                       <p>Unlock wallet to start:</p>
-                      <img className="image-button" onClick={this.login} src={scatter} alt=""/>
+                      { IE ? <h5 className="step-title">Your browser is not supported.<br/>We recommend using Chrome, Firefox or Safari.</h5> : <img className="image-button" onClick={this.login} src={scatter} alt=""/> }
                     </Card>
                   </Col>
                 </QueueAnim>

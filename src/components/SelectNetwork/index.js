@@ -10,8 +10,8 @@ class SelectNetwork extends Component {
 
   menu = (
     <Menu>
-      <Menu.Item key="1"><a href='https://remchain.remme.io' rel="noopener noreferrer">Remme Remchain</a></Menu.Item>
-      <Menu.Item key="0"><a href='https://testchain.remme.io' rel="noopener noreferrer">Remme Testchain</a></Menu.Item>
+      <Menu.Item key="1"><a href='https://remchain.remme.io' rel="noopener noreferrer">Remchain</a></Menu.Item>
+      <Menu.Item key="0"><a href='https://testchain.remme.io' rel="noopener noreferrer">Testchain</a></Menu.Item>
     </Menu>
   );
 

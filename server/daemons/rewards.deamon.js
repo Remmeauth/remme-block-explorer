@@ -35,7 +35,6 @@ const getTotalRewards = async () => {
           sum = sum + Number(i.action_trace.act.data.amount.split(' ')[0])
         }
       })
-      console.log(difference);
     } while (pos > 0 && difference < 7);
     console.log('\x1b[32m%s\x1b[0m', '[REWARDS DEAMON] Done:', sum);
     return sum / 7
