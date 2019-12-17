@@ -64,7 +64,7 @@ class RemmeAccountTxInfo extends Component {
   handleLoadMore = async () => {
     const { id } = this.props;
     const { dataSource } = this.state;
-    if (dataSource.length && dataSource.pop().key != 0 ) {
+    if (dataSource.length && dataSource.pop().key !== 0 ) {
       const last = dataSource.pop().key
       const response = await fetch(`${network.backendAddress}/api/getActions/${id}/${last}`);
       const json = await response.json();
