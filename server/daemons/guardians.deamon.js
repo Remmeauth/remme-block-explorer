@@ -15,6 +15,12 @@ export const startGuardiansDeamon = async () => {
 
     do {
       const guardiansInfo = await api('POST','chain', 'get_table_rows', '{ "pos":"1", "lower_bound":"'+lower_bound+'", "json": true, "code": "'+network.account+'", "scope": "'+network.account+'", "table": "voters", "limit": "'+limit+'" }' );
+
+      if (!guardiansInfo.rows.length) {
+        console.log('\x1b[31m%s\x1b[0m', '[GUARDIANS DEAMON] No voters. Check history plugin');
+        return false;
+      }
+
       more = guardiansInfo.more;
       lower_bound = guardiansInfo.rows.slice(-1).pop()['owner'];
 
