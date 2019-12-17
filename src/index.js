@@ -11,6 +11,10 @@ import jwt from "jsonwebtoken";
 import 'ant-design-pro/dist/ant-design-pro.css';
 import 'antd/dist/antd.css';
 
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
+import 'proxy-polyfill';
+
 import './index.css';
 import { unregister as unregisterServiceWorker } from './registerServiceWorker';
 
