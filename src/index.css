@@ -84,6 +84,10 @@ p {
   .theme-dark p .ant-badge .ant-badge-status-text {
     color: #8b9296; }
 
+.image-logo {
+  height: 26px;
+  margin-bottom: 10px; }
+
 .theme-light .color-background {
   background: #364FCC; }
 

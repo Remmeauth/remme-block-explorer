@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import { connect } from "react-redux";
 import { Modal, Button, Tooltip } from 'antd';
 import jwt from "jsonwebtoken";
-import { secret } from "../../config";
+import QueueAnim from 'rc-queue-anim';
 
+import { secret } from "../../config";
 import { logout, cancel } from "../../actions";
 import SwapHistory from "../../components/Swap/SwapHistory";
 import './style.css'
@@ -73,7 +74,8 @@ class Swap extends Component {
 
   render() {
     return (
-      <div className="Div">
+      <QueueAnim delay={300} interval={300} type="right" gutter={30}>
+        <div key="1">
         <h2 className="align-center">Swap process</h2>
         <div className="swap-wrapper">
           <SwapHistory/>
@@ -84,7 +86,8 @@ class Swap extends Component {
             </Tooltip>
           </div>
         </div>
-      </div>
+        </div>
+      </QueueAnim>
     );
   }
 }
