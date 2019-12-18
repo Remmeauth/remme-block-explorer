@@ -54,7 +54,7 @@ class RemmeProducerInfo extends Component {
           {
             key: '8',
             name: 'Rate',
-            value: `${Number(data.producer.rate.toFixed(4))} %`
+            value: `${data.producer.rate ? Number(data.producer.rate.toFixed(4)) + " %" : 0} %`
           },
           {
             key: '4',
@@ -111,7 +111,7 @@ class RemmeProducerInfo extends Component {
           {
             key: '8',
             name: 'Rate',
-            value: `${Number(data.producer.rate.toFixed(4))} %`
+            value: `${data.producer.rate ? Number(data.producer.rate.toFixed(4)) + " %" : 0} %`
           },
           {
             key: '4',
