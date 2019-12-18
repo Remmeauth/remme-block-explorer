@@ -103,8 +103,8 @@ class RemmeProducers extends Component {
                                   {item.tag === 'Standby' && <Tag color="#e7514c">Standby</Tag>}
                                  </td>
                                  <td className="">{item.total_votes.toFixed(0)}</td>
-                                 <td className="">{Number(item.rate.toFixed(4))} %</td>
-                                 <td className="">{item.rewards.toFixed(0)}</td>
+                                 <td className="">{ item.rate ? Number(item.rate.toFixed(4)) + '%' : '-'}</td>
+                                 <td className="">{ item.rewards && item.rewards.toFixed(0)}</td>
                                  <td className="">{item.unpaid_blocks}</td>
                                  {/*
                                    <td className="">-</td>
