@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import QueueAnim from 'rc-queue-anim';
 
-import { network } from '../../config.js'
+import { network, decimal } from '../../config.js'
 
 class RemmeGuardians extends Component {
   state = {
@@ -69,7 +69,7 @@ class RemmeGuardians extends Component {
                                 <tr className="ant-table-row ant-table-row-level-0" key={index} data-row-key={index}>
                                    <td className="">{ index + 1 }</td>
                                    <td className=""><Link to={'/account/' + item.owner}>{ item.owner }</Link></td>
-                                   <td className="">{ item.staked } {network.coin}</td>
+                                   <td className="">{ item.staked / decimal } {network.coin}</td>
                                    <td className="">{ Number(item.guardian_rate.toFixed(4)) }</td>
                                    <td className="">{item.rewards.toFixed(0)}</td>
                                 </tr>

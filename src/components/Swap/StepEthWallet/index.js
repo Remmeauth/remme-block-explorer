@@ -41,7 +41,7 @@ class StepEthWallet extends Component {
     return (
       <React.Fragment>
           <div className="align-center">
-            <h5 className="step-title">{!type ? "Select" : "Enter"} your <b>Ethrereum</b> wallet:</h5>
+            <h5 className="step-title">{!type ? "Select" : "Enter"} your <b>Ethereum</b> wallet:</h5>
             <Row gutter={16} type="flex" justify="center">
                 {
                   type === 1 &&

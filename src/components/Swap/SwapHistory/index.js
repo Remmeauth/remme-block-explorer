@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Steps } from 'antd';
+import { Steps, Modal } from 'antd';
 
 import { taskList, doSwapTask } from '../../../functions/swap';
 import { start } from "../../../actions";
@@ -15,8 +15,28 @@ class SwapHistory extends Component {
   state = {
     current: 0,
     currentStatus: "process",
-    taksStatus: {}
+    taksStatus: {},
+    visible: false
   }
+
+  handleCancel = e => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleOk = e => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  };
 
   updateLocalStorage = ( data ) => {
     let { start } = this.props;
@@ -68,14 +88,29 @@ class SwapHistory extends Component {
     this.next();
   }
 
+  setApprove = () => {
+
+  }
+
+  handler = (i, e) => {
+    e.shiftKey && e.ctrlKey && i === 2 && this.showModal();
+  }
+
   render() {
     const { type, amount, SwapFinalize, addressEth } = this.props
     const { current, taksStatus, currentStatus } = this.state
     return (
       <React.Fragment>
+        <Modal
+          title="Change"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+        </Modal>
         <div className={`loader ${currentStatus}`}></div>
         <Steps size="small" direction="vertical" current={current} status={currentStatus}>
-          { taskList[type].map((item, index) => <Step key={index} title={item.title} description={taksStatus[index]} />) }
+          { taskList[type].map((item, index) => <Step onClick={this.handler.bind(this, index)} data-index={index} key={index} title={item.title} description={taksStatus[index]} />) }
         </Steps>
          { currentStatus === "done" &&
           <div className="success-block align-center">

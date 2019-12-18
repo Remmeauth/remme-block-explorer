@@ -71,7 +71,7 @@ class RemmeCharts extends Component {
             { show &&
               <QueueAnim type="right" delay={300} >
                 <div key='1'>
-                  <BlockInfoComponent icon="column-width" title="Total Stake" color="#ef534f" value={ (Number(global.total_activated_stake) / decimal).toFixed(0)} key='3'/>
+                  <BlockInfoComponent icon="column-width" title="Total Stake" color="#ef534f" value={ (Number(global.total_guardians_stake) / decimal).toFixed(0)} key='3'/>
                   <BlockInfoComponent classes="blockinfo-guardians" icon="check-circle" title="Total Guardians" value={guardians} color="#4cd79c" key='4'/>
                 </div>
               </QueueAnim>

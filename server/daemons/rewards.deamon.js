@@ -45,7 +45,7 @@ export const startRewardsDeamon = async () => {
     const total = await getTotalRewards();
     REWARDS = total;
   } catch (e) {
-    console.log('\x1b[31m%s\x1b[0m', '[REWARDS DEAMON] ERROR: ', e.message);
+    console.log('\x1b[31m%s\x1b[0m', '[REWARDS DEAMON] ERROR: ', e ? e.message : e);
   }
 }
 

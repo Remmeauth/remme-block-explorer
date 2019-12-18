@@ -14,7 +14,7 @@ export const startProducersDeamon = async () => {
       });
       PRODUCERS_LIST = countRate(sortedProducers, global.total_producer_vote_weight)
     } catch (e) {
-      console.log('\x1b[31m%s\x1b[0m', '[PRODUCER DEAMON] ERROR: ', e.message);
+      console.log('\x1b[31m%s\x1b[0m', '[PRODUCER DEAMON] ERROR: ', e ? e.message : e);
     }
 }
 

@@ -54,7 +54,7 @@ export const startGuardiansDeamon = async () => {
     })
 
   } catch (e) {
-    console.log('\x1b[31m%s\x1b[0m', '[GUARDIANS DEAMON] ERROR: ', e.message);
+    console.log('\x1b[31m%s\x1b[0m', '[GUARDIANS DEAMON] ERROR: ', e ? e.message : e);
   }
 }
 
