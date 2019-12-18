@@ -5,6 +5,8 @@ import { Steps, Modal } from 'antd';
 
 import { taskList, doSwapTask } from '../../../functions/swap';
 import { start } from "../../../actions";
+import { ethAddress } from '../../../schemes';
+import { CreateForm } from '../../../components'
 
 import BlockexplorerLink from "../BlockexplorerLink"
 
@@ -26,15 +28,32 @@ class SwapHistory extends Component {
   };
 
   handleOk = e => {
-    console.log(e);
-    this.setState({
-      visible: false,
+    const form = this.form;
+    const { index } = this.state
+    form.validateFields((err, values) => {
+      if (err) { return; }
+      form.resetFields();
+      const ls = JSON.parse(localStorage.getItem('swap'));
+      const date = Date.now();
+      if (index === 5) {
+        this.updateLocalStorage({
+          SwapTransaction: values.eth_address,
+          [date]: "SwapTransactionChange: " + ls.SwapTransaction + " --> " + values.eth_address
+        });
+      } else if (index === 2) {
+        this.updateLocalStorage({
+          SwapTransactionApprove: values.eth_address,
+          [date]: "SwapTransactionApproveChange: " + ls.SwapTransactionApprove + " --> " + values.eth_address
+        });
+      }
+      window.location.reload(false);
     });
   };
 
-  showModal = () => {
+  showModal = (index) => {
     this.setState({
       visible: true,
+      index: index
     });
   };
 
@@ -88,12 +107,8 @@ class SwapHistory extends Component {
     this.next();
   }
 
-  setApprove = () => {
-
-  }
-
   handler = (i, e) => {
-    e.shiftKey && e.ctrlKey && i === 2 && this.showModal();
+    e.shiftKey && (i === 5 || i === 2 ) && this.showModal(i);
   }
 
   render() {
@@ -102,11 +117,12 @@ class SwapHistory extends Component {
     return (
       <React.Fragment>
         <Modal
-          title="Change"
+          title="Change Tx Id:"
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
+          <CreateForm scheme={ethAddress} ref={form => this.form = form} onSubmit={this.handleOk}/>
         </Modal>
         <div className={`loader ${currentStatus}`}></div>
         <Steps size="small" direction="vertical" current={current} status={currentStatus}>

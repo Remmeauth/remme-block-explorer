@@ -26,9 +26,10 @@ export const newAccountValidator = (item, value, callback) => {
 export const ethAddressValidator = async (item, value, callback) => {
   if(!value){
     callback("Please input ethereum address!");
-  }else if(!await web3.utils.isAddress(value)){
-    callback("Invalid ethereum address!");
   }
+  // else if(!await web3.utils.isAddress(value)){
+  //   callback("Invalid ethereum address!");
+  // }
   callback();
 };
 
