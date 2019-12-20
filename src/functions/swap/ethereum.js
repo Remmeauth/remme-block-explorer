@@ -1,6 +1,5 @@
 import Web3 from 'web3';
 import util from "ethereumjs-util"
-import { toHex } from "web3-utils";
 
 import { decimal, network, EthNetworkConfig, EthTokenAbi, EthTokenContractAddress, EthNetworkConfigWS, EthBridgeContractAddress, RemmeBridgeAbi } from "../../config";
 
@@ -39,11 +38,12 @@ export const EthGetBalanceEth = async ( address ) => {
 
 const genTransaction = async ( myAddress, toAddress, data ) => {
   const count = await web3.eth.getTransactionCount(myAddress);
-  const gasPrice = await web3.eth.getGasPrice();
   const rawTransaction = {
       "from": myAddress,
       "nonce": web3.utils.toHex(count),
       "to": toAddress,
+      "gas": 500000,
+      "gasPrice": 20000000000,
       "value": "0x00",
       "data": data,
       "chainId": "0x00"
