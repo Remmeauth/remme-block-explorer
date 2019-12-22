@@ -70,7 +70,7 @@ class RemmeGuardians extends Component {
                                    <td className="">{ index + 1 }</td>
                                    <td className=""><Link to={'/account/' + item.owner}>{ item.owner }</Link></td>
                                    <td className="">{ item.staked / decimal } {network.coin}</td>
-                                   <td className="">{ Number(item.guardian_rate.toFixed(4)) }</td>
+                                   <td className="">{ Number(item.guardian_rate.toFixed(4)) } %</td>
                                    <td className="">{item.rewards.toFixed(0)}</td>
                                 </tr>
                               )}

@@ -46,8 +46,8 @@ export const startGuardiansDeamon = async () => {
       const difference = DifferenceInDays(now, item.last_reassertion_time)
       if (item.staked >= 2500000000 && difference < 30 ) {
         item.guardian = true;
-        item.guardian_rate = item.staked / total_guardians_stake * 1;
-        item.rewards = Number(item.guardian_rate * (getRewards() * 0.6));
+        item.guardian_rate = item.staked / total_guardians_stake * 100;
+        item.rewards = Number((item.staked / total_guardians_stake) * (getRewards() * 0.6));
         item.total_guardians_stake = total_guardians_stake;
       }
       return item
