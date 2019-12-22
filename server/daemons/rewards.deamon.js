@@ -13,6 +13,8 @@ const getTotalRewards = async () => {
     let pos = -1;
     let difference = 0;
 
+    const forPeriodInDays = 2.2;
+
     do {
       const data = await api('POST','history', 'get_actions', '{"pos":"'+pos+'","offset":"-50","account_name":"rem"}');
       const actions = data.actions.reverse();
@@ -30,16 +32,15 @@ const getTotalRewards = async () => {
 
       difference = DifferenceInDays(date1, actions.slice(-1)[0].block_time);
       actions.forEach(i => {
-        //console.log(i.action_trace.act.name);
-        if (i.action_trace.act.name == "torewards" && DifferenceInDays(date1, i.block_time) < 2.2) {
-        //  console.log(i.action_trace.act.data.amount);
+        if (i.action_trace.act.name == "torewards" && DifferenceInDays(date1, i.block_time) < forPeriodInDays) {
           sum = sum + Number(i.action_trace.act.data.amount.split(' ')[0])
         }
       })
-    } while (pos > 0 && difference < 2.2);
+      console.log(difference);
+    } while (pos > 0 && difference < forPeriodInDays);
     console.log('\x1b[32m%s\x1b[0m', '[REWARDS DEAMON] Done:', sum);
-    console.log('\x1b[32m%s\x1b[0m', '[REWARDS DEAMON] Revards per day:', sum / 2.2);
-    return sum / 2.2
+    console.log('\x1b[32m%s\x1b[0m', '[REWARDS DEAMON] Revards per day:', sum / forPeriodInDays);
+    return sum / forPeriodInDays
 }
 
 export const startRewardsDeamon = async () => {
