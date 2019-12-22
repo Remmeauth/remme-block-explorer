@@ -8,17 +8,17 @@ export const newAccountValidator = (item, value, callback) => {
     callback("must be 12 characters.");
   }
 
-  if (value.slice(11,12) === '.') {
-    callback("Last character can't be '.'.");
-  }
+  // if (value.slice(11,12) === '.') {
+  //   callback("Last character can't be '.'.");
+  // }
 
-  if (!/^[_a-z1-5"."]*((-|\s)*[_a-z1-5])*$/g.test(value)) {
-    callback("[1-5][a-z]['.'] only");
+  if (!/^[a-z1-5]*((-|\s)*[a-z1-5])*$/g.test(value)) {
+    callback("[1-5][a-z] only");
   }
-
-  if (value.slice(0,1) === '.') {
-    callback("First character can't be '.'.");
-  }
+  //
+  // if (value.slice(0,1) === '.') {
+  //   callback("First character can't be '.'.");
+  // }
 
   callback();
 };
