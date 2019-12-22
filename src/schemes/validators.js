@@ -27,9 +27,21 @@ export const ethAddressValidator = async (item, value, callback) => {
   if(!value){
     callback("Please input ethereum address!");
   }
-  // else if(!await web3.utils.isAddress(value)){
-  //   callback("Invalid ethereum address!");
-  // }
+  else if(!await web3.utils.isAddress(value)){
+    callback("Invalid ethereum address!");
+  }
+  callback();
+};
+
+export const ethTXValidator = async (item, value, callback) => {
+  if(!value){
+    callback("Please input ethereum transaction ID!");
+  }
+
+  if (!/^0x([A-Fa-f0-9]{64})$/g.test(value)) {
+    callback("Transaction ID is invalid");
+  }
+
   callback();
 };
 

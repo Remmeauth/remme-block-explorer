@@ -5,7 +5,7 @@ import { Steps, Modal } from 'antd';
 
 import { taskList, doSwapTask } from '../../../functions/swap';
 import { start } from "../../../actions";
-import { ethAddress } from '../../../schemes';
+import { ethTransaction } from '../../../schemes';
 import { CreateForm } from '../../../components'
 
 import BlockexplorerLink from "../BlockexplorerLink"
@@ -122,7 +122,7 @@ class SwapHistory extends Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <CreateForm scheme={ethAddress} ref={form => this.form = form} onSubmit={this.handleOk}/>
+          <CreateForm scheme={ethTransaction} ref={form => this.form = form} onSubmit={this.handleOk}/>
         </Modal>
         <div className={`loader ${currentStatus}`}></div>
         <Steps size="small" direction="vertical" current={current} status={currentStatus}>
