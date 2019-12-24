@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
 import { Modal, Button, Tooltip } from 'antd';
-import jwt from "jsonwebtoken";
 import QueueAnim from 'rc-queue-anim';
 
-import { secret } from "../../config";
 import { logout, cancel } from "../../actions";
 import SwapHistory from "../../components/Swap/SwapHistory";
 import './style.css'
@@ -42,9 +40,6 @@ class Swap extends Component {
       }
 
       token = localStorage.getItem('token');
-      if(token){
-        token = jwt.decode(token,secret);
-      }
     }catch (e) {
       console.log(e.message);
       token = swap = {};

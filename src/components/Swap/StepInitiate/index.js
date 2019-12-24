@@ -3,11 +3,10 @@ import './style.css';
 import React, { Component } from "react";
 import { Button, Spin, message, Icon } from 'antd';
 import { connect } from "react-redux";
-import jwt from "jsonwebtoken";
 import { amount } from '../../../schemes';
 import CreateForm from '../../CreateForm';
 import { login } from "../../../actions";
-import { secret, network, decimal } from "../../../config";
+import { network, decimal } from "../../../config";
 
 import { EthPrivateKeyToAddress, RemGetBalanceRem, EthGetBalanceRem, EthGetBalanceEth, RemGetAccountCreatingFee, RemGetSwapFee } from '../../../functions/swap';
 import SwapParamsView from "../SwapParamsView"
@@ -27,7 +26,7 @@ class StepInitiate extends Component {
 
   initSwap = async (data) => {
     const { login } = this.props;
-    localStorage.setItem('token', jwt.sign(data, secret));
+    localStorage.setItem('token', data);
     login(data);
   }
 
