@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Table, Tag, Row, Col, Button} from 'antd';
 
 import { RemmeSpin } from '../../components'
-import { network } from '../../config.js'
+import { fetchBackend } from '../../functions/helpers'
 import { tableColunm } from '../../schemes'
 
 const { CheckableTag } = Tag;
@@ -52,8 +52,7 @@ class RemmeAccountTxInfo extends Component {
   handleUpdate = async () => {
     const { id } = this.props;
     try {
-      const response = await fetch(`${network.backendAddress}/api/getActions/${id}`);
-      const json = await response.json();
+      const json = await fetchBackend('getActions', id);
       this.pushActions(json.actions.reverse());
     } catch (e) {
       console.log(e.message);
@@ -66,8 +65,7 @@ class RemmeAccountTxInfo extends Component {
     const { dataSource } = this.state;
     if (dataSource.length && dataSource.pop().key !== 0 ) {
       const last = dataSource.pop().key
-      const response = await fetch(`${network.backendAddress}/api/getActions/${id}/${last}`);
-      const json = await response.json();
+      const json = await fetchBackend('getActions', id, last);
       this.pushActions(json.actions.reverse());
     }
   }

@@ -4,9 +4,8 @@ import { Table, Collapse, Tabs } from 'antd';
 import ReactJson from 'react-json-view'
 
 import { RemmeResult, RemmeSpin, TimeStamp } from '../../components'
-import { network } from '../../config.js'
 import { tableColunm } from '../../schemes'
-import { tracesToTree } from '../../functions/helpers'
+import { tracesToTree, fetchBackend } from '../../functions/helpers'
 
 const { Panel } = Collapse;
 const { TabPane } = Tabs;
@@ -19,8 +18,7 @@ class Transaction extends Component {
   handleUpdate = async () => {
     const { id } = this.props.match.params
     try {
-      const response = await fetch( network.backendAddress + `/api/getTransaction/` + id);
-      const json = await response.json();
+      const json = await fetchBackend('getTransaction', id);
       const actions = json.trx ?
       json.trx.trx.actions.map((i, index) => {
         return {

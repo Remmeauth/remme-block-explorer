@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { Tag, Menu, Dropdown } from 'antd';
 
-import { network } from "../../config";
-
 class SelectNetwork extends Component {
   state = {
     visible: false
@@ -24,7 +22,7 @@ class SelectNetwork extends Component {
     return (
       <div className="select-network" style={{ lineHeight: '60px', float: 'right', marginTop: '4px', marginRight: '10px' }} onClick={() => this.toggle()}>
         <Dropdown overlay={this.menu} visible={visible} onVisibleChange={this.handleVisibleChange} placement="topRight">
-          <Tag color="#1890ff" style={{textTransform: 'capitalize', cursor: 'pointer'}}> {network.remenv} </Tag>
+          <Tag color="#1890ff" style={{textTransform: 'capitalize', cursor: 'pointer'}}> {process.env.REACT_APP_REM_ENV_NAME} </Tag>
         </Dropdown>
       </div>
     )

@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 import { Table, Collapse } from 'antd';
 import ReactJson from 'react-json-view'
 
+import { fetchBackend } from '../../functions/helpers'
 import { RemmeResult, RemmeSpin, TimeStamp } from '../../components'
 import { tableColunm } from '../../schemes'
-import { network } from '../../config.js'
 
 const { Panel } = Collapse;
 
@@ -17,9 +17,7 @@ class Block extends Component {
   handleUpdate = async () => {
     const { id } = this.props.match.params
     try {
-      const response = await fetch( network.backendAddress + `/api/getBlock/` + id);
-      const json = await response.json();
-
+      const json = await fetchBackend('getBlock', id);
       this.setState({
         error: false,
         loading: false,

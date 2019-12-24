@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 
-import { network } from '../../config.js'
-
 class ColorAmount extends Component {
   render() {
     const { amount, color, className } = this.props;
@@ -9,8 +7,8 @@ class ColorAmount extends Component {
       <React.Fragment>
         {
           !amount ?
-            <p className={className}>0 {network.coin}</p> :
-            <p className={className} style={{color: color}}>{Number(amount.toFixed(4))} {network.coin}</p>
+            <p className={className}>0 {process.env.REACT_APP_SYSTEM_COIN}</p> :
+            <p className={className} style={{color: color}}>{Number(amount.toFixed(4))} {process.env.REACT_APP_SYSTEM_COIN}</p>
         }
       </React.Fragment>
     )

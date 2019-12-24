@@ -1,7 +1,7 @@
 import React from 'react'
 import { Tag, Input, Tooltip, Icon, message } from 'antd';
 
-import { network } from "../../config";
+import { fetchBackend } from '../../functions/helpers'
 
 const { Search } = Input;
 
@@ -54,7 +54,7 @@ class TagsField extends React.Component {
 
 
     try {
-      fetch(`${network.backendAddress}/api/getAccount/${inputValue}`).then(res => res.json()).then(json =>{
+      fetchBackend('getAccount', inputValue).then(json =>{
         if (!json.producer) {
           message.error("Producer not found.", 2);
         } else {

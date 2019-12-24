@@ -1,16 +1,22 @@
 import React, { Component } from "react";
 import {message, Button, Icon} from 'antd';
-
-import CreateForm from '../../CreateForm';
-import { existingAccount, newAccount } from '../../../schemes';
-import { network } from '../../../config'
-import scatter from "../../../assets/scatter.jpg";
 import ScatterJS from '@scatterjs/core';
 import ScatterEOS from '@scatterjs/eosjs2';
 
-ScatterJS.plugins( new ScatterEOS() );
-const net = ScatterJS.Network.fromJson(network);
+import CreateForm from '../../CreateForm';
+import { existingAccount, newAccount } from '../../../schemes';
+import scatter from "../../../assets/scatter.jpg";
+import { fetchBackend } from '../../../functions/helpers'
 
+ScatterJS.plugins( new ScatterEOS() );
+
+const net = ScatterJS.Network.fromJson({
+    blockchain: process.env.REACT_APP_NETWORK_BLOCKCHAIN,
+    chainId: process.env.REACT_APP_NETWORK_CHAIN_ID,
+    host: process.env.REACT_APP_NETWORK_HOST,
+    port: process.env.REACT_APP_NETWORK_PORT,
+    protocol: process.env.REACT_APP_NETWORK_PROTOCOL
+});
 
 class StepRemWallet extends Component {
   state = {
@@ -23,7 +29,7 @@ class StepRemWallet extends Component {
     form.validateFields((err, values) => {
       if (err) { return; }
       try {
-        fetch(`${network.backendAddress}/api/getAccount/${values.account_name}`).then(res => res.json()).then(json =>{
+        fetchBackend('getAccount', values.account_name).then( json => {
           console.log(json);
           if (!json.account) {
             message.error("Account not found.", 2);
@@ -48,7 +54,7 @@ class StepRemWallet extends Component {
     form.validateFields((err, values) => {
       if (err) { return; }
       try {
-        fetch(`${network.backendAddress}/api/getAccount/${values.account_name}`).then(res => res.json()).then(json =>{
+        fetchBackend('getAccount', values.account_name).then(json =>{
           if (json.account) {
             message.error("Account already exist.", 2);
           } else {
@@ -69,7 +75,7 @@ class StepRemWallet extends Component {
   connect = async () => {
     const {onSubmit} = this.props;
     try {
-      await ScatterJS.connect(network.account, {net});
+      await ScatterJS.connect(process.env.REACT_APP_SYSTEM_ACCOUNT, {net});
       await ScatterJS.logout();
     } catch (e) {
       message.error("Connection error. Please restart your Scatter client.", 2);
@@ -79,15 +85,14 @@ class StepRemWallet extends Component {
     let account;
     try {
       await ScatterJS.login({accounts: [net]});
-      account = await ScatterJS.account(network.blockchain);
+      account = await ScatterJS.account(process.env.REACT_APP_NETWORK_BLOCKCHAIN);
     } catch (e) {
       message.error("No accounts", 2);
       return false;
     }
 
     try {
-      const res = await fetch(`${network.backendAddress}/api/getAccount/${account.name}`);
-      const json = await res.json();
+      const json = await fetchBackend('getAccount', account.name);
 
       if (!json.account) {
         message.error("Account not found.", 2);

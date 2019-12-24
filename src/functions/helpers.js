@@ -32,9 +32,21 @@ export const tracesToTree = (arr) => {
   return tree;
 }
 
-
 export const floorFigure = (figure, decimals) => {
     if (!decimals) decimals = 2;
     var d = Math.pow(10,decimals);
     return (parseInt(figure*d)/d).toFixed(decimals);
 };
+
+export const fetchBackend = async (action, id, key ) => {
+  try {
+    var uri = `${process.env.REACT_APP_BACKEND_URI}/api/${action}`;
+        uri = id ? `${uri}/${id}` : uri;
+        uri = key ? `${uri}/${key}` : uri;
+    const response = await fetch(uri);
+    const json = await response.json();
+    return json
+  } catch (e) {
+    return {};
+  }
+}

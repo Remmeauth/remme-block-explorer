@@ -6,17 +6,17 @@ import ScatterEOS from '@scatterjs/eosjs2';
 
 import { Api, JsonRpc } from 'eosjs';
 import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
-
-import {
-    network,
-    techPrivkey,
-    techAccount,
-    EthReturnChainId,
-} from '../../config';
+import { fetchBackend } from '../../functions/helpers'
 
 const { TextEncoder, TextDecoder } = require('text-encoding');
 ScatterJS.plugins( new ScatterEOS() );
-const net = ScatterJS.Network.fromJson(network);
+const net = ScatterJS.Network.fromJson({
+    blockchain: process.env.REACT_APP_NETWORK_BLOCKCHAIN,
+    chainId: process.env.REACT_APP_NETWORK_CHAIN_ID,
+    host: process.env.REACT_APP_NETWORK_HOST,
+    port: process.env.REACT_APP_NETWORK_PORT,
+    protocol: process.env.REACT_APP_NETWORK_PROTOCOL
+});
 const rpc = new JsonRpc(net.fullhost());
 const eos = ScatterJS.eos(net, Api, {rpc});
 
@@ -37,8 +37,7 @@ export const RemPrivateKeyToAddress = ( PrivateKeyRem ) => {
 
 export const RemGetBalanceRem = async ( addressRem ) => {
     try{
-        const res = await fetch(`${network.backendAddress}/api/getAccount/${addressRem}`);
-        const json = await res.json();
+        const json = await fetchBackend('getAccount', addressRem);
         if(json.hasOwnProperty('account') && json.hasOwnProperty('balance')){
             return json.balance.unstaked;
         }else{
@@ -57,20 +56,19 @@ export const RemRandomKeys = async () => {
 
 export const RemSignDigest = (receiver, txid, swap_pubkey, asset, return_address, timestamp, privkey, active_pubkey, owner_pubkey) => {
   const pubKeys = ((active_pubkey && owner_pubkey) ? owner_pubkey + "*" + active_pubkey + "*" : '')
-  const digest_to_sign = `${receiver}*${pubKeys}${txid.substring(2)}*${network.chainId}*${Number(asset).toFixed(4)} REM*${return_address.substring(2)}*${EthReturnChainId}*${timestamp}`
+  const digest_to_sign = `${receiver}*${pubKeys}${txid.substring(2)}*${process.env.REACT_APP_NETWORK_CHAIN_ID}*${Number(asset).toFixed(4)} REM*${return_address.substring(2)}*${process.env.REACT_APP_ETH_ENV_NAME}*${timestamp}`
   return ecc.signHash(CryptoJS.SHA256(digest_to_sign).toString(CryptoJS.enc.Hex), privkey)
 }
 
 export const RemGenSwapId = (txid, swap_pubkey, asset, timestamp, return_address) => {
-  const swap_str = `${swap_pubkey.substring(3)}*${txid.substring(2)}*${network.chainId}*${Number(asset).toFixed(4)} REM*${return_address.substring(2)}*${EthReturnChainId}*${timestamp}`
+  const swap_str = `${swap_pubkey.substring(3)}*${txid.substring(2)}*${process.env.REACT_APP_NETWORK_CHAIN_ID}*${Number(asset).toFixed(4)} REM*${return_address.substring(2)}*${process.env.REACT_APP_ETH_ENV_NAME}*${timestamp}`
   const hashed = CryptoJS.SHA256(swap_str);
   const result = hashed.toString(CryptoJS.enc.Hex);
   return result
 }
 
 export const RemGetSwapInfo = async (SwapID) => {
-  const response = await fetch( network.backendAddress + `/api/getSwapInfo/${SwapID}`);
-  const json = await response.json();
+  const json = await fetchBackend('getSwapInfo', SwapID);
   console.log(json);
   if (json.hasOwnProperty('rows') && json.rows.length) {
     if (json.rows[0].status === 1) {
@@ -81,29 +79,27 @@ export const RemGetSwapInfo = async (SwapID) => {
 }
 
 export const RemGetSwapFee = async () => {
-  const response = await fetch( network.backendAddress + `/api/getSwapFee`);
-  const json = await response.json();
+  const json = await fetchBackend('getSwapFee');
   return json
 }
 
 export const RemGetAccountCreatingFee = async (SwapID) => {
-  const response = await fetch( network.backendAddress + `/api/getInfo`);
-  const json = await response.json();
-  return json.global.min_account_stake / 10000
+  const json = await fetchBackend('getInfo');
+  return json.global.min_account_stake / process.env.REACT_APP_SYSTEM_COIN_DECIMAL
 }
 
 export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestamp, sig, active_pubkey, owner_pubkey, return_address) => {
-  const signatureProvider = new JsSignatureProvider([techPrivkey]);
-  const rpc = new JsonRpc(`${network.protocol}://${network.host}:${network.port}`, { fetch });
+  const signatureProvider = new JsSignatureProvider([process.env.REACT_APP_SWAP_TECH_ACCOUNT_KEY]);
+  const rpc = new JsonRpc(`${process.env.REACT_APP_NETWORK_PROTOCOL}://${process.env.REACT_APP_NETWORK_HOST}:${process.env.REACT_APP_NETWORK_PORT}`, { fetch });
   const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
   const data = {
-      "rampayer": techAccount,
+      "rampayer": process.env.REACT_APP_SWAP_TECH_ACCOUNT_NAME,
       "receiver": receiver,
       "txid": txid.substring(2),
       "swap_pubkey_str": swap_pubkey,
       "quantity": `${Number(asset).toFixed(4)} REM`,
       "return_address": return_address.substring(2),
-      "return_chain_id": EthReturnChainId,
+      "return_chain_id": process.env.REACT_APP_ETH_ENV_NAME,
       "swap_timestamp": moment.utc(timestamp*1000).format("YYYY-MM-DDTHH:mm:ss"),
       "sign": sig
   };
@@ -118,7 +114,7 @@ export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestam
       account: 'rem.swap',
       name: data.hasOwnProperty('active_pubkey_str') ? 'finishnewacc' : 'finish',
       authorization: [{
-        actor: techAccount,
+        actor: process.env.REACT_APP_SWAP_TECH_ACCOUNT_NAME,
         permission: 'bot',
       }],
       data,
@@ -131,7 +127,7 @@ export const RemFinishSwap = async (receiver, txid, swap_pubkey, asset, timestam
 }
 
 export const EthStartSwap = async (AccountNameRem, amount, addressEth) => {
-    const connected = await ScatterJS.connect(network.account, {net});
+    const connected = await ScatterJS.connect(process.env.REACT_APP_SYSTEM_ACCOUNT, {net});
     if (!connected) return false;
     const scatter = ScatterJS.scatter;
 
@@ -148,8 +144,8 @@ export const EthStartSwap = async (AccountNameRem, amount, addressEth) => {
             data: {
                 from: account.name,
                 to: 'rem.swap',
-                quantity: Number(amount).toFixed(4) + ` ${network.coin}`,
-                memo:  EthReturnChainId + ' ' + addressEth,
+                quantity: Number(amount).toFixed(4) + ` ${process.env.REACT_APP_SYSTEM_COIN}`,
+                memo: `${process.env.REACT_APP_ETH_ENV_NAME} ${addressEth}`,
             }
         }]
     }, {

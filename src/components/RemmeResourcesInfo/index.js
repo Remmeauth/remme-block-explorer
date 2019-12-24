@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Row, Col, Card, Table, Progress } from 'antd';
 
-import { network } from '../../config.js'
 import { tableColunm, gridStyle } from '../../schemes'
 import { TimeStamp } from '../../components'
 
@@ -82,12 +81,12 @@ class RemmeResourcesInfo extends Component {
       {
         key: '0',
         title: 'Voter stake',
-        value: `${data.balance.staked} ${network.coin}`
+        value: `${data.balance.staked} ${process.env.REACT_APP_SYSTEM_COIN}`
       },
       {
         key: '1',
         title: 'Unstaking',
-        value: `${data.balance.unstaking} ${network.coin}`
+        value: `${data.balance.unstaking} ${process.env.REACT_APP_SYSTEM_COIN}`
       },
       {
         key: '2',
@@ -143,9 +142,9 @@ class RemmeResourcesInfo extends Component {
           <Card.Grid style={gridStyle}>
             <h5 style={{ marginBottom: 26}}>Total:</h5>
             <Row gutter={10}>
-              <Col sm={24} md={8}><h6> Staked by Others: </h6><p className="align-center">{ data.balance.staked_by_others } {network.coin}</p></Col>
-              <Col sm={24} md={8}><h6> Staked by Me: </h6><p className="align-center">{ Number(data.account.total_resources.cpu_weight.split(' ')[0]) - data.balance.staked_by_others } {network.coin}</p></Col>
-              <Col sm={24} md={8}><h6> Total Stake: </h6><p className="align-center">{ Number(data.account.total_resources.cpu_weight.split(' ')[0]) } {network.coin}</p></Col>
+              <Col sm={24} md={8}><h6> Staked by Others: </h6><p className="align-center">{ data.balance.staked_by_others } {process.env.REACT_APP_SYSTEM_COIN}</p></Col>
+              <Col sm={24} md={8}><h6> Staked by Me: </h6><p className="align-center">{ Number(data.account.total_resources.cpu_weight.split(' ')[0]) - data.balance.staked_by_others } {process.env.REACT_APP_SYSTEM_COIN}</p></Col>
+              <Col sm={24} md={8}><h6> Total Stake: </h6><p className="align-center">{ Number(data.account.total_resources.cpu_weight.split(' ')[0]) } {process.env.REACT_APP_SYSTEM_COIN}</p></Col>
             </Row>
           </Card.Grid>
         </Card>

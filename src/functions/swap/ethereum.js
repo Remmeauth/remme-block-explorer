@@ -1,12 +1,10 @@
 import Web3 from 'web3';
 import util from "ethereumjs-util"
 
-import { decimal, network, EthNetworkConfig, EthTokenAbi, EthTokenContractAddress, EthNetworkConfigWS, EthBridgeContractAddress, RemmeBridgeAbi } from "../../config";
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.REACT_APP_ETH_INFURA_LINK));
+const web3ws = new Web3(new Web3.providers.WebsocketProvider(process.env.REACT_APP_ETH_INFURA_WS_LINK));
 
-const web3 = new Web3(new Web3.providers.HttpProvider(EthNetworkConfig));
-const web3ws = new Web3(new Web3.providers.WebsocketProvider(EthNetworkConfigWS));
-
-const token = new web3ws.eth.Contract(EthTokenAbi, EthTokenContractAddress);
+const token = new web3ws.eth.Contract(JSON.parse(process.env.REACT_APP_ETH_TOKEN_ABI), process.env.REACT_APP_ETH_TOKEN_CONTRACT);
 
 export const EthGenSwapId = ( ) => {
   return 'id'
@@ -52,9 +50,9 @@ const genTransaction = async ( myAddress, toAddress, data ) => {
 }
 
 export const EthGetBalanceRem = async ( address ) => {
-  const contractInstance = new web3.eth.Contract(EthTokenAbi, EthTokenContractAddress)
+  const contractInstance = new web3.eth.Contract(JSON.parse(process.env.REACT_APP_ETH_TOKEN_ABI), process.env.REACT_APP_ETH_TOKEN_CONTRACT)
   const balance = await contractInstance.methods.balanceOf(address).call()
-  const decimalBalance = balance / decimal
+  const decimalBalance = balance / process.env.REACT_APP_SYSTEM_COIN_DECIMAL
   return decimalBalance
 }
 
@@ -73,8 +71,8 @@ export const EthPrivateKeyToAddress = async ( PrivateKeyEth ) => {
 
 export const EthRawTransactionApprove = async ( amount, myAddress ) => {
   try {
-    const data = token.methods.approve(EthBridgeContractAddress, amount*decimal).encodeABI();
-    const responce = await genTransaction( myAddress, EthTokenContractAddress, data )
+    const data = token.methods.approve(process.env.REACT_APP_ETH_BRIDGE_CONTRACT, amount*process.env.REACT_APP_SYSTEM_COIN_DECIMAL).encodeABI();
+    const responce = await genTransaction( myAddress, process.env.REACT_APP_ETH_TOKEN_CONTRACT, data )
     return responce;
   } catch (e) {
     return (new Error("Approve transaction was not generated"))
@@ -83,9 +81,9 @@ export const EthRawTransactionApprove = async ( amount, myAddress ) => {
 
 export const EthRawTransaction = async ( amount, SwapSecret, addressEth ) => {
   try {
-    const contract = new web3.eth.Contract(RemmeBridgeAbi, EthBridgeContractAddress);
-    const data = await contract.methods.requestSwap("0x"+network.chainId, SwapSecret[1], amount*decimal).encodeABI();
-    const responce = await genTransaction( addressEth, EthBridgeContractAddress, data )
+    const contract = new web3.eth.Contract(JSON.parse(process.env.REACT_APP_ETH_BRIDGE_ABI), process.env.REACT_APP_ETH_BRIDGE_CONTRACT);
+    const data = await contract.methods.requestSwap("0x"+process.env.REACT_APP_NETWORK_CHAIN_ID, SwapSecret[1], amount*process.env.REACT_APP_SYSTEM_COIN_DECIMAL).encodeABI();
+    const responce = await genTransaction( addressEth, process.env.REACT_APP_ETH_BRIDGE_CONTRACT, data )
     return responce;
   } catch (e) {
     return (new Error("Failed"));

@@ -1,5 +1,4 @@
 import { newAccountValidator } from './validators.js'
-import { network } from '../config.js'
 
 export const walletTransfer = [
   {
@@ -17,7 +16,7 @@ export const walletTransfer = [
   },
   {
     name: 'amount',
-    label: 'Amount ('+network.coin+')',
+    label: `Amount (${process.env.REACT_APP_SYSTEM_COIN})`,
     type: 'String',
     required: true,
     message: 'Please input amount of coins!',

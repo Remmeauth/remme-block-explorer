@@ -5,8 +5,6 @@ import NumberInfo from 'ant-design-pro/lib/NumberInfo';
 import { ChartCard, MiniArea } from 'ant-design-pro/lib/Charts';
 import numeral from 'numeral';
 
-import {decimal} from "../../config";
-
 import "./style.css"
 
 const ChartComponent = ({visitData}) => {
@@ -71,7 +69,7 @@ class RemmeCharts extends Component {
             { show &&
               <QueueAnim type="right" delay={300} >
                 <div key='1'>
-                  <BlockInfoComponent icon="column-width" title="Total Stake" color="#ef534f" value={ (Number(global.total_guardians_stake) / decimal).toFixed(0)} key='3'/>
+                  <BlockInfoComponent icon="column-width" title="Total Stake" color="#ef534f" value={ (Number(global.total_guardians_stake) / process.env.REACT_APP_SYSTEM_COIN_DECIMAL).toFixed(0)} key='3'/>
                   <BlockInfoComponent classes="blockinfo-guardians" icon="check-circle" title="Total Guardians" value={guardians} color="#4cd79c" key='4'/>
                 </div>
               </QueueAnim>

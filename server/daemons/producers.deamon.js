@@ -1,5 +1,4 @@
 import { api } from '../helpers'
-import { network } from '../../config'
 import { getGlobalInfo } from './global.deamon.js'
 import { getRewards } from './rewards.deamon.js'
 
@@ -8,7 +7,7 @@ let PRODUCERS_LIST = [];
 export const startProducersDeamon = async () => {
     try {
       const global = getGlobalInfo();
-      const producersList = await api('POST','chain', 'get_table_rows', '{ "json": true, "code": "'+network.account+'", "scope": "'+network.account+'", "table": "producers", "limit": "1000" }' );
+      const producersList = await api(`POST`,`chain`, `get_table_rows`, `{ "json": true, "code": "${process.env.REACT_APP_SYSTEM_ACCOUNT}", "scope": "${process.env.REACT_APP_SYSTEM_ACCOUNT}", "table": "producers", "limit": "1000" }` );
       const sortedProducers = producersList.rows.filter(item => item.is_active ).sort((a, b) => {
           return b.total_votes - a.total_votes;
       });

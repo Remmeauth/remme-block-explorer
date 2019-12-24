@@ -1,7 +1,5 @@
 import request from "request";
 
-import { network, marketChartEndpoint } from '../../config'
-
 export const sleep = (ms) => {
   return new Promise(resolve=>{
     setTimeout(resolve,ms)
@@ -30,7 +28,7 @@ const asyncRequest = (options) => {
 export const api = async (method, type, action, body, version = 'v1') => {
   var options = {
     method: method,
-    url: `${network.NodeForBackend}` + '/' + version + '/'+ type +'/' + action,
+    url: `${process.env.REACT_APP_NODE_API_URI}/${version}/${type}/${action}`,
     headers: {accept: 'application/json', 'content-type': 'application/json'},
     body: body,
     timeout: 3000
@@ -42,7 +40,7 @@ export const api = async (method, type, action, body, version = 'v1') => {
 export const coinmarketcap = async () => {
   var options = {
     method: 'GET',
-    url: marketChartEndpoint,
+    url: process.env.REACT_APP_MARKET_CHART,
     timeout: 3000
   };
   return await asyncRequest(options);

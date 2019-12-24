@@ -5,7 +5,6 @@ import {message, Row, Col, Button, Icon} from 'antd';
 
 import { EthIsMetamask, EthMetamaskNetwork } from '../../../functions/swap';
 import metamask from "../../../assets/metamask.png"
-import {MetamaskNetworkConfig} from "../../../config.js";
 import CreateForm from "../../CreateForm";
 import {ethAddress} from "../../../schemes";
 
@@ -27,10 +26,10 @@ class StepEthWallet extends Component {
     const { onSubmit } = this.props;
     const isMetamask = await EthIsMetamask();
     const currentMetamaskNetwork = EthMetamaskNetwork();
-    if (isMetamask && currentMetamaskNetwork === MetamaskNetworkConfig.index) {
+    if (isMetamask && currentMetamaskNetwork === Number(process.env.REACT_APP_METAMASK_NETWORK_INDEX)) {
       onSubmit({ PrivateKeyEth: "metamask" });
-    } else if (isMetamask && currentMetamaskNetwork !== MetamaskNetworkConfig.index) {
-      message.error("Metamask network must be: " + MetamaskNetworkConfig.name, 2);
+    } else if (isMetamask && currentMetamaskNetwork !== Number(process.env.REACT_APP_METAMASK_NETWORK_INDEX)) {
+      message.error("Metamask network must be: " + process.env.REACT_APP_METAMASK_NETWORK_NAME, 2);
     } else {
       message.error("Metamask not found. Check and try again.", 2);
     }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Spin, Icon  } from 'antd';
 
-import { network } from '../../config.js'
+import { fetchBackend } from '../../functions/helpers'
 import { RemmeGuardians } from '../../components';
 
 const loadIcon = <Icon type="setting" rotate={180} style={{ fontSize: 24 }} spin />;
@@ -16,8 +16,7 @@ class Guardians extends Component {
 
   handleUpdate = async () => {
     try {
-      const response = await fetch( network.backendAddress + `/api/getGuardians`);
-      const json = await response.json();
+      const json = await fetchBackend('getGuardians');
       if (!json.length) { return false }
       this.setState({
         loading: false,

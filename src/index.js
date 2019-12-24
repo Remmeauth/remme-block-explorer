@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import jwt from "jsonwebtoken";
 
 
 import 'ant-design-pro/dist/ant-design-pro.css';
@@ -36,11 +35,8 @@ swap && store.dispatch(start(JSON.parse(swap)));
 
 const token = localStorage.getItem("token");
 if (token) {
-  const data = jwt.decode(token);
-  if (data) {
-    store.dispatch(login(data));
-  }
-};
+  store.dispatch(login(JSON.parse(token)));
+}
 
 ReactDOM.render(
   <Provider store={store}>

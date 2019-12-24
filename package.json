@@ -14,6 +14,7 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "crypto-js": "^3.1.9-1",
+    "env-cmd": "^10.0.1",
     "eosjs": "^20.0.0",
     "eosjs-ecc": "^4.0.4",
     "ethereumjs-util": "5.2.0",
@@ -45,11 +46,11 @@
     "web3": "1.2.4"
   },
   "scripts": {
-    "server": "./node_modules/.bin/nodemon --watch server --exec babel-node -- server/index.js",
+    "server": "env-cmd -e testchain_local ./node_modules/.bin/nodemon --watch server --exec babel-node -- server/index.js",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
-    "start": "cp config.js ./src && npm-run-all -p watch-css start-js",
+    "start": "env-cmd -e testchain_local npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

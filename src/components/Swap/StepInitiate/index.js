@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { amount } from '../../../schemes';
 import CreateForm from '../../CreateForm';
 import { login } from "../../../actions";
-import { network, decimal } from "../../../config";
 
 import { EthPrivateKeyToAddress, RemGetBalanceRem, EthGetBalanceRem, EthGetBalanceEth, RemGetAccountCreatingFee, RemGetSwapFee } from '../../../functions/swap';
 import SwapParamsView from "../SwapParamsView"
@@ -26,7 +25,7 @@ class StepInitiate extends Component {
 
   initSwap = async (data) => {
     const { login } = this.props;
-    localStorage.setItem('token', data);
+    localStorage.setItem('token', JSON.stringify(data));
     login(data);
   }
 
@@ -91,7 +90,7 @@ class StepInitiate extends Component {
 
       const accountCreatingFee = await RemGetAccountCreatingFee();
       const swapFeeInfo = await RemGetSwapFee();
-      const swapFee = (type ? swapFeeInfo[0].out_swap_min_amount : swapFeeInfo[0].in_swap_min_amount) / decimal
+      const swapFee = (type ? swapFeeInfo[0].out_swap_min_amount : swapFeeInfo[0].in_swap_min_amount) / process.env.REACT_APP_SYSTEM_COIN_DECIMAL;
 
       this.setState({
         accountCreatingFee,
@@ -138,8 +137,8 @@ class StepInitiate extends Component {
             <SwapParamsView type={type} addressEth={addressEth} addressRem={addressRem} balanceRemRem={balanceRemRem} balanceEthRem={balanceEthRem} balanceEthEth={balanceEthEth}/>
           </div>
           <h6>Commission will be charged:</h6>
-          <p className="small">Swap action: <span className="amount-color">{swapFee} {network.coin}</span>
-            { OwnerKeyRem && <React.Fragment><br/>Account creation action: <span className="amount-color">{accountCreatingFee} {network.coin}</span></React.Fragment> }
+          <p className="small">Swap action: <span className="amount-color">{swapFee} {process.env.REACT_APP_SYSTEM_COIN}</span>
+            { OwnerKeyRem && <React.Fragment><br/>Account creation action: <span className="amount-color">{accountCreatingFee} {process.env.REACT_APP_SYSTEM_COIN}</span></React.Fragment> }
           </p>
           <h6>Tokens to swap:</h6>
           <CreateForm
@@ -148,8 +147,8 @@ class StepInitiate extends Component {
             ref={form => this.form = form}
             onSubmit={this.handleSubmit}
           />
-          <p className="small">Minimal amount for swap: <span className="amount-color">{minimalAmountToSwap} {network.coin}</span>
-            {userWillGetAmount && <React.Fragment><br/>You will get: <span className="amount-color">{userWillGetAmount} {network.coin}</span></React.Fragment>}
+          <p className="small">Minimal amount for swap: <span className="amount-color">{minimalAmountToSwap} {process.env.REACT_APP_SYSTEM_COIN}</span>
+            {userWillGetAmount && <React.Fragment><br/>You will get: <span className="amount-color">{userWillGetAmount} {process.env.REACT_APP_SYSTEM_COIN}</span></React.Fragment>}
           </p>
           <Button onClick={() => onSubmit({ current:2 })}> <Icon type="left" /> Back</Button>
           <Button className="init-swap" onClick={this.handleSubmit}>Init Swap</Button>

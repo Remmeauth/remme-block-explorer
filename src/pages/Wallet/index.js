@@ -6,15 +6,21 @@ import ScatterEOS from '@scatterjs/eosjs2';
 import {JsonRpc, Api} from 'eosjs';
 import queryString from 'query-string';
 
-import { network } from '../../config.js'
+import { fetchBackend } from '../../functions/helpers'
 import { RemmeSpin, RemmeResult, RemmeAccountInfo, RemmeResourcesInfo, CreateForm, TagsField, RemmeAccountTxInfo } from '../../components'
 import { walletTransfer, walletStake } from '../../schemes';
 import scatter from "../../assets/scatter.jpg";
 
 const { TabPane } = Tabs;
 
-ScatterJS.plugins( new ScatterEOS() );
-const net = ScatterJS.Network.fromJson(network);
+ScatterJS.plugins(new ScatterEOS());
+const net = ScatterJS.Network.fromJson({
+    blockchain: process.env.REACT_APP_NETWORK_BLOCKCHAIN,
+    chainId: process.env.REACT_APP_NETWORK_CHAIN_ID,
+    host: process.env.REACT_APP_NETWORK_HOST,
+    port: process.env.REACT_APP_NETWORK_PORT,
+    protocol: process.env.REACT_APP_NETWORK_PROTOCOL
+});
 const rpc = new JsonRpc(net.fullhost());
 const eos = ScatterJS.eos(net, Api, {rpc});
 
@@ -42,7 +48,7 @@ class Wallet extends Component {
     const {authority, name} = this.state;
     eos.transact({
         actions: [{
-            account: `${network.account}${prefix}`,
+            account: `${process.env.REACT_APP_SYSTEM_ACCOUNT}${prefix}`,
             name: action_name,
             authorization: [{
                 actor: name,
@@ -73,7 +79,7 @@ class Wallet extends Component {
       const data = {
           from: name,
           to: values.account_name,
-          quantity: Number(`${values.amount}`).toFixed(4) + ` ${network.coin}`,
+          quantity: `${Number(values.amount).toFixed(4)} ${process.env.REACT_APP_SYSTEM_COIN}`,
           memo: values.memo,
       }
       form.resetFields();
@@ -107,7 +113,7 @@ class Wallet extends Component {
       const data = {
           from: name,
           receiver: name,
-          stake_quantity: Number(`${values.amount}`).toFixed(4) + ` ${network.coin}`,
+          stake_quantity: `${Number(values.amount).toFixed(4)} ${process.env.REACT_APP_SYSTEM_COIN}`,
           transfer: false,
       }
       form.resetFields();
@@ -123,7 +129,7 @@ class Wallet extends Component {
       const data = {
           from: name,
           receiver: name,
-          unstake_quantity: Number(`${values.amount}`).toFixed(4) + ` ${network.coin}`,
+          unstake_quantity: `${Number(values.amount).toFixed(4)} ${process.env.REACT_APP_SYSTEM_COIN}`,
           transfer: false,
       }
       form.resetFields();
@@ -142,8 +148,7 @@ class Wallet extends Component {
   handleAccountInfo = async (name,authority) => {
     this.setState({ loading: true });
     try {
-      const response = await fetch(`${network.backendAddress}/api/getAccount/${name}`);
-      const json = await response.json();
+      const json = await fetchBackend('getAccount', name);
       if (!json.account.account_name) {
         this.setState({
           error: "Account not found",
@@ -175,7 +180,7 @@ class Wallet extends Component {
 
   login = async () => {
       try {
-          await ScatterJS.connect(network.account, {net});
+          await ScatterJS.connect(process.env.REACT_APP_SYSTEM_ACCOUNT, {net});
           await ScatterJS.logout();
       } catch (e) {
           message.error("Connection error. Please restart your Scatter client.", 2);
@@ -184,9 +189,7 @@ class Wallet extends Component {
 
       try {
           const login = await ScatterJS.login({accounts: [net]});
-          if (!login) return console.error('no identity');
-
-          const account = await ScatterJS.account(network.blockchain);
+          const account = await ScatterJS.account(process.env.REACT_APP_NETWORK_BLOCKCHAIN);
           if (!account) {
               message.error('No accounts');
               return false;

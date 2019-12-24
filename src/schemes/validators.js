@@ -1,6 +1,5 @@
 import Web3 from 'web3';
-import { EthNetworkConfig } from "../config";
-const web3 = new Web3(new Web3.providers.HttpProvider(EthNetworkConfig));
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.REACT_APP_ETH_INFURA_LINK));
 
 export const newAccountValidator = (item, value, callback) => {
 
