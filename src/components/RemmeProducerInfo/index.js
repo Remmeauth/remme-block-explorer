@@ -63,6 +63,11 @@ class RemmeProducerInfo extends Component {
           },
           {
             key: '5',
+            name: 'Voted by',
+            value: ``
+          },
+          {
+            key: '5',
             name: 'Location',
             value: `${data.producer.bp.org.location.country}, ${data.producer.bp.org.location.name}`
           },
@@ -117,6 +122,11 @@ class RemmeProducerInfo extends Component {
             key: '4',
             name: 'Public Key',
             value: `${data.producer.producer_key}`
+          },
+          {
+            key: '5',
+            name: 'Voted by',
+            value: ``
           }
         ]
       this.setState({

@@ -101,8 +101,6 @@ class Wallet extends Component {
     }
     this.setState({ producers: [] });
     this.initTransaction('', 'voteproducer', data);
-
-
   }
 
   handleStake = (e) => {

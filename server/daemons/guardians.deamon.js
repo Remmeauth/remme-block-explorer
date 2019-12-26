@@ -3,6 +3,7 @@ import { getRewards } from './rewards.deamon.js'
 
 let VOTERS = [];
 let GUARDIANS = [];
+let VOTEDBY = {};
 
 export const startGuardiansDeamon = async () => {
   try {

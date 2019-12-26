@@ -100,7 +100,7 @@ class RemmeAccountTxInfo extends Component {
                 </CheckableTag>
               ))}
               </div>
-              <Table ref={this.actionsTable} dataSource={dataSource.filter(el => { if (!selectedTags.length) return true; return selectedTags.includes(el.name); })} pagination={{ pageSize: 25 }} columns={tableColunm(["tx", "date", "name", "data"])} />
+              <Table ref={this.actionsTable} scroll={{ x: 100 }} dataSource={dataSource.filter(el => { if (!selectedTags.length) return true; return selectedTags.includes(el.name); })} pagination={{ pageSize: 25 }} columns={tableColunm(["tx", "date", "name", "data"])} />
               { visible && <Row style={{marginBottom: 15}}>
                   <Col lg={24} xl={24} key="1" className="align-center">
                     <Button type="primary" onClick={this.handleLoadMore}>Load More Pages</Button>

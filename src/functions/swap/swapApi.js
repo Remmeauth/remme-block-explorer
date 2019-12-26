@@ -108,7 +108,6 @@ const actions = {
       return await EthRawTransactionApprove( amount, addressEth )
     },
     SwapTransactionApprove: async ({ SwapRawTransactionApprove, PrivateKeyEth, addressEth }) => {
-      console.log(JSON.parse(SwapRawTransactionApprove));
       if (PrivateKeyEth === "metamask") {
         return new Promise((resolve, reject) => {
           window.web3.eth.sendTransaction(JSON.parse(SwapRawTransactionApprove), function(err, transactionHash) {

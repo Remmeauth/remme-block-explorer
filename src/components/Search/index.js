@@ -14,10 +14,8 @@ class SearchButton extends Component {
       window.location.href = '/transaction/' + value
     } else if (!isNaN(parseInt(value))) {
       window.location.href = '/block/' + value
-    } else if (value === 'rem' || value.length === 12) {
-      window.location.href = '/account/' + value
     } else {
-      window.location.href = '/404'
+      window.location.href = '/account/' + value
     }
   }
 

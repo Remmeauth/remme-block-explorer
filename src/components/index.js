@@ -19,6 +19,7 @@ import Search from './Search';
 import TimeStamp from './TimeStamp';
 import ColorAmount from './ColorAmount';
 import SelectNetwork from './SelectNetwork';
+import OptionList from './OptionList';
 
 export {
   Navigation,
@@ -41,5 +42,6 @@ export {
   TimeStamp,
   ColorAmount,
   RemmeGuardians,
-  SelectNetwork
+  SelectNetwork,
+  OptionList
 };

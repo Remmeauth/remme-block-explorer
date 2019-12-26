@@ -27,6 +27,7 @@ const list = {
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+    width: 200,
     render: (text) => (<Tag color="#ef534f">{text}</Tag>),
   },
 
@@ -54,7 +55,7 @@ const list = {
     title: 'TX ID',
     dataIndex: 'tx',
     key: 'tx',
-    //render: (text) => (<Link to={'/transaction/' + text}>{text.substring(0,10) + '...' + text.slice(-10)}</Link>)
+    width: 150,
     render: (text) => (<Link to={'/transaction/' + text}>{text.substring(0,10) + '..'}</Link>)
   },
 
@@ -62,6 +63,7 @@ const list = {
     title: 'Date',
     dataIndex: 'date',
     key: 'date',
+    width: 180,
     render: text => (<TimeStamp timestamp={text} />)
   },
 
