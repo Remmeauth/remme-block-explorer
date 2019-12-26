@@ -21,6 +21,8 @@ yarn-debug.log*
 yarn-error.log*
 
 .env-cmdrc.js
+.env.production
+.env
 
 config.js
 /src/config.js

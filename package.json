@@ -14,6 +14,7 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "crypto-js": "^3.1.9-1",
+    "dotenv": "^8.2.0",
     "env-cmd": "^10.0.1",
     "eosjs": "^20.0.0",
     "eosjs-ecc": "^4.0.4",
@@ -50,14 +51,11 @@
     "server-testchain-prod": "env-cmd -e testchain_prod babel-node -- server/index.js",
     "server-remchain-local": "env-cmd -e remchain_local ./node_modules/.bin/nodemon --watch server --exec babel-node -- server/index.js",
     "server-remchain-prod": "env-cmd -e remchain_prod babel-node -- server/index.js",
-
     "start-testchain-local": "env-cmd -e testchain_local npm-run-all -p watch-css start-js",
     "start-testchain-prod": "env-cmd -e testchain_prod npm-run-all -p watch-css start-js",
     "start-remchain-local": "env-cmd -e remchain_local npm-run-all -p watch-css start-js",
-
-    "build-testchain": "env-cmd -e testchain_prod npm-run-all build",
+    "build-testchain": "env-cmd -e testchain_prod -f ./env-cmdrc.js npm-run-all build",
     "build-remchain": "env-cmd -e remchain_prod npm run build-css && react-scripts build",
-
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
