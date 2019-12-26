@@ -54,12 +54,13 @@
     "start-testchain-local": "env-cmd -e testchain_local npm-run-all -p watch-css start-js",
     "start-remchain-local": "env-cmd -e remchain_local npm-run-all -p watch-css start-js",
 
-    "build-testchain": "env-cmd -e testchain_prod npm run build-css && react-scripts build",
+    "build-testchain": "env-cmd -e testchain_prod npm-run-all build",
     "build-remchain": "env-cmd -e remchain_prod npm run build-css && react-scripts build",
 
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-    "start-js": "react-scripts start"
+    "start-js": "react-scripts start",
+    "build": "npm run build-css && react-scripts build"
   },
   "eslintConfig": {
     "extends": "react-app"
