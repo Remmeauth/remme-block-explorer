@@ -52,6 +52,7 @@
     "server-remchain-prod": "env-cmd -e remchain_prod babel-node -- server/index.js",
 
     "start-testchain-local": "env-cmd -e testchain_local npm-run-all -p watch-css start-js",
+    "start-testchain-prod": "env-cmd -e testchain_prod npm-run-all -p watch-css start-js",
     "start-remchain-local": "env-cmd -e remchain_local npm-run-all -p watch-css start-js",
 
     "build-testchain": "env-cmd -e testchain_prod npm-run-all build",
