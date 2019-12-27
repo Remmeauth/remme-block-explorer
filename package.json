@@ -47,20 +47,20 @@
     "web3": "1.2.4"
   },
   "scripts": {
-    "server-testchain-local": "env-cmd -e testchain_local ./node_modules/.bin/nodemon --watch server --exec babel-node -- server/index.js",
-    "server-testchain-prod": "env-cmd -e testchain_prod babel-node -- server/index.js",
-    "server-remchain-local": "env-cmd -e remchain_local ./node_modules/.bin/nodemon --watch server --exec babel-node -- server/index.js",
-    "server-remchain-prod": "env-cmd -e remchain_prod babel-node -- server/index.js",
-    "start-testchain-local": "env-cmd -e testchain_local npm-run-all -p watch-css start-js",
-    "start-testchain-prod": "env-cmd -e testchain_prod npm-run-all -p watch-css start-js",
-    "start-remchain-local": "env-cmd -e remchain_local npm-run-all -p watch-css start-js",
-    "build-testchain": "env-cmd -e testchain_prod -f ./env-cmdrc.js npm-run-all build",
-    "build-remchain": "env-cmd -e remchain_prod npm run build-css && react-scripts build",
+    "server:testchain:local": "env-cmd -f .env.testchain.local ./node_modules/.bin/nodemon --watch server --exec babel-node -- server/index.js",
+    "server:testchain:prod": "env-cmd -f .env.testchain.prod babel-node -- server/index.js",
+    "server:remchain:local": "env-cmd -f .env.remchain.local ./node_modules/.bin/nodemon --watch server --exec babel-node -- server/index.js",
+    "server:remchain:prod": "env-cmd -f .env.remchain.prod babel-node -- server/index.js",
+
+    "start:testchain:local": "env-cmd -f .env.testchain.local npm-run-all -p watch-css start-js",
+    "start:remchain:local": "env-cmd -f .env.remchain.local npm-run-all -p watch-css start-js",
+
+    "build:testchain": "env-cmd -f .env.testchain.prod npm run build-css && react-scripts build",
+    "build:remchain": "env-cmd -f .env.remchain.prod npm run build-css && react-scripts build",
+
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
-    "build": "npm run build-css && react-scripts build",
-    "build:testchain": "env-cmd -f .env.testchain.prod npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
