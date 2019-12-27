@@ -22,8 +22,6 @@ const net = ScatterJS.Network.fromJson({
     protocol: process.env.REACT_APP_NETWORK_PROTOCOL
 });
 
-console.log(net);
-
 const rpc = new JsonRpc(net.fullhost());
 const eos = ScatterJS.eos(net, Api, {rpc});
 
@@ -191,15 +189,17 @@ class Wallet extends Component {
       try {
           const login = await ScatterJS.login({accounts: [net]});
           const account = await ScatterJS.account(process.env.REACT_APP_NETWORK_BLOCKCHAIN);
-          console.log(account);
           if (!account) {
               message.error('No accounts');
               return false;
           }
           this.handleAccountInfo(account.name, account.authority);
       } catch (e) {
-          console.log(e);
-          message.error('No accounts');
+          if (e.message) {
+            message.error(e.message);
+          } else {
+            message.error('No accounts');
+          }
           return false;
       }
   }
