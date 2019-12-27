@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Table, Row, Col, Card, Tag, Progress } from 'antd';
 
 import { tableColunm, gridStyle } from '../../schemes'
-import { TimeStamp, ColorAmount } from '../../components'
+import { TimeStamp, ColorAmount, VotersList } from '../../components'
 
 class RemmeAccountInfo extends Component {
   render() {
@@ -47,7 +47,7 @@ class RemmeAccountInfo extends Component {
       {
         key: '3',
         title: 'Voted for',
-        value: data.account.voter_info.producers.map((item, index) => { return <Link style={{marginRight: 5}} onClick={forceUpdate} key={index} to={'/account/' + item}>{item}</Link> })
+        value: <VotersList data={data.account.voter_info.producers} forceUpdate={forceUpdate} />
       },
       {
         key: '4',

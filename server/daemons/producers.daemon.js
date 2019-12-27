@@ -1,10 +1,10 @@
 import { api } from '../helpers'
-import { getGlobalInfo } from './global.deamon.js'
-import { getRewards } from './rewards.deamon.js'
+import { getGlobalInfo } from './global.daemon.js'
+import { getRewards } from './rewards.daemon.js'
 
 let PRODUCERS_LIST = [];
 
-export const startProducersDeamon = async () => {
+export const startProducersDaemon = async () => {
     try {
       const global = getGlobalInfo();
       const producersList = await api(`POST`,`chain`, `get_table_rows`, `{ "json": true, "code": "${process.env.REACT_APP_SYSTEM_ACCOUNT}", "scope": "${process.env.REACT_APP_SYSTEM_ACCOUNT}", "table": "producers", "limit": "1000" }` );
@@ -13,7 +13,7 @@ export const startProducersDeamon = async () => {
       });
       PRODUCERS_LIST = countRate(sortedProducers, global.total_producer_vote_weight)
     } catch (e) {
-      console.log('\x1b[31m%s\x1b[0m', '[PRODUCER DEAMON] ERROR: ', e ? e.message : e);
+      console.log('\x1b[31m%s\x1b[0m', '[PRODUCER DAEMON] ERROR: ', e ? e.message : e);
     }
 }
 

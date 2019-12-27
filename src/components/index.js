@@ -20,6 +20,7 @@ import TimeStamp from './TimeStamp';
 import ColorAmount from './ColorAmount';
 import SelectNetwork from './SelectNetwork';
 import OptionList from './OptionList';
+import VotersList from './VotersList';
 
 export {
   Navigation,
@@ -43,5 +44,6 @@ export {
   ColorAmount,
   RemmeGuardians,
   SelectNetwork,
-  OptionList
+  OptionList,
+  VotersList
 };

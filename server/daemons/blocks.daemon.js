@@ -3,7 +3,7 @@ import { api } from '../helpers'
 let NEW_BLOCKS = [];
 let BLOCK_LIST = [];
 
-export const startBlocksDeamon = async () => {
+export const startBlocksDaemon = async () => {
   try {
     NEW_BLOCKS = [];
     const chainInfo = await api('POST','chain', 'get_info');
@@ -29,7 +29,7 @@ export const startBlocksDeamon = async () => {
     BLOCK_LIST = NEW_BLOCKS.concat(BLOCK_LIST);
     BLOCK_LIST = BLOCK_LIST.slice(0, 8);
   } catch (e) {
-    console.log('\x1b[31m%s\x1b[0m', '[BLOCKS DEAMON] ERROR: ', e ? e.message : e);
+    console.log('\x1b[31m%s\x1b[0m', '[BLOCKS DAEMON] ERROR: ', e ? e.message : e);
   }
 }
 

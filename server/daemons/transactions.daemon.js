@@ -1,4 +1,4 @@
-import { getNewBlockList } from './blocks.deamon.js'
+import { getNewBlockList } from './blocks.daemon.js'
 
 let INITIAL_BLOCK = 0;
 let TRANSACTION_LIST = [];
@@ -8,7 +8,7 @@ const checkTransaction = (transaction) => {
   return false;
 }
 
-export const startTransactionsDeamon = async () => {
+export const startTransactionsDaemon = async () => {
   const blocks = getNewBlockList();
 
   if (blocks.length && !INITIAL_BLOCK)
@@ -18,7 +18,7 @@ export const startTransactionsDeamon = async () => {
     try {
       TRANSACTION_LIST = item.transactions.filter(checkTransaction).concat(TRANSACTION_LIST);
     } catch (e) {
-      
+
       console.log(e.message);
       console.log(item);
     }

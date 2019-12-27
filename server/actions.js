@@ -1,6 +1,6 @@
 import { api, producerInfo } from "./helpers"
 import { getInfo } from "./daemons"
-import { getVoterInfo } from "./daemons/guardians.deamon.js"
+import { getVoterInfo } from "./daemons/voters.daemon.js"
 
 export const getBlock = async (id) => {
   try {

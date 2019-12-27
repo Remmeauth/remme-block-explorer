@@ -17,6 +17,11 @@ class SelectNetwork extends Component {
     this.setState({ visible: flag });
   };
 
+  toggle = () => {
+    const {visible} = this.state
+    this.setState({ visible: !visible });
+  }
+
   render() {
     const { visible } = this.state
     return (

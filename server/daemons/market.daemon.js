@@ -32,7 +32,7 @@ const scale = (arr) => {
   }
 }
 
-export const startMarketDeamon = async () => {
+export const startMarketDaemon = async () => {
   try {
     if (!count) {
       const info = await coinmarketcap();
@@ -44,7 +44,7 @@ export const startMarketDeamon = async () => {
     count++
     if (count == 5) count = 0;
   } catch (e) {
-    console.log('\x1b[31m%s\x1b[0m', '[MARKET DEAMON] ERROR: ', e.message);
+    console.log('\x1b[31m%s\x1b[0m', '[MARKET DAEMON] ERROR: ', e.message);
   }
 }
 

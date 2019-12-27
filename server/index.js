@@ -5,8 +5,8 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 import { getBlock, getTransaction, getAccount, getBalance, getProducer, getActions, getSwapInfo, getVoters, getSwapFee } from './actions'
-import { getGuardians } from './daemons/guardians.deamon.js'
-import { getInfo, startDaemons, startRewardsDaemon } from './daemons'
+import { getGuardians } from './daemons/guardians.daemon.js'
+import { getInfo, startDaemons, startSlowDaemons } from './daemons'
 
 const corsOptions = {
   origin: '*',
@@ -62,4 +62,4 @@ app.get('/api/getGuardians', async (req, res) => {
 app.listen(port, () => console.log('\x1b[34m%s\x1b[0m',`Blockexplorer backend is running on localhost:${port}`));
 
 startDaemons();
-startRewardsDaemon();
+startSlowDaemons();

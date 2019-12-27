@@ -1,11 +1,12 @@
 import { sleep } from '../helpers'
-import { startBlocksDeamon, getBlockList } from './blocks.deamon.js'
-import { startMarketDeamon, getMarketChart } from './market.deamon.js'
-import { startTransactionsDeamon, getTransactionList } from './transactions.deamon.js'
-import { startProducersDeamon, getProducerList } from './producers.deamon.js'
-import { startGlobalDeamon, getGlobalInfo } from './global.deamon.js'
-import { startRewardsDeamon, getRewards } from './rewards.deamon.js'
-import { startGuardiansDeamon, getGuardians } from './guardians.deamon.js'
+import { startBlocksDaemon, getBlockList } from './blocks.daemon.js'
+import { startMarketDaemon, getMarketChart } from './market.daemon.js'
+import { startTransactionsDaemon, getTransactionList } from './transactions.daemon.js'
+import { startProducersDaemon, getProducerList } from './producers.daemon.js'
+import { startGlobalDaemon, getGlobalInfo } from './global.daemon.js'
+import { startRewardsDaemon, getRewards } from './rewards.daemon.js'
+import { startGuardiansDaemon, getGuardians } from './guardians.daemon.js'
+import { startVotersDaemon } from './voters.daemon.js'
 
 let infoData = {};
 
@@ -39,19 +40,20 @@ export const getInfo = () => {
 }
 
 export const startDaemons = async () => {
-  await startGlobalDeamon();
-  await startBlocksDeamon();
-  await startMarketDeamon();
-  await startTransactionsDeamon();
-  await startProducersDeamon();
+  await startGlobalDaemon();
+  await startBlocksDaemon();
+  await startMarketDaemon();
+  await startTransactionsDaemon();
+  await startProducersDaemon();
   prepareData();
   await sleep(1000);
   startDaemons();
 }
 
-export const startRewardsDaemon = async () => {
-  await startRewardsDeamon();
-  await startGuardiansDeamon();
-  await sleep(1000 * 60 * 60); //1h
-  startRewardsDaemon();
+export const startSlowDaemons = async () => {
+  await startRewardsDaemon();
+  await startVotersDaemon();
+  await startGuardiansDaemon();
+  await sleep(1000 * 15 * 60); //15m
+  startSlowDaemons();
 }
