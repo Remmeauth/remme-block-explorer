@@ -21,6 +21,9 @@ const net = ScatterJS.Network.fromJson({
     port: process.env.REACT_APP_NETWORK_PORT,
     protocol: process.env.REACT_APP_NETWORK_PROTOCOL
 });
+
+console.log(net);
+
 const rpc = new JsonRpc(net.fullhost());
 const eos = ScatterJS.eos(net, Api, {rpc});
 
