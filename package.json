@@ -59,7 +59,8 @@
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
-    "build": "npm run build-css && react-scripts build"
+    "build": "npm run build-css && react-scripts build",
+    "build:testchain": "env-cmd -f .env.testchain.prod npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
