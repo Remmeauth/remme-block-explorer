@@ -56,7 +56,7 @@
     "start:remchain:local": "env-cmd -f .env.remchain.local npm-run-all -p watch-css start-js",
 
     "build:testchain": "env-cmd -f .env.testchain.prod react-scripts build",
-    "build:remchain": "env-cmd -f .env.remchain.prod npm run build-css && react-scripts build",
+    "build:remchain": "env-cmd -f .env.remchain.prod react-scripts build",
 
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
