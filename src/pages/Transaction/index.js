@@ -35,11 +35,20 @@ class Transaction extends Component {
           }
       })
 
+      let filteredTraces = []
+
+      json.traces.forEach(item => {
+        if (!filteredTraces.some(el => el.act.hex_data === item.act.hex_data )) {
+          filteredTraces.push(item)
+        }
+      });
+
       this.setState({
         error: false,
         loading: false,
         raw: json,
-        dataTraces: tracesToTree(json.traces),
+        dataTraces: tracesToTree(filteredTraces),
+        dataTracesLength: filteredTraces.length,
         dataActions: actions,
         dataSource: [
           {
@@ -83,7 +92,7 @@ class Transaction extends Component {
   }
 
   render() {
-    const { dataSource, raw, loading, error, dataActions, dataTraces } = this.state;
+    const { dataSource, raw, loading, error, dataActions, dataTraces, dataTracesLength } = this.state;
     return (
       <React.Fragment>
         {
@@ -102,7 +111,7 @@ class Transaction extends Component {
               <TabPane tab="Actions" key="1">
                 <Table className="details-info" columns={tableColunm(['account', 'name', 'data'])} dataSource={dataActions} pagination={false} />
               </TabPane>
-              <TabPane tab={`Traces (${raw.traces.length})`}  key="2">
+              <TabPane tab={`Traces (${dataTracesLength})`}  key="2">
                 <Table className="details-info" columns={tableColunm(['account', 'name', 'data'])} dataSource={dataTraces} pagination={false} />
               </TabPane>
             </Tabs>

@@ -7,26 +7,26 @@ import { tableColunm } from '../../schemes'
 
 const { CheckableTag } = Tag;
 
-const unique = (value, index, self) => {
-  return self.indexOf(value) === index
-}
-
 class RemmeAccountTxInfo extends Component {
 
   state = {
     dataSource: [],
+    dataFilter: [],
     selectedTags: [],
     loading: true,
     visible: false
   }
 
   pushActions = (actions) => {
-    var { dataSource } = this.state;
+    var { dataSource, dataFilter } = this.state;
     try {
-      var dataFilter = [];
+      var filterItems = dataFilter;
       actions.forEach(item => {
         if (!dataSource.some(el => el.hex_data === item.action_trace.act.hex_data && el.block_time === item.block_time )) {
-          dataFilter.push(item.action_trace.act.name)
+          if(filterItems.indexOf(item.action_trace.act.name) === -1) {
+            filterItems.push(item.action_trace.act.name)
+          }
+
           dataSource.push({
             key: item.account_action_seq,
             tx: item.action_trace.trx_id,
@@ -38,10 +38,11 @@ class RemmeAccountTxInfo extends Component {
           })
         }
       });
+      console.log(filterItems);
       this.setState({
         loading:false,
         dataSource: dataSource,
-        dataFilter: dataFilter.filter(unique),
+        dataFilter: filterItems,
         visible: actions.pop().account_action_seq !== 0
       });
     } catch (e) {
