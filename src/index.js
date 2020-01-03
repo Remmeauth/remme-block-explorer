@@ -35,7 +35,11 @@ swap && store.dispatch(start(JSON.parse(swap)));
 
 const token = localStorage.getItem("token");
 if (token) {
-  store.dispatch(login(JSON.parse(token)));
+  try {
+    store.dispatch(login(JSON.parse(token)));
+  } catch (e) {
+    localStorage.removeItem("token");
+  }
 }
 
 ReactDOM.render(
