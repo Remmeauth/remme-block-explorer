@@ -12,6 +12,7 @@
     "babel-preset-env": "^1.7.0",
     "big-integer": "^1.6.44",
     "body-parser": "^1.18.3",
+    "colors": "^1.4.0",
     "cors": "^2.8.4",
     "crypto-js": "^3.1.9-1",
     "dotenv": "^8.2.0",
@@ -51,13 +52,10 @@
     "server:testchain:prod": "env-cmd -f .env.testchain.prod babel-node -- server/index.js",
     "server:remchain:local": "env-cmd -f .env.remchain.local ./node_modules/.bin/nodemon --watch server --exec babel-node -- server/index.js",
     "server:remchain:prod": "env-cmd -f .env.remchain.prod babel-node -- server/index.js",
-
     "start:testchain:local": "env-cmd -f .env.testchain.local npm-run-all -p watch-css start-js",
     "start:remchain:local": "env-cmd -f .env.remchain.local npm-run-all -p watch-css start-js",
-
     "build:testchain": "env-cmd -f .env.testchain.prod react-scripts build",
     "build:remchain": "env-cmd -f .env.remchain.prod react-scripts build",
-
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start"

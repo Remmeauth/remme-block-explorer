@@ -36,7 +36,7 @@ const getTotalRewards = async () => {
           sum = sum + Number(i.action_trace.act.data.amount.split(' ')[0])
         }
       })
-      console.log(difference);
+      //console.log(difference);
     } while (pos > 0 && difference < forPeriodInDays);
     console.log('\x1b[32m%s\x1b[0m', '[REWARDS DAEMON] Done:', sum);
     console.log('\x1b[32m%s\x1b[0m', '[REWARDS DAEMON] Revards per day:', sum / forPeriodInDays);
