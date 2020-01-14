@@ -14,23 +14,38 @@ const initialState = {
   balanceRemRem: false,
   balanceEthRem: false,
   balanceEthEth: false
-
 };
 
-const handleLogin = (state, { PrivateKeyRem, PrivateKeyEth, AccountNameRem, OwnerKeyRem, ActiveKeyRem, SwapInitiated, amount, type, addressEth, addressRem, balanceRemRem, balanceEthRem, balanceEthEth }) => ({
-  PrivateKeyRem,
-  PrivateKeyEth,
-  AccountNameRem,
-  OwnerKeyRem,
-  ActiveKeyRem,
-  SwapInitiated,
-  amount,
-  type,
-  addressEth,
-  addressRem,
-  balanceRemRem,
-  balanceEthRem,
-  balanceEthEth,
+const handleLogin = (
+  state,
+  {
+    PrivateKeyRem,
+    PrivateKeyEth,
+    AccountNameRem,
+    OwnerKeyRem,
+    ActiveKeyRem,
+    SwapInitiated,
+    amount,
+    type,
+    addressEth,
+    addressRem,
+    balanceRemRem,
+    balanceEthRem,
+    balanceEthEth
+  }) => ({
+    PrivateKeyRem,
+    PrivateKeyEth,
+    AccountNameRem,
+    OwnerKeyRem,
+    ActiveKeyRem,
+    SwapInitiated,
+    amount,
+    type,
+    addressEth,
+    addressRem,
+    balanceRemRem,
+    balanceEthRem,
+    balanceEthEth,
 });
 
 const handleLogout = () => initialState;

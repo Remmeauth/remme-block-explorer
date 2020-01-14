@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Table, Row, Col, Card, Tag, Progress } from 'antd';
 
 import { tableColunm, gridStyle } from '../../schemes'
-import { TimeStamp, ColorAmount, VotersList } from '../../components'
+import { TimeStamp, ColorAmount, VotersList, ViewIt } from '../../components'
 
 class RemmeAccountInfo extends Component {
   render() {
@@ -58,7 +58,7 @@ class RemmeAccountInfo extends Component {
 
     return (
       <React.Fragment>
-        <h4>Account info:</h4>
+        <h4>Account info: <ViewIt url={`/account/${data.account.account_name}`}/></h4>
         <Table className="account-info details-info" dataSource={accountDataSource} columns={tableColunm(['title', 'value'])} pagination={false} />
 
         <Card bordered={false}>

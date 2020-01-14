@@ -21,6 +21,7 @@ import ColorAmount from './ColorAmount';
 import SelectNetwork from './SelectNetwork';
 import OptionList from './OptionList';
 import VotersList from './VotersList';
+import ViewIt from './ViewIt';
 
 export {
   Navigation,
@@ -45,5 +46,6 @@ export {
   RemmeGuardians,
   SelectNetwork,
   OptionList,
-  VotersList
+  VotersList,
+  ViewIt
 };

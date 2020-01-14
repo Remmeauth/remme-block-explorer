@@ -4,7 +4,7 @@ import { Table, Collapse } from 'antd';
 import ReactJson from 'react-json-view'
 
 import { fetchBackend } from '../../functions/helpers'
-import { RemmeResult, RemmeSpin, TimeStamp } from '../../components'
+import { RemmeResult, RemmeSpin, TimeStamp, ViewIt } from '../../components'
 import { tableColunm } from '../../schemes'
 
 const { Panel } = Collapse;
@@ -107,7 +107,7 @@ class Block extends Component {
           loading ? (<div className="preload-block"><RemmeSpin /></div>) :
             error ? (<RemmeResult error={error} />) : (
             <React.Fragment>
-              <h4>Block: <span className="block-color">#{raw.block_num}</span></h4>
+              <h4>Block: <span className="block-color">#{raw.block_num}</span> <ViewIt url={`/block/${raw.block_num}`}/></h4>
               <Table className="block-info details-info" dataSource={dataSource} columns={tableColunm(['title', 'value'])} pagination={false} />
               <Collapse className="block-raw" accordion defaultActiveKey={['1']}>
                <Panel header="Block Raw Data" key="1">

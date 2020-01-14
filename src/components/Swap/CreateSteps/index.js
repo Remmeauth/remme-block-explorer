@@ -1,9 +1,13 @@
 import './style.css';
 
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from 'react-router-dom';
 import { Steps, Popover } from 'antd';
 
+import { start, login } from "../../../actions";
 import StepContent from '../StepContent';
+import { availableSwaps, updateStore } from '../../../functions/helpers'
 
 const Step = Steps.Step;
 
@@ -17,16 +21,23 @@ const steps = [
 class CreateSteps extends Component {
 
   state = {
+      initiated: false,
       current: 0,
       type: 0,
   };
 
   next = (update_params) => {
-    const current = update_params.current !== undefined ? update_params.current : this.state.current + 1;
-    this.setState({
-      ...update_params,
-      current
-    });
+    const { start, login } = this.props
+    if (!availableSwaps()) {
+      const current = update_params.current !== undefined ? update_params.current : this.state.current + 1;
+      this.setState({
+        ...update_params,
+        current
+      });
+    } else {
+      updateStore(start, login);
+      this.setState({ initiated: true });
+    }
   }
 
   prev() {
@@ -41,10 +52,10 @@ class CreateSteps extends Component {
   );
 
   render() {
-    const { current, type, PrivateKeyRem, PrivateKeyEth, AccountNameRem, OwnerKeyRem, ActiveKeyRem} = this.state;
+    const { current, type, PrivateKeyRem, PrivateKeyEth, AccountNameRem, OwnerKeyRem, ActiveKeyRem, initiated } = this.state;
     return (
       <div className="steps-wrap">
-
+        { initiated && <Redirect to="/swap" /> }
         <Steps current={current} progressDot={this.customDot}>
           {steps.map(item => <Step key={item.title} title={item.title} />)}
         </Steps>
@@ -66,4 +77,4 @@ class CreateSteps extends Component {
   }
 }
 
-export default CreateSteps;
+export default connect(null, { start, login })(CreateSteps);

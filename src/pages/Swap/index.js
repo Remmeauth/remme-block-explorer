@@ -21,7 +21,6 @@ class Swap extends Component {
         localStorage.removeItem("swap");
         logout();
         cancel();
-        //window.location.reload();
       }
     });
   };
@@ -38,9 +37,8 @@ class Swap extends Component {
         if(swap.hasOwnProperty('SwapRawTransactionApprove'))
           swap.SwapRawTransactionApprove = JSON.parse(swap.SwapRawTransactionApprove);
       }
-
       token = localStorage.getItem('token');
-    }catch (e) {
+    } catch (e) {
       console.log(e.message);
       token = swap = {};
     }

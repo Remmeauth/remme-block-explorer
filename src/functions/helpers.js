@@ -1,3 +1,5 @@
+//import { logout, cancel, start } from "../actions";
+
 export const tracesToTree = (arr) => {
   var tree = [],
       mappedArr = {},
@@ -49,4 +51,31 @@ export const fetchBackend = async (action, id, key ) => {
   } catch (e) {
     return {};
   }
+}
+
+export const availableSwaps = () => {
+    let initiated = false;
+    try {
+      const data = localStorage.getItem('token');
+      const json = JSON.parse(data);
+      initiated  = json.SwapInitiated ? true : false;
+    } catch {};
+    return initiated;
+}
+
+export const cancelSwap = (logout, cancel) => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("swap");
+  logout();
+  cancel();
+}
+
+export const updateStore = (start, login) => {
+  try {
+    ['swap', 'token'].forEach((i, index) => {
+      const data = localStorage.getItem(i);
+      const json = JSON.parse(data);
+      [start, login][index](json)
+    })
+  } catch {};
 }

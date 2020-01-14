@@ -1,0 +1,12 @@
+.ant-steps-item.SwapTransactionApprove .ant-steps-item-title,
+.ant-steps-item.SwapTransaction .ant-steps-item-title {
+  padding-left: 12px;
+  border: 1px solid;
+  cursor: pointer;
+  opacity: 0.2;
+}
+
+.current-2 .ant-steps-item.SwapTransactionApprove.button-not-clicked .ant-steps-item-title,
+.current-5 .ant-steps-item.SwapTransaction.button-not-clicked .ant-steps-item-title {
+  opacity: 1;
+}

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Table, Collapse, Tabs } from 'antd';
 import ReactJson from 'react-json-view'
 
-import { RemmeResult, RemmeSpin, TimeStamp } from '../../components'
+import { RemmeResult, RemmeSpin, TimeStamp, ViewIt } from '../../components'
 import { tableColunm } from '../../schemes'
 import { tracesToTree, fetchBackend } from '../../functions/helpers'
 
@@ -99,7 +99,7 @@ class Transaction extends Component {
           loading ? (<div className="preload-block"><RemmeSpin /></div>) :
             error ? (<RemmeResult error={error} />) : (
             <React.Fragment>
-              <h4>Tx: <span className="transition-color">{raw.id}</span></h4>
+              <h4>Tx: <span className="transition-color">{raw.id}</span> <ViewIt url={`/transaction/${raw.id}`}/></h4>
               <Table className="transition-info details-info" dataSource={dataSource} columns={tableColunm(['title', 'value'])} pagination={false} />
               <Collapse className="transition-raw" accordion defaultActiveKey={['1']}>
                <Panel header="Tx Raw Data" key="1">

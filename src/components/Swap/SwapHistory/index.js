@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from 'react-router-dom';
 import PropTypes from "prop-types";
 import { Steps, Modal } from 'antd';
 
 import { taskList, doSwapTask } from '../../../functions/swap';
-import { start } from "../../../actions";
+import { start, logout, cancel, login } from "../../../actions";
 import { ethTransaction } from '../../../schemes';
 import { CreateForm } from '../../../components'
+import { availableSwaps, updateStore, cancelSwap } from '../../../functions/helpers'
+import './style.css'
 
 import BlockexplorerLink from "../BlockexplorerLink"
 
@@ -15,6 +18,8 @@ const Step = Steps.Step;
 class SwapHistory extends Component {
 
   state = {
+    clickedMetamask: false,
+    initiated: 1,
     current: 0,
     currentStatus: "process",
     taksStatus: {},
@@ -71,6 +76,9 @@ class SwapHistory extends Component {
 
   taskCallback = (error, responce) => {
     let { current, taksStatus } = this.state ;
+
+    this.setState({ clickedMetamask: false });
+
     const { type } = this.props
       if (error) {
         taksStatus[current] = error;
@@ -98,9 +106,35 @@ class SwapHistory extends Component {
       }
   }
 
-  next = async () => {
+  beforeDoSwapTask = () => {
     const { current } = this.state;
-    doSwapTask( current, this.props, this.taskCallback );
+    const { start, logout, cancel } = this.props;
+
+    if (availableSwaps()) {
+      updateStore(start, login);
+      setTimeout(()=>{
+        doSwapTask( current, this.props, this.taskCallback );
+      }, 100);
+    } else {
+      cancelSwap(logout, cancel);
+      this.setState({ initiated: false });
+    }
+  }
+
+  next = async () => {
+    const { current, clickedMetamask } = this.state;
+    const { id } = taskList[this.props.type][current];
+
+    if ( clickedMetamask || (current !== 2 && current !== 5)) {
+      this.beforeDoSwapTask();
+    } else if (this.props[id]) {
+      this.taskCallback(null, this.props[id]);
+    } else if (availableSwaps(this.props.logout, this.props.cancel)) {
+      updateStore(this.props.start, this.props.login);
+      setTimeout(()=>{ this.next() }, 2000);
+    } else {
+      this.setState({ initiated: false });
+    }
   }
 
   componentDidMount = () => {
@@ -108,14 +142,20 @@ class SwapHistory extends Component {
   }
 
   handler = (i, e) => {
-    e.shiftKey && (i === 5 || i === 2 ) && this.showModal(i);
+    let { current } = this.state;
+    if ((e.shiftKey && i === 5) || (e.shiftKey && i === 2)) {
+      this.showModal(i);
+    } else if ((i === 2 && current === 2) || (i === 5 && current === 5)) {
+      this.setState({ clickedMetamask: true });
+    }
   }
 
   render() {
     const { type, amount, SwapFinalize, addressEth } = this.props
-    const { current, taksStatus, currentStatus } = this.state
+    const { current, taksStatus, currentStatus, initiated, clickedMetamask } = this.state
     return (
       <React.Fragment>
+        { !initiated && <Redirect to="/init-swap" /> }
         <Modal
           title="Change Tx Id:"
           visible={this.state.visible}
@@ -125,8 +165,14 @@ class SwapHistory extends Component {
           <CreateForm scheme={ethTransaction} ref={form => this.form = form} onSubmit={this.handleOk}/>
         </Modal>
         <div className={`loader ${currentStatus}`}></div>
-        <Steps size="small" direction="vertical" current={current} status={currentStatus}>
-          { taskList[type].map((item, index) => <Step onClick={this.handler.bind(this, index)} data-index={index} key={index} title={item.title} description={taksStatus[index]} />) }
+        <Steps className={'current-' + current} size="small" direction="vertical" current={current} status={currentStatus}>
+          { taskList[type].map((item, index) => <Step
+            className={item.id + ' ' + (!clickedMetamask ? 'button-not-clicked' : '')}
+            onClick={this.handler.bind(this, index)}
+            data-index={index} key={index}
+            title={item.title}
+            description={taksStatus[index]}
+          />) }
         </Steps>
          { currentStatus === "done" &&
           <div className="success-block align-center">
@@ -181,10 +227,10 @@ function mapStateToProps(state) {
     SwapSignDigest:state.swap.SwapSignDigest,
     SwapID:state.swap.SwapID,
     SwapWait:state.swap.SwapWait,
-    SwapFinalize: state.swap.SwapFinalize
+    SwapFinalize: state.swap.SwapFinalize,
   };
 };
 
 //----------------------------------------------------------------------------------------------------------------------
 
-export default connect(mapStateToProps, { start })(SwapHistory);
+export default connect(mapStateToProps, { start, logout, cancel, login })(SwapHistory);
