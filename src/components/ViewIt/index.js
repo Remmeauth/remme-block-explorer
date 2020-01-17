@@ -7,7 +7,7 @@ class ViewIt extends Component {
     const { url } = this.props;
     return (
       <React.Fragment>
-          {process.env.REACT_APP_VIEW_ON && <span style={{fontSize: 14, float: 'right', lineHeight: "34px"}}><SmartLink link={`${process.env.REACT_APP_VIEW_ON}${url}${process.env.REACT_APP_VIEW_ON_PARAMS}`}>View It with Bloks.io</SmartLink></span>}
+          {process.env.REACT_APP_VIEW_ON && <span style={{fontSize: 14, float: 'right', lineHeight: "34px"}}><SmartLink link={`${process.env.REACT_APP_VIEW_ON}${url}${process.env.REACT_APP_VIEW_ON_PARAMS ? process.env.REACT_APP_VIEW_ON_PARAMS : ''}`}>View It with Bloks.io</SmartLink></span>}
       </React.Fragment>
     )
   }
