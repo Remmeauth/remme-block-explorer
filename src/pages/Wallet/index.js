@@ -68,7 +68,7 @@ class Wallet extends Component {
       }, 2000);
 
     }).catch(err => {
-      message.error(err.message, 2);
+      message.error(err.message, 10);
     });
   }
 
@@ -92,7 +92,7 @@ class Wallet extends Component {
     const {producers, name} = this.state;
 
     if (!producers || producers.length === 0) {
-      message.error('Pls. Set producers.');
+      message.error('Pls. Set producers.', 4);
       return;
     }
     const data = {
@@ -182,7 +182,7 @@ class Wallet extends Component {
           await ScatterJS.connect(process.env.REACT_APP_SYSTEM_ACCOUNT, {net});
           await ScatterJS.logout();
       } catch (e) {
-          message.error("Connection error. Please restart your Scatter client.", 2);
+          message.error("Connection error. Please restart your Scatter client.", 10);
           return false;
       }
 
@@ -190,15 +190,15 @@ class Wallet extends Component {
           const login = await ScatterJS.login({accounts: [net]});
           const account = await ScatterJS.account(process.env.REACT_APP_NETWORK_BLOCKCHAIN);
           if (!account) {
-              message.error('No accounts');
+              message.error('No accounts', 4);
               return false;
           }
           this.handleAccountInfo(account.name, account.authority);
       } catch (e) {
           if (e.message) {
-            message.error(e.message);
+            message.error(e.message, 10);
           } else {
-            message.error('No accounts');
+            message.error('No accounts', 10);
           }
           return false;
       }

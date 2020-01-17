@@ -67,7 +67,7 @@ class StepRemWallet extends Component {
           }
         });
       } catch (e) {
-       message.error("Data is wrong. Try again.", 2);
+       message.error("Data is wrong. Try again.", 4);
       }
     });
   };

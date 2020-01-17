@@ -77,8 +77,6 @@ class SwapHistory extends Component {
   taskCallback = (error, responce) => {
     let { current, taksStatus } = this.state ;
 
-    this.setState({ clickedMetamask: false });
-
     const { type } = this.props
       if (error) {
         taksStatus[current] = error;
@@ -87,6 +85,7 @@ class SwapHistory extends Component {
           currentStatus: "error"
         });
       } else if (responce) {
+        this.setState({ clickedMetamask: false });
         taksStatus[current] = responce;
         this.updateLocalStorage({[taskList[type][current].id]: responce});
         this.setState({
