@@ -18,7 +18,7 @@ const ChartComponent = ({visitData}) => {
       <MiniArea line height={45} data={prices} color="#398bf7" borderColor="#398bf7" scale={prices_scale}  />
       <NumberInfo
         subTitle="Market Cap"
-        total={"$"+ numeral(market_caps[0].y).format('0,0')}
+        total={"$"+ numeral(prices[0].y * 1000000000).format('0,0')}
       />
       <MiniArea line height={45} data={market_caps} color="#735af2" borderColor="#735af2" scale={market_caps_scale} />
     </ChartCard>
