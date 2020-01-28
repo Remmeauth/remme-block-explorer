@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import QueueAnim from 'rc-queue-anim';
 import { Row, Col, Icon } from 'antd';
 import NumberInfo from 'ant-design-pro/lib/NumberInfo';
@@ -25,8 +26,15 @@ const ChartComponent = ({visitData}) => {
   )
 }
 
-const BlockInfoComponent = ({icon, title, value, color, classes}) => (
-  <ChartCard className={classes} title={title} avatar={<Icon type={icon} style={{color: color}}/> } total={value}/>
+const BlockInfoComponent = ({icon, title, value, color, classes, link}) => (
+  <React.Fragment>
+  {
+    link ? <Link to={link}>
+      <ChartCard className={classes} title={title} avatar={<Icon type={icon} style={{color: color}}/> } total={value}/>
+    </Link> :
+    <ChartCard className={classes} title={title} avatar={<Icon type={icon} style={{color: color}}/> } total={value}/>
+  }
+  </React.Fragment>
 )
 
 class RemmeCharts extends Component {
@@ -60,7 +68,7 @@ class RemmeCharts extends Component {
               <QueueAnim type="right"  >
                 <div key='1'>
                   <BlockInfoComponent icon="code-sandbox" title="Total Blocks" value={totalBlocks} color="#f9b22b" key='1'/>
-                  <BlockInfoComponent icon="user" title="Total Producers" value={producers.length} color="#56c0d8" key='2'/>
+                  <BlockInfoComponent icon="user" link="/producers" title="Total Producers" value={producers.length} color="#56c0d8" key='2'/>
                 </div>
               </QueueAnim>
             }
@@ -70,7 +78,7 @@ class RemmeCharts extends Component {
               <QueueAnim type="right" delay={300} >
                 <div key='1'>
                   <BlockInfoComponent icon="column-width" title="Total Stake" color="#ef534f" value={ (Number(global.total_guardians_stake) / process.env.REACT_APP_SYSTEM_COIN_DECIMAL).toFixed(0)} key='3'/>
-                  <BlockInfoComponent classes="blockinfo-guardians" icon="check-circle" title="Total Guardians" value={guardians} color="#4cd79c" key='4'/>
+                  <BlockInfoComponent classes="blockinfo-guardians" icon="check-circle" link="/guardians" title="Total Guardians" value={guardians} color="#4cd79c" key='4'/>
                 </div>
               </QueueAnim>
             }
