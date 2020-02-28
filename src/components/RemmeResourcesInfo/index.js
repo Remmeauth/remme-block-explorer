@@ -12,17 +12,16 @@ const DifferenceInWeeks = (d1, d2) => {
 }
 
 const maturityFormatter = (weeks) => {
-  let left = 25 - weeks;
+  let left = 26 - weeks;
   if (left < 1) {
     left = 1;
-  } else if (left > 25) {
-    left = 25;
+  } else if (left > 26) {
+    left = 26;
   }
-
   return {
-    text: `${Math.floor(left)}/25`,
-    percent: 100 / 25 * Math.floor(left),
-    ratio: Number((1 / 25 * Math.floor(left)).toFixed(4))
+    text: `${Math.floor(left)}/26`,
+    percent: 100 / 26 * Math.floor(left),
+    ratio: Number((1 / 26 * Math.floor(left)).toFixed(4))
   }
 
 }
