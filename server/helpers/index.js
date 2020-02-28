@@ -10,7 +10,6 @@ export const sleep = (ms) => {
 const asyncRequest = (options) => {
   return new Promise(function(resolve, reject) {
     try {
-      console.log(new Date().toLocaleString().cyan, '[ REQUEST ]', `${options.url}`.grey);
       request(options, function (error, response, body) {
         if (error) {
           reject(error);
@@ -35,9 +34,13 @@ export const api = async (method, type, action, body, version = 'v1') => {
     body: body,
     timeout: 3000
   };
-  const resp = await asyncRequest(options);
-  console.log(new Date().toLocaleString().cyan, '[ REQUEST ]', `DONE`.grey);
-  return resp
+  try {
+    const resp = await asyncRequest(options);
+    return resp
+  } catch (e) {
+    console.log(e);
+    return false
+  }
 };
 
 export const coinmarketcap = async () => {
@@ -46,9 +49,13 @@ export const coinmarketcap = async () => {
     url: process.env.REACT_APP_MARKET_CHART,
     timeout: 3000
   };
-  const resp = await asyncRequest(options);
-  console.log(new Date().toLocaleString().cyan, '[ REQUEST ]', `DONE`.grey);
-  return resp
+  try {
+    const resp = await asyncRequest(options);
+    return resp
+  } catch (e) {
+    console.log(e);
+    return false
+  }
 };
 
 export const producerInfo = async (url) => {
@@ -57,9 +64,13 @@ export const producerInfo = async (url) => {
     url: url,
     timeout: 3000
   };
-  const resp = await asyncRequest(options);
-  console.log(new Date().toLocaleString().cyan, '[ REQUEST ]', `DONE`.grey);
-  return resp
+  try {
+    const resp = await asyncRequest(options);
+    return resp
+  } catch (e) {
+    console.log(e);
+    return false
+  }
 };
 
 export const DifferenceInDays = (d1, d2) => {
