@@ -18,7 +18,7 @@ export const startVotersDaemon = async () => {
     var lower_bound = "";
 
     do {
-      const votersInfo = await api(`POST`,`chain`, `get_table_rows`, `{ "pos":"1", "lower_bound":"${lower_bound}", "json": true, "code": "${process.env.REACT_APP_SYSTEM_ACCOUNT}", "scope": "${process.env.REACT_APP_SYSTEM_ACCOUNT}", "table": "voters", "limit": "${limit}" }`);
+      const votersInfo = await api(`POST`,`chain`, `get_table_rows`, `{"json":true,"code":"rem","scope":"rem","table":"voters","table_key":"","lower_bound":" ${lower_bound}","upper_bound":null,"index_position":1,"key_type":"i64","limit":"${limit}","reverse":false,"show_payer":false}`);
       if (!votersInfo.rows.length) {
         console.log('\x1b[31m%s\x1b[0m', '[VOTERS DAEMON] No voters.');
         return false;
