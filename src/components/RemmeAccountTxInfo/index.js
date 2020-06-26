@@ -54,6 +54,7 @@ class RemmeAccountTxInfo extends Component {
     const { id } = this.props;
     try {
       const json = await fetchBackend('getActions', id);
+      console.log("KKK", json)
       this.pushActions(json.actions.reverse());
     } catch (e) {
       console.log(e.message);
