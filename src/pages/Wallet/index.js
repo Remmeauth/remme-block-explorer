@@ -8,7 +8,7 @@ import queryString from 'query-string';
 
 import { fetchBackend } from '../../functions/helpers'
 import { RemmeSpin, RemmeResult, RemmeAccountInfo, RemmeResourcesInfo, CreateForm, TagsField, RemmeAccountTxInfo } from '../../components'
-import { walletTransfer, walletStake } from '../../schemes';
+import { walletTransfer, walletStake, walletUnstake } from '../../schemes';
 import scatter from "../../assets/scatter.jpg";
 
 const { TabPane } = Tabs;
@@ -120,7 +120,7 @@ class Wallet extends Component {
     });
   };
 
-  handleUnstake = (e) => {
+  handleInitUnstake = (e) => {
     const {name} = this.state;
     const form = this.form3;
     form.validateFields((err, values) => {
@@ -133,6 +133,18 @@ class Wallet extends Component {
       }
       form.resetFields();
       this.initTransaction('','undelegatebw', data);
+    });
+  };
+
+  handleUnstake = (e) => {
+    const form = this.form4;
+    form.validateFields((err, values) => {
+      if (err) { return; }
+      const data = {
+          owner: values.owner,
+      }
+      form.resetFields();
+      this.initTransaction('','refund', data);
     });
   };
 
@@ -226,7 +238,11 @@ class Wallet extends Component {
                           <TabPane tab="Unstake Resources" key="unstake">
                             <h5>Unstake:</h5>
                             <CreateForm scheme={walletStake} ref={form => this.form3 = form}/>
-                            <Button type="primary" onClick={this.handleUnstake}>Generate Transaction</Button>
+                            <Button type="primary" onClick={this.handleInitUnstake}>Initiate Unstake</Button>
+                            <br/>
+                            <br/>
+                            <CreateForm scheme={walletUnstake} ref={form => this.form4 = form}/>
+                            <Button type="primary" onClick={this.handleUnstake}>Claim Unfrozen Stake</Button>
                           </TabPane>
                           <TabPane tab="Vote" key="vote">
                             <h5>Vote:</h5>

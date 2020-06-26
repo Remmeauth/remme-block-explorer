@@ -6,6 +6,7 @@ import { newAccount } from './newAccount';
 import { walletTransfer } from './walletTransfer';
 import { walletStake } from './walletStake';
 import { walletVote } from './walletVote';
+import { walletUnstake } from './walletUnstake';
 import { tableColunm, gridStyle } from './tableColunm';
 export {
   amount,
@@ -16,6 +17,7 @@ export {
   walletTransfer,
   walletStake,
   walletVote,
+  walletUnstake,
   tableColunm,
   gridStyle
 };
