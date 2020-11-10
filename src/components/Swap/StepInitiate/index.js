@@ -63,8 +63,8 @@ class StepInitiate extends Component {
     const remBalance = type ? balanceRemRem : balanceEthRem
     const minDeposit = accountCreatingFee + swapFee + 1
 
-    if (isNaN(parseFloat(value)) && !isFinite(value)) {
-      callback("Please enter a valid number!");
+    if (isNaN(parseFloat(value)) && !isFinite(value) || !Number.isInteger(parseFloat(value))) {
+      callback("Please enter a valid integer number!");
     }
     if (parseFloat(value) < minDeposit) {
       callback("Min swap is "+minDeposit+" REM.");
