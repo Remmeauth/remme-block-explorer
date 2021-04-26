@@ -21,13 +21,6 @@ const NavigationItems = [
     key: 2,
   },
   {
-    title: 'Swap',
-    link: '/swap',
-    icon: 'swap',
-    type: 'simple',
-    key: 5,
-  },
-  {
     title: 'Producers',
     link: '/producers',
     icon: 'check-circle',
